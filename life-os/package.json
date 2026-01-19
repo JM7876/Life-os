@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "15.1.7",
+    "next": "15.1.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "lucide-react": "^0.468.0",
@@ -30,7 +30,7 @@
     "postcss": "^8.4.49",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.17.0",
-    "eslint-config-next": "15.1.7",
+    "eslint-config-next": "15.1.9",
     "@serwist/next": "^9.0.0",
     "serwist": "^9.0.0"
   }
