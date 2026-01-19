@@ -1,0 +1,52 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a24"/>
+      <stop offset="100%" style="stop-color:#0a0a0f"/>
+    </linearGradient>
+    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a78bfa"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="512" height="512" rx="108" fill="url(#bgGrad)"/>
+  
+  <!-- Ambient glow -->
+  <circle cx="256" cy="256" r="140" fill="#8b5cf6" opacity="0.15" filter="url(#glow)"/>
+  
+  <!-- Main icon - Sparkles/Brain hybrid representing AI Life OS -->
+  <g filter="url(#glow)">
+    <!-- Center diamond -->
+    <path d="M256 140L290 256L256 372L222 256Z" fill="url(#iconGrad)"/>
+    
+    <!-- Top sparkle -->
+    <path d="M256 100L264 140L256 180L248 140Z" fill="url(#iconGrad)" opacity="0.8"/>
+    
+    <!-- Bottom sparkle -->
+    <path d="M256 332L264 372L256 412L248 372Z" fill="url(#iconGrad)" opacity="0.8"/>
+    
+    <!-- Left sparkle -->
+    <path d="M140 256L180 264L220 256L180 248Z" fill="url(#iconGrad)" opacity="0.8"/>
+    
+    <!-- Right sparkle -->
+    <path d="M292 256L332 264L372 256L332 248Z" fill="url(#iconGrad)" opacity="0.8"/>
+    
+    <!-- Diagonal sparkles -->
+    <path d="M170 170L198 198L190 210L162 182Z" fill="url(#iconGrad)" opacity="0.6"/>
+    <path d="M342 170L314 198L322 210L350 182Z" fill="url(#iconGrad)" opacity="0.6"/>
+    <path d="M170 342L198 314L190 302L162 330Z" fill="url(#iconGrad)" opacity="0.6"/>
+    <path d="M342 342L314 314L322 302L350 330Z" fill="url(#iconGrad)" opacity="0.6"/>
+  </g>
+  
+  <!-- Inner circle highlight -->
+  <circle cx="256" cy="256" r="40" fill="none" stroke="url(#iconGrad)" stroke-width="3" opacity="0.6"/>
+</svg>
