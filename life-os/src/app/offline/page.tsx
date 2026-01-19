@@ -1,14 +1,14 @@
+'use client';
+
 export default function OfflinePage() {
   return (
     <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center p-8">
-      {/* Ambient Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl" />
       </div>
       
       <div className="relative text-center max-w-md">
-        {/* Icon */}
         <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-violet-500/20 to-purple-600/20 flex items-center justify-center border border-violet-500/20">
           <svg
             className="w-10 h-10 text-violet-400"
@@ -25,16 +25,14 @@ export default function OfflinePage() {
           </svg>
         </div>
         
-        {/* Content */}
         <h1 className="text-2xl font-bold text-white mb-3">
-          You're Offline
+          You&apos;re Offline
         </h1>
         <p className="text-white/50 mb-8 leading-relaxed">
           Life OS needs an internet connection to sync your data. 
-          Your local changes are saved and will sync when you're back online.
+          Your local changes are saved and will sync when you&apos;re back online.
         </p>
         
-        {/* Action */}
         <button
           onClick={() => window.location.reload()}
           className="px-6 py-3 rounded-xl bg-violet-500/20 text-violet-300 hover:bg-violet-500/30 transition-all font-medium border border-violet-500/30"
@@ -42,7 +40,6 @@ export default function OfflinePage() {
           Try Again
         </button>
         
-        {/* Status indicator */}
         <div className="mt-8 flex items-center justify-center gap-2 text-sm text-white/30">
           <span className="w-2 h-2 bg-amber-400 rounded-full animate-pulse" />
           Waiting for connection...
