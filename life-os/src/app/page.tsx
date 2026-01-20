@@ -130,7 +130,7 @@ export default function LifeOS() {
   onMouseLeave={() => setSidebarOpen(false)}
 >
   <div className={`
-    h-[calc(100vh-13rem)] py-4 px-3 flex flex-col
+    min-h-[520px] py-4 px-3 flex flex-col
     bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl
     shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)]
     transition-all duration-500 ease-out
