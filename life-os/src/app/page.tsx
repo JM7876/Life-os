@@ -123,7 +123,7 @@ export default function LifeOS() {
       {/* Sidebar */}
       {/* Floating Glass Sidebar */}
 <aside
-  className={`fixed left-4 top-24 z-50 transition-all duration-500 ease-out ${
+  className={`fixed left-4 top-44 z-50 transition-all duration-500 ease-out ${
     sidebarOpen ? 'w-56' : 'w-16'
   }`}
   onMouseEnter={() => setSidebarOpen(true)}
