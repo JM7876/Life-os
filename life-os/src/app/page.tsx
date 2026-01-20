@@ -139,7 +139,7 @@ export default function LifeOS() {
           ${sidebarOpen ? 'shadow-[0_8px_40px_rgba(0,212,255,0.15),0_8px_32px_rgba(0,0,0,0.4)]' : ''}
         `}>
           {/* Logo */}
-          <div className={`flex items-center gap-3 px-3 mb-6 `}>
+          <div className={`flex items-center gap-3 px-3 mb-6 ${sidebarOpen ? "" : "justify-center"}`}>
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/20">
               <Icons.Sparkles className="w-5 h-5 text-white" />
             </div>
@@ -155,7 +155,7 @@ export default function LifeOS() {
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative justify-center !important ${
+                className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative justify-center ${
                   activeTab === item.id
                     ? 'bg-white/10 text-cyan-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]'
                     : 'text-white/60 hover:bg-white/5 hover:text-white/80'
