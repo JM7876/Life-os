@@ -130,7 +130,7 @@ export default function LifeOS() {
         onMouseLeave={() => setSidebarOpen(false)}
       >
         <div className={`
-          h-auto min-h-[480px] py-4 px-3
+          h-auto min-h-[580px] py-4 px-3
           bg-white/5 backdrop-blur-2xl
           border border-white/10
           rounded-3xl
