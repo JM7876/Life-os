@@ -122,68 +122,65 @@ export default function LifeOS() {
 
       {/* Sidebar */}
       {/* Floating Glass Sidebar */}
-      <aside 
-        className={`fixed left-4 top-48 z-50 transition-all duration-500 ease-out ${
-          sidebarOpen ? 'w-56' : 'w-16'
-        }`}
-        onMouseEnter={() => setSidebarOpen(true)}
-        onMouseLeave={() => setSidebarOpen(false)}
-      >
-        <div className={`
-          h-auto min-h-[580px] py-4 px-3
-          bg-white/5 backdrop-blur-2xl
-          border border-white/10
-          rounded-3xl
-          shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)]
-          transition-all duration-500 ease-out
-          ${sidebarOpen ? 'shadow-[0_8px_40px_rgba(0,212,255,0.15),0_8px_32px_rgba(0,0,0,0.4)]' : ''}
-        `}>
-          {/* Logo */}
-          <div className={`flex items-center gap-3 px-3 mb-6 ${sidebarOpen ? "" : "justify-center"}`}>
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/20">
-              <Icons.Sparkles className="w-5 h-5 text-white" />
-            </div>
-            <div className={`overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
-              <h1 className="font-bold text-sm tracking-tight whitespace-nowrap">Life OS</h1>
-              <p className="text-[10px] text-white/40 whitespace-nowrap">Command Center</p>
-            </div>
-          </div>
+<aside
+  className={`fixed left-4 top-48 z-50 transition-all duration-500 ease-out ${
+    sidebarOpen ? 'w-56' : 'w-16'
+  }`}
+  onMouseEnter={() => setSidebarOpen(true)}
+  onMouseLeave={() => setSidebarOpen(false)}
+>
+  <div className={`
+    h-[calc(100vh-13rem)] py-4 px-3 flex flex-col
+    bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl
+    shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)]
+    transition-all duration-500 ease-out
+    ${sidebarOpen ? 'shadow-[0_8px_40px_rgba(0,212,255,0.15),0_8px_32px_rgba(0,0,0,0.4)]' : ''}
+  `}>
+    {/* Logo */}
+    <div className={`flex items-center gap-3 px-3 mb-6 ${sidebarOpen ? "" : "justify-center"}`}>
+      <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/20">
+        <Icons.Sparkles className="w-5 h-5 text-white" />
+      </div>
+      <div className={`overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
+        <h1 className="font-bold text-sm tracking-tight whitespace-nowrap">Life OS</h1>
+        <p className="text-[10px] text-white/40 whitespace-nowrap">Command Center</p>
+      </div>
+    </div>
 
-          {/* Nav Items */}
-          <nav className="space-y-1">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative ${
-                  activeTab === item.id
-                    ? 'bg-white/10 text-cyan-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]'
-                    : 'text-white/80 hover:bg-white/5 hover:text-white/80'
-                } ${sidebarOpen ? '' : 'justify-center'}`}
-              >
-                {activeTab === item.id && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full" />
-                )}
-                <item.icon className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${activeTab === item.id ? 'scale-110' : 'group-hover:scale-105'}`} />
-                <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
-                  {item.label}
-                </span>
-              </button>
-            ))}
-          </nav>
+    {/* Nav Items */}
+    <nav className="space-y-1 flex-1">
+      {navItems.map((item) => (
+        <button
+          key={item.id}
+          onClick={() => setActiveTab(item.id)}
+          className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative ${
+            activeTab === item.id
+              ? 'bg-white/10 text-cyan-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]'
+              : 'text-white/80 hover:bg-white/5 hover:text-white/80'
+          } ${sidebarOpen ? '' : 'justify-center'}`}
+        >
+          {activeTab === item.id && (
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full" />
+          )}
+          <item.icon className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${activeTab === item.id ? 'scale-110' : 'group-hover:scale-105'}`} />
+          <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
+            {item.label}
+          </span>
+        </button>
+      ))}
+    </nav>
 
-          {/* Settings */}
-          <div className={`mt-6 pt-4 border-t border-white/5 ${sidebarOpen ? '' : 'flex justify-center'}`}>
-            <button className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-white/80 hover:bg-white/5 hover:text-white/80 transition-all duration-300 `}>
-              <Icons.Settings className="w-5 h-5 flex-shrink-0" />
-              <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
-                Settings
-              </span>
-            </button>
-          </div>
-        </div>
-      </aside>
-
+    {/* Settings */}
+    <div className={`pt-4 border-t border-white/5 ${sidebarOpen ? '' : 'flex justify-center'}`}>
+      <button className="w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-white/80 hover:bg-white/5 hover:text-white/80 transition-all duration-300">
+        <Icons.Settings className="w-5 h-5 flex-shrink-0" />
+        <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
+          Settings
+        </span>
+      </button>
+    </div>
+  </div>
+</aside>
       {/* Main Content */}
       <main className="lg:ml-24 min-h-screen relative">
         {/* Top Bar */}
