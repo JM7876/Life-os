@@ -130,7 +130,7 @@ export default function LifeOS() {
         onMouseLeave={() => setSidebarOpen(false)}
       >
         <div className={`
-          h-auto py-4 px-2
+          h-auto py-4 px-3
           bg-white/5 backdrop-blur-2xl
           border border-white/10
           rounded-3xl
@@ -139,7 +139,7 @@ export default function LifeOS() {
           ${sidebarOpen ? 'shadow-[0_8px_40px_rgba(0,212,255,0.15),0_8px_32px_rgba(0,0,0,0.4)]' : ''}
         `}>
           {/* Logo */}
-          <div className={`flex items-center gap-3 px-2 mb-6 ${sidebarOpen ? '' : 'justify-center'}`}>
+          <div className={`flex items-center gap-3 px-3 mb-6 `}>
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/20">
               <Icons.Sparkles className="w-5 h-5 text-white" />
             </div>
@@ -155,11 +155,11 @@ export default function LifeOS() {
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative ${
+                className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative justify-center !important ${
                   activeTab === item.id
                     ? 'bg-white/10 text-cyan-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]'
-                    : 'text-white/50 hover:bg-white/5 hover:text-white/80'
-                } ${sidebarOpen ? '' : 'justify-center'}`}
+                    : 'text-white/60 hover:bg-white/5 hover:text-white/80'
+                } `}
               >
                 {activeTab === item.id && (
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full" />
@@ -174,7 +174,7 @@ export default function LifeOS() {
 
           {/* Settings */}
           <div className={`mt-6 pt-4 border-t border-white/5 ${sidebarOpen ? '' : 'flex justify-center'}`}>
-            <button className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-white/50 hover:bg-white/5 hover:text-white/80 transition-all duration-300 ${sidebarOpen ? '' : 'justify-center'}`}>
+            <button className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-white/60 hover:bg-white/5 hover:text-white/80 transition-all duration-300 `}>
               <Icons.Settings className="w-5 h-5 flex-shrink-0" />
               <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
                 Settings
@@ -270,7 +270,7 @@ export default function LifeOS() {
                       <p className={`font-medium ${task.completed ? 'line-through text-white/40' : ''}`}>{task.title}</p>
                       <p className="text-xs text-white/40">{task.dueDate} • {task.category}</p>
                     </div>
-                    <span className={`hidden sm:block px-2 py-1 rounded-lg text-xs font-medium border ${priorityColors[task.priority]}`}>{task.priority}</span>
+                    <span className={`hidden sm:block px-3 py-1 rounded-lg text-xs font-medium border ${priorityColors[task.priority]}`}>{task.priority}</span>
                   </div>
                 ))}
               </div>
@@ -287,7 +287,7 @@ export default function LifeOS() {
                   <div key={i} className="p-3 rounded-xl bg-white/5">
                     <div className="flex items-center justify-between mb-1">
                       <p className="text-xs text-white/50">{stat.label}</p>
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${stat.positive ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}`}>{stat.change}</span>
+                      <span className={`text-xs px-3 py-0.5 rounded-full ${stat.positive ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}`}>{stat.change}</span>
                     </div>
                     <p className="text-lg font-bold">{stat.value}</p>
                   </div>
@@ -300,7 +300,7 @@ export default function LifeOS() {
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400"><Icons.Mail /></div>
                 <h3 className="font-semibold">Email</h3>
-                <span className="ml-auto px-2 py-1 rounded-lg bg-rose-500/20 text-rose-400 text-xs">3 Priority</span>
+                <span className="ml-auto px-3 py-1 rounded-lg bg-rose-500/20 text-rose-400 text-xs">3 Priority</span>
               </div>
               <div className="space-y-2">
                 {[
@@ -338,7 +338,7 @@ export default function LifeOS() {
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2 text-sm">
-                  <span className="px-2 py-1 rounded-lg bg-white/10">DL 1247</span>
+                  <span className="px-3 py-1 rounded-lg bg-white/10">DL 1247</span>
                   <span className="text-white/50">DTW → DEN</span>
                   <span className="text-white/50">3h 45m</span>
                 </div>
