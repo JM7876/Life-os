@@ -123,14 +123,14 @@ export default function LifeOS() {
       {/* Sidebar */}
       {/* Floating Glass Sidebar */}
 <aside
-  className={`fixed left-4 top-48 z-50 transition-all duration-500 ease-out ${
+  className={`fixed left-4 top-40 z-50 transition-all duration-500 ease-out ${
     sidebarOpen ? 'w-56' : 'w-16'
   }`}
   onMouseEnter={() => setSidebarOpen(true)}
   onMouseLeave={() => setSidebarOpen(false)}
 >
   <div className={`
-    min-h-[680px] py-4 px-3 flex flex-col
+    min-h-[560px] py-4 px-3 flex flex-col
     bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl
     shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)]
     transition-all duration-500 ease-out
@@ -191,7 +191,7 @@ export default function LifeOS() {
             </button>
 
             <div className="hidden md:block relative">
-              <div className="absolute left-3 top-48 text-white/40"><Icons.Search /></div>
+              <div className="absolute left-3 top-40 text-white/40"><Icons.Search /></div>
               <input type="text" placeholder="Search..." className="w-64 bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50" />
             </div>
 
