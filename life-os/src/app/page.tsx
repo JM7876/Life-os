@@ -159,7 +159,7 @@ export default function LifeOS() {
               : 'text-white/80 hover:bg-white/5 hover:text-white/80'
           } ${sidebarOpen ? '' : 'justify-center'}`}
         >
-          {activeTab === item.id && (
+          {activeTab === item.id && sidebarOpen && (
             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full" />
           )}
           <item.icon className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${activeTab === item.id ? 'scale-110' : 'group-hover:scale-105'}`} />
