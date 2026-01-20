@@ -214,7 +214,7 @@ export default function LifeOS() {
               { icon: Icons.Calendar, label: 'Events', value: '2', sub: 'Next: 2PM' },
               { icon: Icons.Target, label: 'Goals', value: '68%', sub: 'On track' },
             ].map((stat, i) => (
-              <div key={i} className="bg-[#12121a]/60 backdrop-blur border border-white/5 rounded-2xl p-4 hover:border-violet-500/30 transition-all">
+              <div key={i} className="liquid-glass rounded-2xl liquid-glass-hover p-4 hover:border-violet-500/30 transition-all">
                 <div className="flex items-start justify-between mb-2">
                   <div className="p-2 rounded-xl bg-violet-500/10 text-violet-400">
                     <stat.icon />
@@ -230,7 +230,7 @@ export default function LifeOS() {
           {/* Main Grid */}
           <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-6">
             {/* Tasks */}
-            <div className="lg:col-span-2 bg-[#12121a]/60 backdrop-blur border border-white/5 rounded-2xl p-4 lg:p-5">
+            <div className="lg:col-span-2 liquid-glass rounded-2xl liquid-glass-hover p-4 lg:p-5">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-xl bg-violet-500/10 text-violet-400"><Icons.CheckSquare /></div>
@@ -257,7 +257,7 @@ export default function LifeOS() {
             </div>
 
             {/* Financial */}
-            <div className="bg-[#12121a]/60 backdrop-blur border border-white/5 rounded-2xl p-4 lg:p-5">
+            <div className="liquid-glass rounded-2xl liquid-glass-hover p-4 lg:p-5">
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400"><Icons.Wallet /></div>
                 <h3 className="font-semibold">Finances</h3>
@@ -276,7 +276,7 @@ export default function LifeOS() {
             </div>
 
             {/* Email */}
-            <div className="bg-[#12121a]/60 backdrop-blur border border-white/5 rounded-2xl p-4 lg:p-5">
+            <div className="liquid-glass rounded-2xl liquid-glass-hover p-4 lg:p-5">
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400"><Icons.Mail /></div>
                 <h3 className="font-semibold">Email</h3>
@@ -301,7 +301,7 @@ export default function LifeOS() {
             </div>
 
             {/* Travel */}
-            <div className="lg:col-span-2 bg-[#12121a]/60 backdrop-blur border border-white/5 rounded-2xl p-4 lg:p-5">
+            <div className="lg:col-span-2 liquid-glass rounded-2xl liquid-glass-hover p-4 lg:p-5">
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400"><Icons.Plane /></div>
                 <h3 className="font-semibold">Upcoming Travel</h3>
