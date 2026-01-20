@@ -155,7 +155,7 @@ export default function LifeOS() {
           onClick={() => setActiveTab(item.id)}
           className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative ${
             activeTab === item.id
-              ? 'bg-white/10 text-cyan-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]'
+              ? 'text-cyan-300'
               : 'text-white/80 hover:text-cyan-300'
           } ${sidebarOpen ? '' : 'justify-center'}`}
         >
