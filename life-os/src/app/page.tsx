@@ -121,51 +121,71 @@ export default function LifeOS() {
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed left-0 top-0 h-full w-72 bg-[#12121a]/98 backdrop-blur-xl border-r border-white/5 z-50 transform transition-transform duration-300 lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-        <div className="p-5 pt-6">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
-                <Icons.Sparkles className="w-6 h-6" />
-              </div>
-              <div>
-                <h1 className="font-bold text-lg tracking-tight">Life OS</h1>
-                <p className="text-xs text-white/40">Command Center</p>
-              </div>
+      {/* Floating Glass Sidebar */}
+      <aside 
+        className={`fixed left-4 top-1/2 -translate-y-1/2 z-50 transition-all duration-500 ease-out ${
+          sidebarOpen ? 'w-56' : 'w-16'
+        }`}
+        onMouseEnter={() => setSidebarOpen(true)}
+        onMouseLeave={() => setSidebarOpen(false)}
+      >
+        <div className={`
+          h-auto py-4 px-2
+          bg-white/5 backdrop-blur-2xl
+          border border-white/10
+          rounded-3xl
+          shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)]
+          transition-all duration-500 ease-out
+          ${sidebarOpen ? 'shadow-[0_8px_40px_rgba(0,212,255,0.15),0_8px_32px_rgba(0,0,0,0.4)]' : ''}
+        `}>
+          {/* Logo */}
+          <div className={`flex items-center gap-3 px-2 mb-6 ${sidebarOpen ? '' : 'justify-center'}`}>
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/20">
+              <Icons.Sparkles className="w-5 h-5 text-white" />
             </div>
-            <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-2 rounded-lg hover:bg-white/10">
-              <Icons.X />
-            </button>
+            <div className={`overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
+              <h1 className="font-bold text-sm tracking-tight whitespace-nowrap">Life OS</h1>
+              <p className="text-[10px] text-white/40 whitespace-nowrap">Command Center</p>
+            </div>
           </div>
 
+          {/* Nav Items */}
           <nav className="space-y-1">
             {navItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => { setActiveTab(item.id); setSidebarOpen(false); }}
-                className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-200 ${
+                onClick={() => setActiveTab(item.id)}
+                className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative ${
                   activeTab === item.id
-                    ? 'bg-violet-500/20 text-violet-300 border border-violet-500/30'
-                    : 'text-white/60 hover:bg-white/5 hover:text-white/80'
-                }`}
+                    ? 'bg-white/10 text-cyan-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]'
+                    : 'text-white/50 hover:bg-white/5 hover:text-white/80'
+                } ${sidebarOpen ? '' : 'justify-center'}`}
               >
-                <item.icon />
-                <span className="font-medium">{item.label}</span>
+                {activeTab === item.id && (
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full" />
+                )}
+                <item.icon className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${activeTab === item.id ? 'scale-110' : 'group-hover:scale-105'}`} />
+                <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
+                  {item.label}
+                </span>
               </button>
             ))}
           </nav>
-        </div>
 
-        <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-white/5">
-          <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-white/5 hover:text-white/80 transition-all">
-            <Icons.Settings />
-            <span className="font-medium">Settings</span>
-          </button>
+          {/* Settings */}
+          <div className={`mt-6 pt-4 border-t border-white/5 ${sidebarOpen ? '' : 'flex justify-center'}`}>
+            <button className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-white/50 hover:bg-white/5 hover:text-white/80 transition-all duration-300 ${sidebarOpen ? '' : 'justify-center'}`}>
+              <Icons.Settings className="w-5 h-5 flex-shrink-0" />
+              <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
+                Settings
+              </span>
+            </button>
+          </div>
         </div>
       </aside>
 
       {/* Main Content */}
-      <main className="lg:ml-72 min-h-screen relative">
+      <main className="lg:ml-24 min-h-screen relative">
         {/* Top Bar */}
         <header className="sticky top-0 z-30 bg-[#0a0a0f]/90 backdrop-blur-xl border-b border-white/5 safe-top">
           <div className="flex items-center justify-between px-4 lg:px-6 py-3">
