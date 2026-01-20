@@ -43,14 +43,14 @@ export default function Calendar() {
   const [showEventPanel, setShowEventPanel] = useState(false);
 
   const events: CalendarEvent[] = [
-    { id: '1', title: 'Team Standup', date: new Date(2026, 0, 20), time: '9:00 AM', duration: '30 min', location: 'Zoom', color: 'cyan', type: 'meeting' },
-    { id: '2', title: 'Denver Flight', date: new Date(2026, 2, 15), time: '2:30 PM', duration: '3h 45m', location: 'DTW → DEN', color: 'violet', type: 'travel' },
-    { id: '3', title: 'Portfolio Review', date: new Date(2026, 0, 20), time: '2:00 PM', duration: '1 hour', location: 'Studio', color: 'pink', type: 'personal' },
-    { id: '4', title: 'Pay Amex Statement', date: new Date(2026, 0, 21), time: '11:59 PM', duration: '', color: 'amber', type: 'deadline' },
-    { id: '5', title: 'Boss Meeting - Trello', date: new Date(2026, 0, 20), time: '3:00 PM', duration: '1 hour', location: 'Office', color: 'emerald', type: 'meeting' },
-    { id: '6', title: 'Gym Session', date: new Date(2026, 0, 20), time: '6:00 PM', duration: '1 hour', location: 'Fitness Center', color: 'emerald', type: 'personal' },
-    { id: '7', title: 'Project Deadline', date: new Date(2026, 0, 25), time: '5:00 PM', duration: '', color: 'pink', type: 'deadline' },
-    { id: '8', title: 'Dentist Appointment', date: new Date(2026, 0, 28), time: '3:00 PM', duration: '1 hour', location: 'Downtown Dental', color: 'cyan', type: 'personal' },
+    { id: '1', title: 'Team Standup', date: new Date(2025, 0, 20), time: '9:00 AM', duration: '30 min', location: 'Zoom', color: 'cyan', type: 'meeting' },
+    { id: '2', title: 'Denver Flight', date: new Date(2025, 2, 15), time: '2:30 PM', duration: '3h 45m', location: 'DTW → DEN', color: 'violet', type: 'travel' },
+    { id: '3', title: 'Portfolio Review', date: new Date(2025, 0, 20), time: '2:00 PM', duration: '1 hour', location: 'Studio', color: 'pink', type: 'personal' },
+    { id: '4', title: 'Pay Amex Statement', date: new Date(2025, 0, 21), time: '11:59 PM', duration: '', color: 'amber', type: 'deadline' },
+    { id: '5', title: 'Boss Meeting - Trello', date: new Date(2025, 0, 20), time: '3:00 PM', duration: '1 hour', location: 'Office', color: 'emerald', type: 'meeting' },
+    { id: '6', title: 'Gym Session', date: new Date(2025, 0, 20), time: '6:00 PM', duration: '1 hour', location: 'Fitness Center', color: 'emerald', type: 'personal' },
+    { id: '7', title: 'Project Deadline', date: new Date(2025, 0, 25), time: '5:00 PM', duration: '', color: 'pink', type: 'deadline' },
+    { id: '8', title: 'Dentist Appointment', date: new Date(2025, 0, 28), time: '3:00 PM', duration: '1 hour', location: 'Downtown Dental', color: 'cyan', type: 'personal' },
   ];
 
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
