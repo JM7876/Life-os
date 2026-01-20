@@ -123,14 +123,14 @@ export default function LifeOS() {
       {/* Sidebar */}
       {/* Floating Glass Sidebar */}
       <aside 
-        className={`fixed left-4 top-44 z-50 transition-all duration-500 ease-out ${
+        className={`fixed left-4 top-48 z-50 transition-all duration-500 ease-out ${
           sidebarOpen ? 'w-56' : 'w-16'
         }`}
         onMouseEnter={() => setSidebarOpen(true)}
         onMouseLeave={() => setSidebarOpen(false)}
       >
         <div className={`
-          h-auto py-4 px-3
+          h-auto min-h-[480px] py-4 px-3
           bg-white/5 backdrop-blur-2xl
           border border-white/10
           rounded-3xl
@@ -155,11 +155,11 @@ export default function LifeOS() {
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative justify-center ${
+                className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative ${
                   activeTab === item.id
                     ? 'bg-white/10 text-cyan-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]'
                     : 'text-white/80 hover:bg-white/5 hover:text-white/80'
-                } `}
+                } ${sidebarOpen ? '' : 'justify-center'}`}
               >
                 {activeTab === item.id && (
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full" />
@@ -194,7 +194,7 @@ export default function LifeOS() {
             </button>
 
             <div className="hidden md:block relative">
-              <div className="absolute left-3 top-44 text-white/40"><Icons.Search /></div>
+              <div className="absolute left-3 top-48 text-white/40"><Icons.Search /></div>
               <input type="text" placeholder="Search..." className="w-64 bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50" />
             </div>
 
