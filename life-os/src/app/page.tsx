@@ -158,7 +158,7 @@ export default function LifeOS() {
                 className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative justify-center ${
                   activeTab === item.id
                     ? 'bg-white/10 text-cyan-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]'
-                    : 'text-white/70 hover:bg-white/5 hover:text-white/80'
+                    : 'text-white/80 hover:bg-white/5 hover:text-white/80'
                 } `}
               >
                 {activeTab === item.id && (
@@ -174,7 +174,7 @@ export default function LifeOS() {
 
           {/* Settings */}
           <div className={`mt-6 pt-4 border-t border-white/5 ${sidebarOpen ? '' : 'flex justify-center'}`}>
-            <button className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-white/70 hover:bg-white/5 hover:text-white/80 transition-all duration-300 `}>
+            <button className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-white/80 hover:bg-white/5 hover:text-white/80 transition-all duration-300 `}>
               <Icons.Settings className="w-5 h-5 flex-shrink-0" />
               <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
                 Settings
@@ -223,7 +223,7 @@ export default function LifeOS() {
             <h2 className="text-2xl lg:text-3xl font-bold mb-1">
               Good morning, <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-400">Johnathon</span>
             </h2>
-            <p className="text-white/50">Here&apos;s what&apos;s happening today.</p>
+            <p className="text-white/80">Here&apos;s what&apos;s happening today.</p>
           </div>
 
           {/* Quick Stats */}
@@ -286,7 +286,7 @@ export default function LifeOS() {
                 {financialStats.map((stat, i) => (
                   <div key={i} className="p-3 rounded-xl bg-white/5">
                     <div className="flex items-center justify-between mb-1">
-                      <p className="text-xs text-white/50">{stat.label}</p>
+                      <p className="text-xs text-white/80">{stat.label}</p>
                       <span className={`text-xs px-3 py-0.5 rounded-full ${stat.positive ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}`}>{stat.change}</span>
                     </div>
                     <p className="text-lg font-bold">{stat.value}</p>
@@ -329,18 +329,18 @@ export default function LifeOS() {
               <div className="p-4 rounded-xl bg-gradient-to-br from-violet-500/20 to-purple-500/10 border border-violet-500/20">
                 <div className="flex items-center justify-between mb-3">
                   <div>
-                    <p className="text-xs text-white/50">Next Trip</p>
+                    <p className="text-xs text-white/80">Next Trip</p>
                     <p className="text-xl font-bold">Denver, CO</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-white/50">Departure</p>
+                    <p className="text-xs text-white/80">Departure</p>
                     <p className="text-xl font-bold">Mar 15</p>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2 text-sm">
                   <span className="px-3 py-1 rounded-lg bg-white/10">DL 1247</span>
-                  <span className="text-white/50">DTW → DEN</span>
-                  <span className="text-white/50">3h 45m</span>
+                  <span className="text-white/80">DTW → DEN</span>
+                  <span className="text-white/80">3h 45m</span>
                 </div>
               </div>
             </div>
