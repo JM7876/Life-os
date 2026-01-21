@@ -158,8 +158,7 @@ export default function LifeOS() {
         <div className="fixed inset-0 bg-black/60 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
       )}
 
-      {/* Sidebar */}
-      {/* Floating Glass Sidebar */}
+      {/* Sidebar - Apple Liquid Glass */}
 <aside
   className={`fixed left-4 top-44 z-50 transition-all duration-500 ease-out ${
     sidebarOpen ? 'w-56' : 'w-16'
@@ -167,87 +166,124 @@ export default function LifeOS() {
   onMouseEnter={() => setSidebarOpen(true)}
   onMouseLeave={() => setSidebarOpen(false)}
 >
-  <div className={`
-    min-h-[560px] py-4 px-3 flex flex-col
-    bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl
-    shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)]
-    transition-all duration-500 ease-out
-    ${sidebarOpen ? 'shadow-[0_8px_40px_rgba(0,212,255,0.15),0_8px_32px_rgba(0,0,0,0.4)]' : ''}
-  `}>
-    {/* Logo */}
-    <div className={`flex items-center gap-3 px-3 mb-6 ${sidebarOpen ? "" : "justify-center"}`}>
-      <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/20">
-        <Icons.Sparkles className="w-5 h-5 text-white" />
+  <div
+    className="relative min-h-[560px] py-4 px-3 flex flex-col rounded-[2rem] overflow-hidden transition-all duration-500 ease-out"
+    style={{
+      background: 'rgba(255, 255, 255, 0.05)',
+      backdropFilter: 'blur(4px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+      border: '1px solid rgba(255,255,255,0.2)',
+      boxShadow: sidebarOpen
+        ? '0 8px 40px rgba(0,212,255,0.15), 0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)'
+        : '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+    }}
+  >
+    {/* Shine effect */}
+    <div
+      className="absolute inset-0 rounded-[2rem] pointer-events-none"
+      style={{
+        background: 'rgba(255, 255, 255, 0.05)',
+        boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+        opacity: 0.5,
+      }}
+    />
+    {/* Sidebar content wrapper */}
+    <div className="relative flex flex-col flex-1">
+      {/* Logo */}
+      <div className={`flex items-center gap-3 px-3 mb-6 ${sidebarOpen ? "" : "justify-center"}`}>
+        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/20">
+          <Icons.Sparkles className="w-5 h-5 text-white" />
+        </div>
+        <div className={`overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
+          <h1 className="font-bold text-sm tracking-tight whitespace-nowrap">Life OS</h1>
+          <p className="text-[10px] text-white/40 whitespace-nowrap">Command Center</p>
+        </div>
       </div>
-      <div className={`overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
-        <h1 className="font-bold text-sm tracking-tight whitespace-nowrap">Life OS</h1>
-        <p className="text-[10px] text-white/40 whitespace-nowrap">Command Center</p>
-      </div>
-    </div>
 
-    {/* Nav Items */}
-    <nav className="space-y-1 flex-1">
-      {navItems.map((item) => (
-        <button
-          key={item.id}
-          onClick={() => setActiveTab(item.id)}
-          className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative ${
-            activeTab === item.id
-              ? 'text-cyan-300'
-              : 'text-white/80 hover:text-cyan-300'
-          } ${sidebarOpen ? '' : 'justify-center'}`}
-        >
-          {activeTab === item.id && sidebarOpen && (
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full" />
-          )}
-          <item.icon className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${activeTab === item.id ? 'scale-110' : 'group-hover:scale-105'}`} />
+      {/* Nav Items */}
+      <nav className="space-y-1 flex-1">
+        {navItems.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => setActiveTab(item.id)}
+            className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative ${
+              activeTab === item.id
+                ? 'text-cyan-300'
+                : 'text-white/80 hover:text-cyan-300'
+            } ${sidebarOpen ? '' : 'justify-center'}`}
+          >
+            {activeTab === item.id && sidebarOpen && (
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full" />
+            )}
+            <item.icon className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${activeTab === item.id ? 'scale-110' : 'group-hover:scale-105'}`} />
+            <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
+              {item.label}
+            </span>
+          </button>
+        ))}
+      </nav>
+
+      {/* Settings */}
+      <div className={`pt-4 border-t border-white/5 ${sidebarOpen ? '' : 'flex justify-center'}`}>
+        <button className="w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-white/80 hover:text-cyan-300 transition-all duration-300">
+          <Icons.Settings className="w-5 h-5 flex-shrink-0" />
           <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
-            {item.label}
+            Settings
           </span>
         </button>
-      ))}
-    </nav>
-
-    {/* Settings */}
-    <div className={`pt-4 border-t border-white/5 ${sidebarOpen ? '' : 'flex justify-center'}`}>
-      <button className="w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-white/80 hover:text-cyan-300 transition-all duration-300">
-        <Icons.Settings className="w-5 h-5 flex-shrink-0" />
-        <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
-          Settings
-        </span>
-      </button>
+      </div>
     </div>
   </div>
 </aside>
       {/* Main Content */}
       <main className="lg:ml-24 min-h-screen relative">
-        {/* Top Bar */}
-        <header className="sticky top-0 z-30 bg-[#0d0d2a]/90 backdrop-blur-xl border-b border-white/5 safe-top">
-          <div className="flex items-center justify-between px-4 lg:px-6 py-3">
-            <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2.5 rounded-xl bg-white/5 hover:bg-white/10">
-              <Icons.Menu />
-            </button>
-
-            <div className="hidden md:block relative">
-              <div className="absolute left-3 top-40 text-white/40"><Icons.Search /></div>
-              <input type="text" placeholder="Search..." className="w-64 bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50" />
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button className="relative p-2.5 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
-                <Icons.Bell />
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-violet-500 rounded-full" />
+        {/* Top Bar - Apple Liquid Glass */}
+        <header className="sticky top-0 z-30 safe-top">
+          <div
+            className="relative mx-4 mt-4 rounded-[1.5rem] overflow-hidden"
+            style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(4px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+            }}
+          >
+            {/* Shine effect */}
+            <div
+              className="absolute inset-0 rounded-[1.5rem] pointer-events-none"
+              style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                opacity: 0.5,
+              }}
+            />
+            <div className="relative flex items-center justify-between px-4 lg:px-6 py-3">
+              <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2.5 rounded-xl bg-white/5 hover:bg-white/10">
+                <Icons.Menu />
               </button>
-              <button
-                onClick={() => setChatOpen(!chatOpen)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all ${
-                  chatOpen ? 'bg-violet-500 text-white' : 'bg-violet-500/20 text-violet-300 hover:bg-violet-500/30'
-                }`}
-              >
-                <Icons.Brain />
-                <span className="hidden sm:inline">AI</span>
-              </button>
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center font-bold">J</div>
+
+              <div className="hidden md:block relative">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40"><Icons.Search /></div>
+                <input type="text" placeholder="Search..." className="w-64 bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50" />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <button className="relative p-2.5 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                  <Icons.Bell />
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-violet-500 rounded-full" />
+                </button>
+                <button
+                  onClick={() => setChatOpen(!chatOpen)}
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all ${
+                    chatOpen ? 'bg-violet-500 text-white' : 'bg-violet-500/20 text-violet-300 hover:bg-violet-500/30'
+                  }`}
+                >
+                  <Icons.Brain />
+                  <span className="hidden sm:inline">AI</span>
+                </button>
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center font-bold">J</div>
+              </div>
             </div>
           </div>
         </header>
@@ -265,7 +301,7 @@ export default function LifeOS() {
             <p className="text-white/80">Here&apos;s what&apos;s happening today.</p>
           </div>
 
-          {/* Quick Stats */}
+          {/* Quick Stats - Apple Liquid Glass */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
             {[
               { icon: Icons.CheckSquare, label: 'Tasks', value: '5', sub: '2 done' },
@@ -273,113 +309,214 @@ export default function LifeOS() {
               { icon: Icons.Calendar, label: 'Events', value: '2', sub: 'Next: 2PM' },
               { icon: Icons.Target, label: 'Goals', value: '68%', sub: 'On track' },
             ].map((stat, i) => (
-              <div key={i} className="liquid-glass rounded-2xl liquid-glass-hover p-4 hover:border-violet-500/30 transition-all">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="p-2 rounded-xl bg-violet-500/10 text-violet-400">
-                    <stat.icon />
+              <div
+                key={i}
+                className="relative rounded-[1.5rem] p-4 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  backdropFilter: 'blur(4px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+                }}
+              >
+                {/* Shine effect */}
+                <div
+                  className="absolute inset-0 rounded-[1.5rem] pointer-events-none"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                    opacity: 0.5,
+                  }}
+                />
+                <div className="relative">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="p-2 rounded-xl bg-violet-500/20 text-violet-400">
+                      <stat.icon />
+                    </div>
                   </div>
+                  <p className="text-2xl font-bold">{stat.value}</p>
+                  <p className="text-xs text-white/50">{stat.label}</p>
+                  <p className="text-xs text-violet-400">{stat.sub}</p>
                 </div>
-                <p className="text-2xl font-bold">{stat.value}</p>
-                <p className="text-xs text-white/40">{stat.label}</p>
-                <p className="text-xs text-violet-400">{stat.sub}</p>
               </div>
             ))}
           </div>
 
           {/* Main Grid */}
           <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-6">
-            {/* Tasks */}
-            <div className="lg:col-span-2 liquid-glass rounded-2xl liquid-glass-hover p-4 lg:p-5">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-xl bg-violet-500/10 text-violet-400"><Icons.CheckSquare /></div>
-                  <h3 className="font-semibold">Today&apos;s Tasks</h3>
+            {/* Tasks - Apple Liquid Glass */}
+            <div
+              className="lg:col-span-2 relative rounded-[1.5rem] p-4 lg:p-5 overflow-hidden transition-all duration-300 hover:scale-[1.01] hover:-translate-y-1"
+              style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                backdropFilter: 'blur(4px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+              }}
+            >
+              {/* Shine effect */}
+              <div
+                className="absolute inset-0 rounded-[1.5rem] pointer-events-none"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                  opacity: 0.5,
+                }}
+              />
+              <div className="relative">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-xl bg-violet-500/10 text-violet-400"><Icons.CheckSquare /></div>
+                    <h3 className="font-semibold">Today&apos;s Tasks</h3>
+                  </div>
+                  <button className="p-2 rounded-lg bg-violet-500/10 text-violet-400 hover:bg-violet-500/20">
+                    <Icons.Plus />
+                  </button>
                 </div>
-                <button className="p-2 rounded-lg bg-violet-500/10 text-violet-400 hover:bg-violet-500/20">
-                  <Icons.Plus />
-                </button>
-              </div>
-              <div className="space-y-2">
-                {tasks.map((task) => (
-                  <div key={task.id} className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${task.completed ? 'bg-white/5 border-white/5 opacity-50' : 'bg-white/5 border-white/10'}`}>
-                    <button onClick={() => toggleTask(task.id)} className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center flex-shrink-0 ${task.completed ? 'bg-violet-500 border-violet-500' : 'border-white/30'}`}>
-                      {task.completed && <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
-                    </button>
-                    <div className="flex-1 min-w-0">
-                      <p className={`font-medium ${task.completed ? 'line-through text-white/40' : ''}`}>{task.title}</p>
-                      <p className="text-xs text-white/40">{task.dueDate} • {task.category}</p>
+                <div className="space-y-2">
+                  {tasks.map((task) => (
+                    <div key={task.id} className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${task.completed ? 'bg-white/5 border-white/5 opacity-50' : 'bg-white/5 border-white/10'}`}>
+                      <button onClick={() => toggleTask(task.id)} className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center flex-shrink-0 ${task.completed ? 'bg-violet-500 border-violet-500' : 'border-white/30'}`}>
+                        {task.completed && <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
+                      </button>
+                      <div className="flex-1 min-w-0">
+                        <p className={`font-medium ${task.completed ? 'line-through text-white/40' : ''}`}>{task.title}</p>
+                        <p className="text-xs text-white/40">{task.dueDate} • {task.category}</p>
+                      </div>
+                      <span className={`hidden sm:block px-3 py-1 rounded-lg text-xs font-medium border ${priorityColors[task.priority]}`}>{task.priority}</span>
                     </div>
-                    <span className={`hidden sm:block px-3 py-1 rounded-lg text-xs font-medium border ${priorityColors[task.priority]}`}>{task.priority}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Financial */}
-            <div className="liquid-glass rounded-2xl liquid-glass-hover p-4 lg:p-5">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400"><Icons.Wallet /></div>
-                <h3 className="font-semibold">Finances</h3>
-              </div>
-              <div className="space-y-3">
-                {financialStats.map((stat, i) => (
-                  <div key={i} className="p-3 rounded-xl bg-white/5">
-                    <div className="flex items-center justify-between mb-1">
-                      <p className="text-xs text-white/80">{stat.label}</p>
-                      <span className={`text-xs px-3 py-0.5 rounded-full ${stat.positive ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}`}>{stat.change}</span>
-                    </div>
-                    <p className="text-lg font-bold">{stat.value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Email */}
-            <div className="liquid-glass rounded-2xl liquid-glass-hover p-4 lg:p-5">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400"><Icons.Mail /></div>
-                <h3 className="font-semibold">Email</h3>
-                <span className="ml-auto px-3 py-1 rounded-lg bg-rose-500/20 text-rose-400 text-xs">3 Priority</span>
-              </div>
-              <div className="space-y-2">
-                {[
-                  { from: 'American Express', subject: 'Statement ready', time: '2h', priority: true },
-                  { from: 'Delta Airlines', subject: 'Flight confirmed', time: '5h', priority: true },
-                  { from: 'Adobe', subject: 'New Lightroom features', time: '1d', priority: false },
-                ].map((email, i) => (
-                  <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
-                    <div className={`w-2 h-2 rounded-full flex-shrink-0 ${email.priority ? 'bg-rose-400' : 'bg-white/20'}`} />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm truncate">{email.from}</p>
-                      <p className="text-xs text-white/40 truncate">{email.subject}</p>
-                    </div>
-                    <p className="text-xs text-white/30">{email.time}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Travel */}
-            <div className="lg:col-span-2 liquid-glass rounded-2xl liquid-glass-hover p-4 lg:p-5">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400"><Icons.Plane /></div>
-                <h3 className="font-semibold">Upcoming Travel</h3>
-              </div>
-              <div className="p-4 rounded-xl bg-gradient-to-br from-violet-500/20 to-purple-500/10 border border-violet-500/20">
-                <div className="flex items-center justify-between mb-3">
-                  <div>
-                    <p className="text-xs text-white/80">Next Trip</p>
-                    <p className="text-xl font-bold">Denver, CO</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-xs text-white/80">Departure</p>
-                    <p className="text-xl font-bold">Mar 15</p>
-                  </div>
+                  ))}
                 </div>
-                <div className="flex flex-wrap gap-2 text-sm">
-                  <span className="px-3 py-1 rounded-lg bg-white/10">DL 1247</span>
-                  <span className="text-white/80">DTW → DEN</span>
-                  <span className="text-white/80">3h 45m</span>
+              </div>
+            </div>
+
+            {/* Financial - Apple Liquid Glass */}
+            <div
+              className="relative rounded-[1.5rem] p-4 lg:p-5 overflow-hidden transition-all duration-300 hover:scale-[1.01] hover:-translate-y-1"
+              style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                backdropFilter: 'blur(4px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+              }}
+            >
+              {/* Shine effect */}
+              <div
+                className="absolute inset-0 rounded-[1.5rem] pointer-events-none"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                  opacity: 0.5,
+                }}
+              />
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400"><Icons.Wallet /></div>
+                  <h3 className="font-semibold">Finances</h3>
+                </div>
+                <div className="space-y-3">
+                  {financialStats.map((stat, i) => (
+                    <div key={i} className="p-3 rounded-xl bg-white/5">
+                      <div className="flex items-center justify-between mb-1">
+                        <p className="text-xs text-white/80">{stat.label}</p>
+                        <span className={`text-xs px-3 py-0.5 rounded-full ${stat.positive ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}`}>{stat.change}</span>
+                      </div>
+                      <p className="text-lg font-bold">{stat.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Email - Apple Liquid Glass */}
+            <div
+              className="relative rounded-[1.5rem] p-4 lg:p-5 overflow-hidden transition-all duration-300 hover:scale-[1.01] hover:-translate-y-1"
+              style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                backdropFilter: 'blur(4px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+              }}
+            >
+              {/* Shine effect */}
+              <div
+                className="absolute inset-0 rounded-[1.5rem] pointer-events-none"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                  opacity: 0.5,
+                }}
+              />
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400"><Icons.Mail /></div>
+                  <h3 className="font-semibold">Email</h3>
+                  <span className="ml-auto px-3 py-1 rounded-lg bg-rose-500/20 text-rose-400 text-xs">3 Priority</span>
+                </div>
+                <div className="space-y-2">
+                  {[
+                    { from: 'American Express', subject: 'Statement ready', time: '2h', priority: true },
+                    { from: 'Delta Airlines', subject: 'Flight confirmed', time: '5h', priority: true },
+                    { from: 'Adobe', subject: 'New Lightroom features', time: '1d', priority: false },
+                  ].map((email, i) => (
+                    <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+                      <div className={`w-2 h-2 rounded-full flex-shrink-0 ${email.priority ? 'bg-rose-400' : 'bg-white/20'}`} />
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-sm truncate">{email.from}</p>
+                        <p className="text-xs text-white/40 truncate">{email.subject}</p>
+                      </div>
+                      <p className="text-xs text-white/30">{email.time}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Travel - Apple Liquid Glass */}
+            <div
+              className="lg:col-span-2 relative rounded-[1.5rem] p-4 lg:p-5 overflow-hidden transition-all duration-300 hover:scale-[1.01] hover:-translate-y-1"
+              style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                backdropFilter: 'blur(4px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+              }}
+            >
+              {/* Shine effect */}
+              <div
+                className="absolute inset-0 rounded-[1.5rem] pointer-events-none"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                  opacity: 0.5,
+                }}
+              />
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400"><Icons.Plane /></div>
+                  <h3 className="font-semibold">Upcoming Travel</h3>
+                </div>
+                <div className="p-4 rounded-xl bg-gradient-to-br from-violet-500/20 to-purple-500/10 border border-violet-500/20">
+                  <div className="flex items-center justify-between mb-3">
+                    <div>
+                      <p className="text-xs text-white/80">Next Trip</p>
+                      <p className="text-xl font-bold">Denver, CO</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xs text-white/80">Departure</p>
+                      <p className="text-xl font-bold">Mar 15</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2 text-sm">
+                    <span className="px-3 py-1 rounded-lg bg-white/10">DL 1247</span>
+                    <span className="text-white/80">DTW → DEN</span>
+                    <span className="text-white/80">3h 45m</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -388,10 +525,28 @@ export default function LifeOS() {
           )}
         </div>
 
-        {/* Chat Panel */}
-        <div className={`fixed inset-0 lg:inset-auto lg:right-0 lg:top-0 lg:h-full lg:w-96 bg-[#12121a]/98 backdrop-blur-xl lg:border-l border-white/5 transform transition-transform duration-300 z-50 ${chatOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="flex flex-col h-full safe-top">
-            <div className="p-4 border-b border-white/5">
+        {/* Chat Panel - Apple Liquid Glass */}
+        <div
+          className={`fixed inset-0 lg:inset-auto lg:right-4 lg:top-4 lg:bottom-4 lg:w-96 rounded-none lg:rounded-[2rem] overflow-hidden transform transition-transform duration-300 z-50 ${chatOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          style={{
+            background: 'rgba(255, 255, 255, 0.05)',
+            backdropFilter: 'blur(4px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+          }}
+        >
+          {/* Shine effect */}
+          <div
+            className="absolute inset-0 rounded-none lg:rounded-[2rem] pointer-events-none"
+            style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+              opacity: 0.5,
+            }}
+          />
+          <div className="relative flex flex-col h-full safe-top">
+            <div className="p-4 border-b border-white/10">
               <div className="flex items-center gap-3">
                 <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center"><Icons.Brain className="w-6 h-6" /></div>
                 <div>
@@ -415,7 +570,7 @@ export default function LifeOS() {
               <div ref={chatEndRef} />
             </div>
 
-            <div className="p-4 border-t border-white/5">
+            <div className="p-4 border-t border-white/10">
               <div className="flex gap-2 mb-3 overflow-x-auto">
                 {['Plan my day', 'Check emails', 'Finances'].map((action) => (
                   <button key={action} onClick={() => setInputValue(action)} className="px-3 py-2 rounded-full bg-white/5 hover:bg-white/10 text-sm whitespace-nowrap">{action}</button>
