@@ -216,29 +216,32 @@ export default function Calendar() {
           className="xl:col-span-3 relative group"
           onMouseMove={handleMouseMove}
         >
-          {/* Apple Liquid Glass card */}
+          {/* Apple Liquid Glass card - Official CSS specs */}
           <div
-            className="relative rounded-3xl p-6 overflow-hidden transition-all duration-500"
+            className="relative rounded-[2rem] p-6 overflow-hidden transition-all duration-500"
             style={{
               background: `
-                radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.16) 0%, transparent 50%),
-                linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)
+                radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.2) 0%, transparent 50%),
+                rgba(255, 255, 255, 0.15)
               `,
-              backdropFilter: 'blur(40px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-              border: '1px solid rgba(255,255,255,0.22)',
-              boxShadow: '0 18px 40px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1)',
+              backdropFilter: 'blur(2px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(2px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.8)',
+              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3)',
             }}
           >
-            {/* Radial lens highlight - Apple softLight effect */}
+            {/* Shine pseudo-element effect */}
             <div
-              className="absolute inset-0 rounded-3xl pointer-events-none mix-blend-soft-light"
+              className="absolute inset-0 rounded-[2rem] pointer-events-none"
               style={{
-                background: 'radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.16) 0%, transparent 60%)'
+                background: 'rgba(255, 255, 255, 0.1)',
+                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 1), inset 0px -9px 0px -8px rgba(255, 255, 255, 1)',
+                opacity: 0.6,
+                filter: 'blur(1px) brightness(115%)',
               }}
             />
             {/* Top shine highlight */}
-            <div className="absolute inset-x-0 top-0 h-24 rounded-t-3xl pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%)' }} />
+            <div className="absolute inset-x-0 top-0 h-24 rounded-t-[2rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
 
             {/* Month Navigation */}
             <div className="flex items-center justify-between mb-6">
@@ -310,33 +313,33 @@ export default function Calendar() {
                       ${isHovered && !isTodayCell ? 'scale-105 z-10' : ''}
                     `}
                     style={{
-                      // Apple Liquid Glass: ultraThinMaterial style
+                      // Apple Liquid Glass: Official CSS recreation
                       background: isTodayCell
-                        ? 'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.12) 100%)'
+                        ? 'rgba(255, 255, 255, 0.25)'
                         : isPastDay
-                          ? 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)'
-                          : 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
-                      backdropFilter: 'blur(20px) saturate(180%)',
-                      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                          ? 'rgba(255, 255, 255, 0.05)'
+                          : 'rgba(255, 255, 255, 0.15)',
+                      backdropFilter: 'blur(2px) saturate(180%)',
+                      WebkitBackdropFilter: 'blur(2px) saturate(180%)',
                       border: isTodayCell
-                        ? '1px solid rgba(255,255,255,0.35)'
+                        ? '1px solid rgba(255,255,255,0.9)'
                         : isPastDay
-                          ? '1px solid rgba(255,255,255,0.06)'
-                          : '1px solid rgba(255,255,255,0.18)',
+                          ? '1px solid rgba(255,255,255,0.2)'
+                          : '1px solid rgba(255,255,255,0.8)',
                       boxShadow: isTodayCell
-                        ? '0 8px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2)'
+                        ? '0 8px 32px rgba(31, 38, 135, 0.3), inset 0 4px 20px rgba(255, 255, 255, 0.4)'
                         : isHovered && !isPastDay
-                          ? '0 12px 28px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15)'
-                          : '0 4px 12px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.08)',
+                          ? '0 8px 32px rgba(31, 38, 135, 0.25), inset 0 4px 20px rgba(255, 255, 255, 0.35)'
+                          : '0 4px 16px rgba(31, 38, 135, 0.15), inset 0 2px 10px rgba(255, 255, 255, 0.2)',
                       transform: isHovered && !isTodayCell ? 'translateY(-3px) scale(1.05)' : undefined,
                     }}
                   >
-                    {/* Radial lens highlight - Apple softLight refraction */}
+                    {/* Inner shine effect */}
                     <div
-                      className="absolute inset-0 rounded-2xl pointer-events-none mix-blend-soft-light"
+                      className="absolute inset-0 rounded-2xl pointer-events-none"
                       style={{
-                        background: 'radial-gradient(ellipse at 30% 25%, rgba(255,255,255,0.16) 0%, transparent 70%)',
-                        opacity: isTodayCell ? 0.8 : isPastDay ? 0.3 : 0.6
+                        boxShadow: 'inset -6px -5px 0px -7px rgba(255, 255, 255, 0.8), inset 0px -6px 0px -5px rgba(255, 255, 255, 0.6)',
+                        opacity: isTodayCell ? 0.9 : isPastDay ? 0.3 : 0.7
                       }}
                     />
 
@@ -383,24 +386,28 @@ export default function Calendar() {
 
         {/* Right Sidebar */}
         <div className="space-y-4">
-          {/* Today Card - Apple Liquid Glass */}
+          {/* Today Card - Apple Liquid Glass Official */}
           <div
-            className="relative rounded-3xl p-6 text-center overflow-hidden"
+            className="relative rounded-[2rem] p-6 text-center overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 100%)',
-              backdropFilter: 'blur(40px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-              border: '1px solid rgba(255,255,255,0.28)',
-              boxShadow: '0 18px 40px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15)',
+              background: 'rgba(255, 255, 255, 0.15)',
+              backdropFilter: 'blur(2px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(2px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.8)',
+              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3)',
             }}
           >
-            {/* Radial lens highlight */}
+            {/* Shine effect */}
             <div
-              className="absolute inset-0 rounded-3xl pointer-events-none mix-blend-soft-light"
-              style={{ background: 'radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.2) 0%, transparent 60%)' }}
+              className="absolute inset-0 rounded-[2rem] pointer-events-none"
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 1), inset 0px -9px 0px -8px rgba(255, 255, 255, 1)',
+                opacity: 0.6,
+              }}
             />
             {/* Animated glow ring */}
-            <div className="absolute inset-0 rounded-3xl animate-pulse-glow" style={{ boxShadow: '0 0 40px rgba(255,255,255,0.08)' }} />
+            <div className="absolute inset-0 rounded-[2rem] animate-pulse-glow" style={{ boxShadow: '0 0 30px rgba(31, 38, 135, 0.15)' }} />
 
             <p className="relative text-white/60 text-xs uppercase tracking-[0.2em] font-medium">Today</p>
             <p className="relative text-6xl font-bold mt-3 mb-2 text-white drop-shadow-lg">
@@ -412,21 +419,25 @@ export default function Calendar() {
             <p className="relative text-white/50 text-xs mt-1">{new Date().getFullYear()}</p>
           </div>
 
-          {/* Upcoming Events - Apple Liquid Glass */}
+          {/* Upcoming Events - Apple Liquid Glass Official */}
           <div
-            className="rounded-3xl p-5 relative overflow-hidden"
+            className="rounded-[2rem] p-5 relative overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
-              backdropFilter: 'blur(40px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-              border: '1px solid rgba(255,255,255,0.22)',
-              boxShadow: '0 18px 40px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1)',
+              background: 'rgba(255, 255, 255, 0.15)',
+              backdropFilter: 'blur(2px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(2px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.8)',
+              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3)',
             }}
           >
-            {/* Radial lens highlight */}
+            {/* Shine effect */}
             <div
-              className="absolute inset-0 rounded-3xl pointer-events-none mix-blend-soft-light"
-              style={{ background: 'radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.16) 0%, transparent 60%)' }}
+              className="absolute inset-0 rounded-[2rem] pointer-events-none"
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 1), inset 0px -9px 0px -8px rgba(255, 255, 255, 1)',
+                opacity: 0.6,
+              }}
             />
             <h4 className="font-semibold mb-4 text-white/90 flex items-center gap-2">
               <span className="relative flex h-2 w-2">
@@ -463,21 +474,25 @@ export default function Calendar() {
             </div>
           </div>
 
-          {/* Monthly Stats - Apple Liquid Glass */}
+          {/* Monthly Stats - Apple Liquid Glass Official */}
           <div
-            className="rounded-3xl p-5 relative overflow-hidden"
+            className="rounded-[2rem] p-5 relative overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
-              backdropFilter: 'blur(40px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-              border: '1px solid rgba(255,255,255,0.22)',
-              boxShadow: '0 18px 40px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1)',
+              background: 'rgba(255, 255, 255, 0.15)',
+              backdropFilter: 'blur(2px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(2px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.8)',
+              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3)',
             }}
           >
-            {/* Radial lens highlight */}
+            {/* Shine effect */}
             <div
-              className="absolute inset-0 rounded-3xl pointer-events-none mix-blend-soft-light"
-              style={{ background: 'radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.16) 0%, transparent 60%)' }}
+              className="absolute inset-0 rounded-[2rem] pointer-events-none"
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 1), inset 0px -9px 0px -8px rgba(255, 255, 255, 1)',
+                opacity: 0.6,
+              }}
             />
             <h4 className="font-semibold mb-4 text-white/90 flex items-center gap-2">
               <CalendarIcons.TrendingUp className="w-4 h-4 text-emerald-400" />
@@ -539,18 +554,22 @@ export default function Calendar() {
             className="relative w-full max-w-md animate-slide-up"
             onClick={e => e.stopPropagation()}
             style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
-              backdropFilter: 'blur(40px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-              border: '1px solid rgba(255,255,255,0.22)',
-              borderRadius: '1.5rem',
-              boxShadow: '0 25px 50px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12)',
+              background: 'rgba(255, 255, 255, 0.15)',
+              backdropFilter: 'blur(2px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(2px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.8)',
+              borderRadius: '2rem',
+              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3)',
             }}
           >
-            {/* Radial lens highlight - softLight blend */}
+            {/* Shine effect */}
             <div
-              className="absolute inset-0 rounded-3xl pointer-events-none mix-blend-soft-light"
-              style={{ background: 'radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.18) 0%, transparent 60%)' }}
+              className="absolute inset-0 rounded-[2rem] pointer-events-none"
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 1), inset 0px -9px 0px -8px rgba(255, 255, 255, 1)',
+                opacity: 0.6,
+              }}
             />
 
             <div className="relative p-6">
