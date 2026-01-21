@@ -216,9 +216,13 @@ export default function LifeOS() {
         </header>
 
         {/* Dashboard Content */}
-        <div className={`p-4 lg:p-6 transition-all duration-300 ${chatOpen ? 'lg:mr-96' : ''}`}>{activeTab === 'calendar' ? <Calendar /> : <><div className="mb-6">
-          <div className="mb-6">
-            <h2 className="text-2xl lg:text-3xl font-bold mb-1">
+        <div className={`p-4 lg:p-6 transition-all duration-300 ${chatOpen ? 'lg:mr-96' : ''}`}>
+          {activeTab === 'calendar' ? (
+            <Calendar />
+          ) : (
+            <div className="mb-6">
+              <div className="mb-6">
+                <h2 className="text-2xl lg:text-3xl font-bold mb-1">
               Good morning, <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-400">Johnathon</span>
             </h2>
             <p className="text-white/80">Here&apos;s what&apos;s happening today.</p>
@@ -343,6 +347,8 @@ export default function LifeOS() {
               </div>
             </div>
           </div>
+            </div>
+          )}
         </div>
 
         {/* Chat Panel */}
