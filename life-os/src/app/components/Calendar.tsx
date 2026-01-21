@@ -221,22 +221,22 @@ export default function Calendar() {
             className="relative rounded-[2rem] p-6 overflow-hidden transition-all duration-500"
             style={{
               background: `
-                radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.2) 0%, transparent 50%),
-                rgba(255, 255, 255, 0.15)
+                radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.13) 0%, transparent 50%),
+                rgba(255, 255, 255, 0.05)
               `,
-              backdropFilter: 'blur(2px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(2px) saturate(180%)',
-              border: '1px solid rgba(255,255,255,0.8)',
-              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3)',
+              backdropFilter: 'blur(4px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
             }}
           >
             {/* Shine pseudo-element effect */}
             <div
               className="absolute inset-0 rounded-[2rem] pointer-events-none"
               style={{
-                background: 'rgba(255, 255, 255, 0.1)',
-                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 1), inset 0px -9px 0px -8px rgba(255, 255, 255, 1)',
-                opacity: 0.6,
+                background: 'rgba(255, 255, 255, 0.05)',
+                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                opacity: 0.5,
                 filter: 'blur(1px) brightness(115%)',
               }}
             />
@@ -315,17 +315,17 @@ export default function Calendar() {
                     style={{
                       // Apple Liquid Glass: Official CSS recreation
                       background: isTodayCell
-                        ? 'rgba(255, 255, 255, 0.25)'
+                        ? 'rgba(255, 255, 255, 0.13)'
                         : isPastDay
-                          ? 'rgba(255, 255, 255, 0.05)'
-                          : 'rgba(255, 255, 255, 0.15)',
-                      backdropFilter: 'blur(2px) saturate(180%)',
-                      WebkitBackdropFilter: 'blur(2px) saturate(180%)',
+                          ? 'rgba(255, 255, 255, 0.02)'
+                          : 'rgba(255, 255, 255, 0.05)',
+                      backdropFilter: 'blur(4px) saturate(180%)',
+                      WebkitBackdropFilter: 'blur(4px) saturate(180%)',
                       border: isTodayCell
-                        ? '1px solid rgba(255,255,255,0.9)'
+                        ? '1px solid rgba(255,255,255,0.4)'
                         : isPastDay
-                          ? '1px solid rgba(255,255,255,0.2)'
-                          : '1px solid rgba(255,255,255,0.8)',
+                          ? '1px solid rgba(255,255,255,0.1)'
+                          : '1px solid rgba(255,255,255,0.2)',
                       boxShadow: isTodayCell
                         ? '0 8px 32px rgba(31, 38, 135, 0.3), inset 0 4px 20px rgba(255, 255, 255, 0.4)'
                         : isHovered && !isPastDay
@@ -390,20 +390,20 @@ export default function Calendar() {
           <div
             className="relative rounded-[2rem] p-6 text-center overflow-hidden"
             style={{
-              background: 'rgba(255, 255, 255, 0.15)',
-              backdropFilter: 'blur(2px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(2px) saturate(180%)',
-              border: '1px solid rgba(255,255,255,0.8)',
-              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3)',
+              background: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(4px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
             }}
           >
             {/* Shine effect */}
             <div
               className="absolute inset-0 rounded-[2rem] pointer-events-none"
               style={{
-                background: 'rgba(255, 255, 255, 0.1)',
-                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 1), inset 0px -9px 0px -8px rgba(255, 255, 255, 1)',
-                opacity: 0.6,
+                background: 'rgba(255, 255, 255, 0.05)',
+                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                opacity: 0.5,
               }}
             />
             {/* Animated glow ring */}
@@ -423,20 +423,20 @@ export default function Calendar() {
           <div
             className="rounded-[2rem] p-5 relative overflow-hidden"
             style={{
-              background: 'rgba(255, 255, 255, 0.15)',
-              backdropFilter: 'blur(2px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(2px) saturate(180%)',
-              border: '1px solid rgba(255,255,255,0.8)',
-              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3)',
+              background: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(4px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
             }}
           >
             {/* Shine effect */}
             <div
               className="absolute inset-0 rounded-[2rem] pointer-events-none"
               style={{
-                background: 'rgba(255, 255, 255, 0.1)',
-                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 1), inset 0px -9px 0px -8px rgba(255, 255, 255, 1)',
-                opacity: 0.6,
+                background: 'rgba(255, 255, 255, 0.05)',
+                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                opacity: 0.5,
               }}
             />
             <h4 className="font-semibold mb-4 text-white/90 flex items-center gap-2">
@@ -478,20 +478,20 @@ export default function Calendar() {
           <div
             className="rounded-[2rem] p-5 relative overflow-hidden"
             style={{
-              background: 'rgba(255, 255, 255, 0.15)',
-              backdropFilter: 'blur(2px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(2px) saturate(180%)',
-              border: '1px solid rgba(255,255,255,0.8)',
-              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3)',
+              background: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(4px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
             }}
           >
             {/* Shine effect */}
             <div
               className="absolute inset-0 rounded-[2rem] pointer-events-none"
               style={{
-                background: 'rgba(255, 255, 255, 0.1)',
-                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 1), inset 0px -9px 0px -8px rgba(255, 255, 255, 1)',
-                opacity: 0.6,
+                background: 'rgba(255, 255, 255, 0.05)',
+                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                opacity: 0.5,
               }}
             />
             <h4 className="font-semibold mb-4 text-white/90 flex items-center gap-2">
@@ -554,21 +554,21 @@ export default function Calendar() {
             className="relative w-full max-w-md animate-slide-up"
             onClick={e => e.stopPropagation()}
             style={{
-              background: 'rgba(255, 255, 255, 0.15)',
-              backdropFilter: 'blur(2px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(2px) saturate(180%)',
-              border: '1px solid rgba(255,255,255,0.8)',
+              background: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(4px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.2)',
               borderRadius: '2rem',
-              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3)',
+              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
             }}
           >
             {/* Shine effect */}
             <div
               className="absolute inset-0 rounded-[2rem] pointer-events-none"
               style={{
-                background: 'rgba(255, 255, 255, 0.1)',
-                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 1), inset 0px -9px 0px -8px rgba(255, 255, 255, 1)',
-                opacity: 0.6,
+                background: 'rgba(255, 255, 255, 0.05)',
+                boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                opacity: 0.5,
               }}
             />
 

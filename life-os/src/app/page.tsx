@@ -109,11 +109,48 @@ export default function LifeOS() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-      {/* Ambient Background */}
+    <div className="min-h-screen bg-[#0d0d2a] text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      {/* Vibrant Gradient Background for Liquid Glass */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-500/15 rounded-full blur-3xl" />
+        {/* Base gradient */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(135deg, #1a0a2e 0%, #16213e 25%, #0f3460 50%, #1a1a4e 75%, #2d1b4e 100%)'
+          }}
+        />
+        {/* Flowing wave 1 - cyan/blue */}
+        <div
+          className="absolute -bottom-1/4 -left-1/4 w-[150%] h-[80%] opacity-60"
+          style={{
+            background: 'radial-gradient(ellipse at 30% 80%, #00d4ff 0%, #0066ff 30%, transparent 70%)',
+            filter: 'blur(60px)',
+          }}
+        />
+        {/* Flowing wave 2 - purple/violet */}
+        <div
+          className="absolute top-0 right-0 w-[80%] h-[100%] opacity-50"
+          style={{
+            background: 'radial-gradient(ellipse at 70% 30%, #a855f7 0%, #7c3aed 40%, transparent 70%)',
+            filter: 'blur(80px)',
+          }}
+        />
+        {/* Flowing wave 3 - pink/magenta */}
+        <div
+          className="absolute top-1/4 left-1/3 w-[60%] h-[60%] opacity-40"
+          style={{
+            background: 'radial-gradient(ellipse at 50% 50%, #f0abfc 0%, #c026d3 50%, transparent 80%)',
+            filter: 'blur(100px)',
+          }}
+        />
+        {/* Accent glow - warm */}
+        <div
+          className="absolute bottom-1/3 right-1/4 w-[40%] h-[40%] opacity-30"
+          style={{
+            background: 'radial-gradient(circle, #fbbf24 0%, #f97316 50%, transparent 70%)',
+            filter: 'blur(80px)',
+          }}
+        />
       </div>
 
       {/* Mobile Overlay */}
@@ -185,7 +222,7 @@ export default function LifeOS() {
       {/* Main Content */}
       <main className="lg:ml-24 min-h-screen relative">
         {/* Top Bar */}
-        <header className="sticky top-0 z-30 bg-[#0a0a0f]/90 backdrop-blur-xl border-b border-white/5 safe-top">
+        <header className="sticky top-0 z-30 bg-[#0d0d2a]/90 backdrop-blur-xl border-b border-white/5 safe-top">
           <div className="flex items-center justify-between px-4 lg:px-6 py-3">
             <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2.5 rounded-xl bg-white/5 hover:bg-white/10">
               <Icons.Menu />
