@@ -33,6 +33,9 @@ import {
   ExternalLink,
 } from 'lucide-react';
 
+// Import data from JSON file
+import boardData from '@/data/photography-board.json';
+
 // Types
 interface Project {
   id: string;
@@ -59,17 +62,16 @@ interface Task {
 interface Client {
   id: string;
   name: string;
-  type: 'wedding-couple' | 'brand' | 'individual' | 'agency';
+  type: 'wedding-couple' | 'brand' | 'individual' | 'agency' | 'commercial' | 'portrait' | 'wedding';
   email: string;
   phone: string;
-  address: string;
   totalProjects: number;
 }
 
 interface Collaborator {
   id: string;
   name: string;
-  role: 'model' | 'videographer' | 'agency' | 'makeup-artist' | 'assistant' | 'stylist';
+  role: 'model' | 'videographer' | 'agency' | 'makeup-artist' | 'assistant' | 'stylist' | 'second-shooter' | 'retoucher';
   rate: number;
   email: string;
 }
@@ -77,61 +79,102 @@ interface Collaborator {
 interface GearItem {
   id: string;
   name: string;
-  category: 'camera' | 'lens' | 'lighting' | 'accessory' | 'audio';
+  category: 'camera' | 'lens' | 'lighting' | 'accessory' | 'audio' | 'drone';
   purchaseDate: string;
   value: number;
   condition: 'excellent' | 'good' | 'fair' | 'needs-repair';
-  nextMaintenance?: string;
+  notes?: string;
 }
 
 interface Expense {
   id: string;
   name: string;
-  type: 'equipment' | 'software' | 'studio-rental' | 'travel' | 'props';
+  type: 'equipment' | 'software' | 'studio-rental' | 'travel' | 'props' | 'subscription' | 'rental' | 'contractor';
   amount: number;
   date: string;
   notes: string;
-  project?: string;
+  recurring?: boolean;
 }
 
-// Sample Data
-const sampleProjects: Project[] = [
-  { id: '1', name: 'TechGrow Product Launch', type: 'commercial', client: 'Luxe Boutique', status: 'shooting', startDate: 'Oct 13, 2025', endDate: 'Oct 14, 2025', location: 'TechGrow HQ, Seattle', deliverables: 'Edited Photos', budget: 2500 },
-  { id: '2', name: 'Autumn Family Portraits - Johnson Fam', type: 'portrait', client: 'David Wilson', status: 'planning', startDate: 'Oct 12, 2025', endDate: 'Oct 12, 2025', location: 'Maple Park', deliverables: 'Edited Photos, Prints', budget: 800 },
-  { id: '3', name: 'Smith Wedding Photography', type: 'wedding', client: 'Smith Wedding Photography', status: 'editing', startDate: 'Oct 8, 2025', endDate: 'Oct 12, 2025', location: 'Riverside Gardens, Portland', deliverables: 'Edited Photos, Prints, Album', budget: 4500 },
-];
+// Transform JSON data to match component interfaces
+const transformProjects = (): Project[] => {
+  return boardData.projects.map(p => ({
+    id: p.id,
+    name: p.name,
+    type: p.type as Project['type'],
+    client: p.client.name,
+    status: p.status as Project['status'],
+    startDate: p.startDate,
+    endDate: p.endDate,
+    location: p.location,
+    deliverables: p.deliverables.join(', '),
+    budget: p.budget,
+  }));
+};
 
-const sampleTasks: Task[] = [
-  { id: '1', title: 'Backup Johnson family session RAW files', project: 'Johnson Family', status: 'not-started', priority: 'medium', dueDate: 'Oct 15, 2025' },
-  { id: '2', title: 'Review portfolio selection for Smith Wedding', project: 'Smith Wedding', status: 'in-progress', priority: 'high', dueDate: 'Oct 12, 2025' },
-  { id: '3', title: 'Retouch corporate headshots for Tech Solutions', project: 'Tech Solutions', status: 'review', priority: 'urgent', dueDate: 'Oct 11, 2025' },
-  { id: '4', title: 'Export final gallery for client delivery', project: 'Luxe Boutique', status: 'done', priority: 'high', dueDate: 'Oct 10, 2025' },
-];
+const transformTasks = (): Task[] => {
+  return boardData.cards.map(card => ({
+    id: card.id,
+    title: card.title,
+    project: card.project.name,
+    status: card.listId.replace('list-', '') as Task['status'],
+    priority: card.priority as Task['priority'],
+    dueDate: new Date(card.dueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+  }));
+};
 
-const sampleClients: Client[] = [
-  { id: '1', name: 'Smith Wedding Photography', type: 'wedding-couple', email: 'smithwedding2025@gmail.com', phone: '(555) 123-4567', address: '123 Maple Street, Portland', totalProjects: 1 },
-  { id: '2', name: 'Luxe Boutique', type: 'brand', email: 'sarah@luxeboutique.com', phone: '(555) 987-6543', address: '450 Fashion Ave, Seattle', totalProjects: 3 },
-  { id: '3', name: 'David Wilson', type: 'individual', email: 'david.wilson@example.com', phone: '(555) 234-5678', address: '789 Oak Drive, Chicago', totalProjects: 2 },
-];
+const transformClients = (): Client[] => {
+  return boardData.clients.map(c => ({
+    id: c.id,
+    name: c.name,
+    type: c.type as Client['type'],
+    email: c.email,
+    phone: c.phone,
+    totalProjects: c.totalProjects,
+  }));
+};
 
-const sampleCollaborators: Collaborator[] = [
-  { id: '1', name: 'Sarah Johnson', role: 'model', rate: 150, email: 'sarah.johnson@email.com' },
-  { id: '2', name: 'Michael Chen', role: 'videographer', rate: 500, email: 'm.chen@videocreative.com' },
-  { id: '3', name: 'Glam Squad Agency', role: 'agency', rate: 350, email: 'bookings@glamsquad.com' },
-];
+const transformCollaborators = (): Collaborator[] => {
+  return boardData.collaborators.map(c => ({
+    id: c.id,
+    name: c.name,
+    role: c.role as Collaborator['role'],
+    rate: c.rate,
+    email: c.email,
+  }));
+};
 
-const sampleGear: GearItem[] = [
-  { id: '1', name: 'Sony A7IV', category: 'camera', purchaseDate: 'Jan 2024', value: 2500, condition: 'excellent', nextMaintenance: 'Mar 2026' },
-  { id: '2', name: 'Sony 24-70mm f/2.8 GM II', category: 'lens', purchaseDate: 'Mar 2024', value: 2300, condition: 'excellent' },
-  { id: '3', name: 'Godox AD600 Pro', category: 'lighting', purchaseDate: 'Jun 2023', value: 800, condition: 'good', nextMaintenance: 'Dec 2025' },
-  { id: '4', name: 'Sony 85mm f/1.4 GM', category: 'lens', purchaseDate: 'Aug 2024', value: 1800, condition: 'excellent' },
-];
+const transformGear = (): GearItem[] => {
+  return boardData.equipment.map(g => ({
+    id: g.id,
+    name: g.name,
+    category: g.category as GearItem['category'],
+    purchaseDate: g.purchaseDate,
+    value: g.value,
+    condition: g.condition as GearItem['condition'],
+    notes: g.notes,
+  }));
+};
 
-const sampleExpenses: Expense[] = [
-  { id: '1', name: 'Camera Equipment Rental', type: 'equipment', amount: 450.75, date: 'Oct 8, 2025', notes: 'Rented camera and lighting kit', project: 'TechGrow' },
-  { id: '2', name: 'Software Subscription - Adobe', type: 'software', amount: 52.99, date: 'Oct 9, 2025', notes: 'Monthly Adobe Creative Cloud' },
-  { id: '3', name: 'Recording Studio Rental', type: 'studio-rental', amount: 350.00, date: 'Oct 12, 2025', notes: '6-hour studio session at Sound Studio' },
-];
+const transformExpenses = (): Expense[] => {
+  return boardData.finances.expenses.map(e => ({
+    id: e.id,
+    name: e.name,
+    type: e.type as Expense['type'],
+    amount: e.amount,
+    date: e.date,
+    notes: e.notes,
+    recurring: e.recurring,
+  }));
+};
+
+// Use transformed data from JSON
+const sampleProjects: Project[] = transformProjects();
+const sampleTasks: Task[] = transformTasks();
+const sampleClients: Client[] = transformClients();
+const sampleCollaborators: Collaborator[] = transformCollaborators();
+const sampleGear: GearItem[] = transformGear();
+const sampleExpenses: Expense[] = transformExpenses();
 
 // Utility Components
 const StatusBadge = ({ status, type = 'status' }: { status: string; type?: 'status' | 'type' | 'priority' | 'role' | 'condition' }) => {
