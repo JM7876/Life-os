@@ -221,17 +221,24 @@ export default function Calendar() {
             className="relative rounded-3xl p-6 overflow-hidden transition-all duration-500"
             style={{
               background: `
-                radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(100,140,255,0.12) 0%, transparent 50%),
-                linear-gradient(135deg, rgba(120,160,255,0.12) 0%, rgba(140,120,220,0.08) 50%, rgba(100,180,255,0.1) 100%)
+                radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.16) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)
               `,
-              backdropFilter: 'blur(40px)',
-              WebkitBackdropFilter: 'blur(40px)',
-              border: '1px solid rgba(180,200,255,0.2)',
-              boxShadow: '0 8px 40px rgba(0,0,0,0.2), 0 0 80px rgba(100,140,255,0.1), inset 0 1px 1px rgba(255,255,255,0.25)',
+              backdropFilter: 'blur(40px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.22)',
+              boxShadow: '0 18px 40px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1)',
             }}
           >
+            {/* Radial lens highlight - Apple softLight effect */}
+            <div
+              className="absolute inset-0 rounded-3xl pointer-events-none mix-blend-soft-light"
+              style={{
+                background: 'radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.16) 0%, transparent 60%)'
+              }}
+            />
             {/* Top shine highlight */}
-            <div className="absolute inset-x-0 top-0 h-24 rounded-t-3xl pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
+            <div className="absolute inset-x-0 top-0 h-24 rounded-t-3xl pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%)' }} />
 
             {/* Month Navigation */}
             <div className="flex items-center justify-between mb-6">
@@ -303,33 +310,33 @@ export default function Calendar() {
                       ${isHovered && !isTodayCell ? 'scale-105 z-10' : ''}
                     `}
                     style={{
-                      // Apple Liquid Glass: frosted glass with blue/purple tint
+                      // Apple Liquid Glass: ultraThinMaterial style
                       background: isTodayCell
-                        ? 'linear-gradient(135deg, rgba(99,132,255,0.5) 0%, rgba(160,120,255,0.4) 50%, rgba(99,180,255,0.35) 100%)'
+                        ? 'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.12) 100%)'
                         : isPastDay
-                          ? 'linear-gradient(135deg, rgba(120,140,200,0.08) 0%, rgba(100,120,180,0.05) 100%)'
-                          : 'linear-gradient(135deg, rgba(120,160,255,0.15) 0%, rgba(140,120,220,0.1) 50%, rgba(100,180,255,0.12) 100%)',
-                      backdropFilter: 'blur(12px)',
-                      WebkitBackdropFilter: 'blur(12px)',
+                          ? 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)'
+                          : 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+                      backdropFilter: 'blur(20px) saturate(180%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
                       border: isTodayCell
-                        ? '1px solid rgba(180,200,255,0.5)'
+                        ? '1px solid rgba(255,255,255,0.35)'
                         : isPastDay
-                          ? '1px solid rgba(150,170,220,0.1)'
-                          : '1px solid rgba(180,200,255,0.25)',
+                          ? '1px solid rgba(255,255,255,0.06)'
+                          : '1px solid rgba(255,255,255,0.18)',
                       boxShadow: isTodayCell
-                        ? '0 4px 24px rgba(100,140,255,0.3), 0 0 40px rgba(139,92,246,0.25), inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -1px 2px rgba(0,0,0,0.1)'
+                        ? '0 8px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2)'
                         : isHovered && !isPastDay
-                          ? '0 8px 32px rgba(100,140,255,0.25), inset 0 1px 1px rgba(255,255,255,0.3), inset 0 -1px 2px rgba(0,0,0,0.1)'
-                          : 'inset 0 1px 1px rgba(255,255,255,0.2), inset 0 -1px 2px rgba(0,0,0,0.05)',
+                          ? '0 12px 28px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15)'
+                          : '0 4px 12px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.08)',
                       transform: isHovered && !isTodayCell ? 'translateY(-3px) scale(1.05)' : undefined,
                     }}
                   >
-                    {/* Top highlight - Apple glass shine effect */}
+                    {/* Radial lens highlight - Apple softLight refraction */}
                     <div
-                      className="absolute inset-x-0 top-0 h-1/2 rounded-t-2xl pointer-events-none"
+                      className="absolute inset-0 rounded-2xl pointer-events-none mix-blend-soft-light"
                       style={{
-                        background: 'linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.05) 50%, transparent 100%)',
-                        opacity: isTodayCell ? 0.6 : isPastDay ? 0.2 : 0.4
+                        background: 'radial-gradient(ellipse at 30% 25%, rgba(255,255,255,0.16) 0%, transparent 70%)',
+                        opacity: isTodayCell ? 0.8 : isPastDay ? 0.3 : 0.6
                       }}
                     />
 
@@ -380,20 +387,23 @@ export default function Calendar() {
           <div
             className="relative rounded-3xl p-6 text-center overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, rgba(99,132,255,0.35) 0%, rgba(160,120,255,0.25) 50%, rgba(99,180,255,0.3) 100%)',
-              backdropFilter: 'blur(40px)',
-              WebkitBackdropFilter: 'blur(40px)',
-              border: '1px solid rgba(180,200,255,0.4)',
-              boxShadow: '0 8px 40px rgba(100,140,255,0.2), 0 0 60px rgba(139,92,246,0.15), inset 0 1px 1px rgba(255,255,255,0.3)',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 100%)',
+              backdropFilter: 'blur(40px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.28)',
+              boxShadow: '0 18px 40px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15)',
             }}
           >
-            {/* Top shine */}
-            <div className="absolute inset-x-0 top-0 h-16 rounded-t-3xl pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%)' }} />
+            {/* Radial lens highlight */}
+            <div
+              className="absolute inset-0 rounded-3xl pointer-events-none mix-blend-soft-light"
+              style={{ background: 'radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.2) 0%, transparent 60%)' }}
+            />
             {/* Animated glow ring */}
-            <div className="absolute inset-0 rounded-3xl animate-pulse-glow" style={{ boxShadow: '0 0 60px rgba(100,140,255,0.3)' }} />
+            <div className="absolute inset-0 rounded-3xl animate-pulse-glow" style={{ boxShadow: '0 0 40px rgba(255,255,255,0.08)' }} />
 
             <p className="relative text-white/60 text-xs uppercase tracking-[0.2em] font-medium">Today</p>
-            <p className="relative text-6xl font-bold mt-3 mb-2 bg-gradient-to-br from-white via-blue-100 to-purple-200 bg-clip-text text-transparent drop-shadow-lg">
+            <p className="relative text-6xl font-bold mt-3 mb-2 text-white drop-shadow-lg">
               {new Date().getDate()}
             </p>
             <p className="relative text-white/80 text-sm font-medium">
@@ -406,14 +416,18 @@ export default function Calendar() {
           <div
             className="rounded-3xl p-5 relative overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, rgba(120,160,255,0.12) 0%, rgba(140,120,220,0.08) 50%, rgba(100,180,255,0.1) 100%)',
-              backdropFilter: 'blur(40px)',
-              WebkitBackdropFilter: 'blur(40px)',
-              border: '1px solid rgba(180,200,255,0.2)',
-              boxShadow: '0 8px 40px rgba(0,0,0,0.15), inset 0 1px 1px rgba(255,255,255,0.2)',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
+              backdropFilter: 'blur(40px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.22)',
+              boxShadow: '0 18px 40px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1)',
             }}
           >
-            <div className="absolute inset-x-0 top-0 h-12 rounded-t-3xl pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%)' }} />
+            {/* Radial lens highlight */}
+            <div
+              className="absolute inset-0 rounded-3xl pointer-events-none mix-blend-soft-light"
+              style={{ background: 'radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.16) 0%, transparent 60%)' }}
+            />
             <h4 className="font-semibold mb-4 text-white/90 flex items-center gap-2">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
@@ -453,14 +467,18 @@ export default function Calendar() {
           <div
             className="rounded-3xl p-5 relative overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, rgba(120,160,255,0.12) 0%, rgba(140,120,220,0.08) 50%, rgba(100,180,255,0.1) 100%)',
-              backdropFilter: 'blur(40px)',
-              WebkitBackdropFilter: 'blur(40px)',
-              border: '1px solid rgba(180,200,255,0.2)',
-              boxShadow: '0 8px 40px rgba(0,0,0,0.15), inset 0 1px 1px rgba(255,255,255,0.2)',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
+              backdropFilter: 'blur(40px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.22)',
+              boxShadow: '0 18px 40px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1)',
             }}
           >
-            <div className="absolute inset-x-0 top-0 h-12 rounded-t-3xl pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%)' }} />
+            {/* Radial lens highlight */}
+            <div
+              className="absolute inset-0 rounded-3xl pointer-events-none mix-blend-soft-light"
+              style={{ background: 'radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.16) 0%, transparent 60%)' }}
+            />
             <h4 className="font-semibold mb-4 text-white/90 flex items-center gap-2">
               <CalendarIcons.TrendingUp className="w-4 h-4 text-emerald-400" />
               This Month
@@ -521,19 +539,19 @@ export default function Calendar() {
             className="relative w-full max-w-md animate-slide-up"
             onClick={e => e.stopPropagation()}
             style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)',
-              backdropFilter: 'blur(40px)',
-              WebkitBackdropFilter: 'blur(40px)',
-              border: '1px solid rgba(255,255,255,0.15)',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+              backdropFilter: 'blur(40px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.22)',
               borderRadius: '1.5rem',
-              boxShadow: '0 25px 50px rgba(0,0,0,0.5), 0 0 100px rgba(139, 92, 246, 0.1), inset 0 1px 0 rgba(255,255,255,0.15)',
+              boxShadow: '0 25px 50px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12)',
             }}
           >
-            {/* Chrome edge highlight */}
-            <div className="absolute inset-0 rounded-3xl pointer-events-none" style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%)',
-              borderRadius: '1.5rem'
-            }} />
+            {/* Radial lens highlight - softLight blend */}
+            <div
+              className="absolute inset-0 rounded-3xl pointer-events-none mix-blend-soft-light"
+              style={{ background: 'radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.18) 0%, transparent 60%)' }}
+            />
 
             <div className="relative p-6">
               <div className="flex items-center justify-between mb-5">
