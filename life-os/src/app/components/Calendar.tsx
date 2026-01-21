@@ -216,22 +216,22 @@ export default function Calendar() {
           className="xl:col-span-3 relative group"
           onMouseMove={handleMouseMove}
         >
-          {/* Glass card with mouse-reactive gradient */}
+          {/* Apple Liquid Glass card */}
           <div
-            className="relative rounded-2xl p-6 overflow-hidden transition-all duration-500"
+            className="relative rounded-3xl p-6 overflow-hidden transition-all duration-500"
             style={{
               background: `
-                radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-                linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)
+                radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(100,140,255,0.12) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(120,160,255,0.12) 0%, rgba(140,120,220,0.08) 50%, rgba(100,180,255,0.1) 100%)
               `,
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
+              backdropFilter: 'blur(40px)',
+              WebkitBackdropFilter: 'blur(40px)',
+              border: '1px solid rgba(180,200,255,0.2)',
+              boxShadow: '0 8px 40px rgba(0,0,0,0.2), 0 0 80px rgba(100,140,255,0.1), inset 0 1px 1px rgba(255,255,255,0.25)',
             }}
           >
-            {/* Subtle noise texture overlay */}
-            <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
+            {/* Top shine highlight */}
+            <div className="absolute inset-x-0 top-0 h-24 rounded-t-3xl pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
 
             {/* Month Navigation */}
             <div className="flex items-center justify-between mb-6">
@@ -297,33 +297,41 @@ export default function Calendar() {
                     onMouseEnter={() => setHoveredDay(day)}
                     onMouseLeave={() => setHoveredDay(null)}
                     className={`
-                      aspect-square rounded-xl border transition-all duration-300
+                      aspect-square rounded-2xl transition-all duration-300
                       flex flex-col items-center justify-start pt-1.5 sm:pt-2 gap-0.5 sm:gap-1
                       relative overflow-hidden group/day
-                      ${isTodayCell
-                        ? 'border-violet-400/60 animate-pulse-glow'
-                        : isPastDay
-                          ? 'border-white/5 hover:border-white/10'
-                          : 'border-white/10 hover:border-white/25'
-                      }
                       ${isHovered && !isTodayCell ? 'scale-105 z-10' : ''}
                     `}
                     style={{
+                      // Apple Liquid Glass: frosted glass with blue/purple tint
                       background: isTodayCell
-                        ? 'linear-gradient(145deg, rgba(139,92,246,0.35) 0%, rgba(6,182,212,0.25) 100%)'
+                        ? 'linear-gradient(135deg, rgba(99,132,255,0.5) 0%, rgba(160,120,255,0.4) 50%, rgba(99,180,255,0.35) 100%)'
                         : isPastDay
-                          ? 'linear-gradient(145deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.005) 100%)'
-                          : 'linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)',
+                          ? 'linear-gradient(135deg, rgba(120,140,200,0.08) 0%, rgba(100,120,180,0.05) 100%)'
+                          : 'linear-gradient(135deg, rgba(120,160,255,0.15) 0%, rgba(140,120,220,0.1) 50%, rgba(100,180,255,0.12) 100%)',
+                      backdropFilter: 'blur(12px)',
+                      WebkitBackdropFilter: 'blur(12px)',
+                      border: isTodayCell
+                        ? '1px solid rgba(180,200,255,0.5)'
+                        : isPastDay
+                          ? '1px solid rgba(150,170,220,0.1)'
+                          : '1px solid rgba(180,200,255,0.25)',
                       boxShadow: isTodayCell
-                        ? '0 0 25px rgba(139,92,246,0.5), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -2px 4px rgba(0,0,0,0.2)'
+                        ? '0 4px 24px rgba(100,140,255,0.3), 0 0 40px rgba(139,92,246,0.25), inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -1px 2px rgba(0,0,0,0.1)'
                         : isHovered && !isPastDay
-                          ? '0 8px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -2px 4px rgba(0,0,0,0.15)'
-                          : 'inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -2px 4px rgba(0,0,0,0.1)',
+                          ? '0 8px 32px rgba(100,140,255,0.25), inset 0 1px 1px rgba(255,255,255,0.3), inset 0 -1px 2px rgba(0,0,0,0.1)'
+                          : 'inset 0 1px 1px rgba(255,255,255,0.2), inset 0 -1px 2px rgba(0,0,0,0.05)',
                       transform: isHovered && !isTodayCell ? 'translateY(-3px) scale(1.05)' : undefined,
                     }}
                   >
-                    {/* Chrome edge highlight */}
-                    <div className={`absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-300 ${isHovered && !isTodayCell ? 'opacity-100' : 'opacity-0'}`} style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%)' }} />
+                    {/* Top highlight - Apple glass shine effect */}
+                    <div
+                      className="absolute inset-x-0 top-0 h-1/2 rounded-t-2xl pointer-events-none"
+                      style={{
+                        background: 'linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.05) 50%, transparent 100%)',
+                        opacity: isTodayCell ? 0.6 : isPastDay ? 0.2 : 0.4
+                      }}
+                    />
 
                     <span className={`
                       text-xs sm:text-sm font-semibold transition-all duration-300
@@ -368,41 +376,44 @@ export default function Calendar() {
 
         {/* Right Sidebar */}
         <div className="space-y-4">
-          {/* Today Card */}
+          {/* Today Card - Apple Liquid Glass */}
           <div
-            className="relative rounded-2xl p-6 text-center overflow-hidden"
+            className="relative rounded-3xl p-6 text-center overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(6, 182, 212, 0.1) 100%)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(139, 92, 246, 0.3)',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 40px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(255,255,255,0.1)',
+              background: 'linear-gradient(135deg, rgba(99,132,255,0.35) 0%, rgba(160,120,255,0.25) 50%, rgba(99,180,255,0.3) 100%)',
+              backdropFilter: 'blur(40px)',
+              WebkitBackdropFilter: 'blur(40px)',
+              border: '1px solid rgba(180,200,255,0.4)',
+              boxShadow: '0 8px 40px rgba(100,140,255,0.2), 0 0 60px rgba(139,92,246,0.15), inset 0 1px 1px rgba(255,255,255,0.3)',
             }}
           >
+            {/* Top shine */}
+            <div className="absolute inset-x-0 top-0 h-16 rounded-t-3xl pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%)' }} />
             {/* Animated glow ring */}
-            <div className="absolute inset-0 rounded-2xl animate-pulse-glow" style={{ boxShadow: '0 0 60px rgba(139, 92, 246, 0.3)' }} />
+            <div className="absolute inset-0 rounded-3xl animate-pulse-glow" style={{ boxShadow: '0 0 60px rgba(100,140,255,0.3)' }} />
 
-            <p className="text-white/50 text-xs uppercase tracking-[0.2em] font-medium">Today</p>
-            <p className="text-6xl font-bold mt-3 mb-2 bg-gradient-to-br from-cyan-400 via-violet-400 to-pink-400 bg-clip-text text-transparent drop-shadow-lg">
+            <p className="relative text-white/60 text-xs uppercase tracking-[0.2em] font-medium">Today</p>
+            <p className="relative text-6xl font-bold mt-3 mb-2 bg-gradient-to-br from-white via-blue-100 to-purple-200 bg-clip-text text-transparent drop-shadow-lg">
               {new Date().getDate()}
             </p>
-            <p className="text-white/70 text-sm font-medium">
+            <p className="relative text-white/80 text-sm font-medium">
               {dayNames[new Date().getDay()]}, {monthNames[new Date().getMonth()]}
             </p>
-            <p className="text-white/40 text-xs mt-1">{new Date().getFullYear()}</p>
+            <p className="relative text-white/50 text-xs mt-1">{new Date().getFullYear()}</p>
           </div>
 
-          {/* Upcoming Events */}
+          {/* Upcoming Events - Apple Liquid Glass */}
           <div
-            className="rounded-2xl p-5"
+            className="rounded-3xl p-5 relative overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
+              background: 'linear-gradient(135deg, rgba(120,160,255,0.12) 0%, rgba(140,120,220,0.08) 50%, rgba(100,180,255,0.1) 100%)',
+              backdropFilter: 'blur(40px)',
+              WebkitBackdropFilter: 'blur(40px)',
+              border: '1px solid rgba(180,200,255,0.2)',
+              boxShadow: '0 8px 40px rgba(0,0,0,0.15), inset 0 1px 1px rgba(255,255,255,0.2)',
             }}
           >
+            <div className="absolute inset-x-0 top-0 h-12 rounded-t-3xl pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%)' }} />
             <h4 className="font-semibold mb-4 text-white/90 flex items-center gap-2">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
@@ -438,17 +449,18 @@ export default function Calendar() {
             </div>
           </div>
 
-          {/* Monthly Stats */}
+          {/* Monthly Stats - Apple Liquid Glass */}
           <div
-            className="rounded-2xl p-5"
+            className="rounded-3xl p-5 relative overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
+              background: 'linear-gradient(135deg, rgba(120,160,255,0.12) 0%, rgba(140,120,220,0.08) 50%, rgba(100,180,255,0.1) 100%)',
+              backdropFilter: 'blur(40px)',
+              WebkitBackdropFilter: 'blur(40px)',
+              border: '1px solid rgba(180,200,255,0.2)',
+              boxShadow: '0 8px 40px rgba(0,0,0,0.15), inset 0 1px 1px rgba(255,255,255,0.2)',
             }}
           >
+            <div className="absolute inset-x-0 top-0 h-12 rounded-t-3xl pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%)' }} />
             <h4 className="font-semibold mb-4 text-white/90 flex items-center gap-2">
               <CalendarIcons.TrendingUp className="w-4 h-4 text-emerald-400" />
               This Month
