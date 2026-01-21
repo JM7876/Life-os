@@ -301,21 +301,29 @@ export default function Calendar() {
                       flex flex-col items-center justify-start pt-1.5 sm:pt-2 gap-0.5 sm:gap-1
                       relative overflow-hidden group/day
                       ${isTodayCell
-                        ? 'bg-gradient-to-br from-violet-500/50 to-cyan-500/40 border-violet-400/60 shadow-[0_0_25px_rgba(139,92,246,0.5)] animate-pulse-glow'
+                        ? 'border-violet-400/60 animate-pulse-glow'
                         : isPastDay
-                          ? 'bg-white/[0.02] border-white/5 hover:bg-white/5 hover:border-white/10'
-                          : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-violet-500/10'
+                          ? 'border-white/5 hover:border-white/10'
+                          : 'border-white/10 hover:border-white/25'
                       }
                       ${isHovered && !isTodayCell ? 'scale-105 z-10' : ''}
                     `}
                     style={{
-                      transform: isHovered && !isTodayCell ? 'translateY(-2px)' : undefined,
+                      background: isTodayCell
+                        ? 'linear-gradient(145deg, rgba(139,92,246,0.35) 0%, rgba(6,182,212,0.25) 100%)'
+                        : isPastDay
+                          ? 'linear-gradient(145deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.005) 100%)'
+                          : 'linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)',
+                      boxShadow: isTodayCell
+                        ? '0 0 25px rgba(139,92,246,0.5), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -2px 4px rgba(0,0,0,0.2)'
+                        : isHovered && !isPastDay
+                          ? '0 8px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -2px 4px rgba(0,0,0,0.15)'
+                          : 'inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -2px 4px rgba(0,0,0,0.1)',
+                      transform: isHovered && !isTodayCell ? 'translateY(-3px) scale(1.05)' : undefined,
                     }}
                   >
-                    {/* Chrome edge effect on hover */}
-                    {isHovered && !isTodayCell && (
-                      <div className="absolute inset-0 rounded-xl border border-white/20 pointer-events-none" />
-                    )}
+                    {/* Chrome edge highlight */}
+                    <div className={`absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-300 ${isHovered && !isTodayCell ? 'opacity-100' : 'opacity-0'}`} style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%)' }} />
 
                     <span className={`
                       text-xs sm:text-sm font-semibold transition-all duration-300
