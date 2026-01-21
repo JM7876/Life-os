@@ -1,5 +1,6 @@
 'use client';
 import Calendar from './components/Calendar';
+import PhotographyModule from '@/components/PhotographyModule';
 
 import React, { useState, useRef, useEffect } from 'react';
 
@@ -295,9 +296,11 @@ export default function LifeOS() {
         </header>
 
         {/* Dashboard Content */}
-        <div className={`p-4 lg:p-6 transition-all duration-300 ${chatOpen ? 'lg:mr-96' : ''}`}>
+        <div className={`transition-all duration-300 ${chatOpen ? 'lg:mr-96' : ''} ${activeTab === 'work' ? 'p-0' : 'p-4 lg:p-6'}`}>
           {activeTab === 'calendar' ? (
             <Calendar />
+          ) : activeTab === 'work' ? (
+            <PhotographyModule />
           ) : (
             <div className="mb-6">
               <div className="mb-6">
