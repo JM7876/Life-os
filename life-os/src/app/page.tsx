@@ -185,8 +185,11 @@ export default function LifeOS() {
         background: 'rgba(255, 255, 255, 0.05)',
         boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
         opacity: 0.5,
+        filter: 'blur(1px) brightness(115%)',
       }}
     />
+    {/* Top shine highlight */}
+    <div className="absolute inset-x-0 top-0 h-20 rounded-t-[2rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
     {/* Sidebar content wrapper */}
     <div className="relative flex flex-col flex-1">
       {/* Logo */}
@@ -256,8 +259,11 @@ export default function LifeOS() {
                 background: 'rgba(255, 255, 255, 0.05)',
                 boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
                 opacity: 0.5,
+                filter: 'blur(1px) brightness(115%)',
               }}
             />
+            {/* Top shine highlight */}
+            <div className="absolute inset-x-0 top-0 h-10 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
             <div className="relative flex items-center justify-between px-4 lg:px-6 py-3">
               <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2.5 rounded-xl bg-white/5 hover:bg-white/10">
                 <Icons.Menu />
@@ -327,8 +333,11 @@ export default function LifeOS() {
                     background: 'rgba(255, 255, 255, 0.05)',
                     boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
                     opacity: 0.5,
+                    filter: 'blur(1px) brightness(115%)',
                   }}
                 />
+                {/* Top shine highlight */}
+                <div className="absolute inset-x-0 top-0 h-12 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
                 <div className="relative">
                   <div className="flex items-start justify-between mb-2">
                     <div className="p-2 rounded-xl bg-violet-500/20 text-violet-400">
@@ -363,8 +372,11 @@ export default function LifeOS() {
                   background: 'rgba(255, 255, 255, 0.05)',
                   boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
                   opacity: 0.5,
+                  filter: 'blur(1px) brightness(115%)',
                 }}
               />
+              {/* Top shine highlight */}
+              <div className="absolute inset-x-0 top-0 h-16 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
               <div className="relative">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
@@ -410,8 +422,11 @@ export default function LifeOS() {
                   background: 'rgba(255, 255, 255, 0.05)',
                   boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
                   opacity: 0.5,
+                  filter: 'blur(1px) brightness(115%)',
                 }}
               />
+              {/* Top shine highlight */}
+              <div className="absolute inset-x-0 top-0 h-16 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
               <div className="relative">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400"><Icons.Wallet /></div>
@@ -449,8 +464,11 @@ export default function LifeOS() {
                   background: 'rgba(255, 255, 255, 0.05)',
                   boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
                   opacity: 0.5,
+                  filter: 'blur(1px) brightness(115%)',
                 }}
               />
+              {/* Top shine highlight */}
+              <div className="absolute inset-x-0 top-0 h-16 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
               <div className="relative">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400"><Icons.Mail /></div>
@@ -494,8 +512,11 @@ export default function LifeOS() {
                   background: 'rgba(255, 255, 255, 0.05)',
                   boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
                   opacity: 0.5,
+                  filter: 'blur(1px) brightness(115%)',
                 }}
               />
+              {/* Top shine highlight */}
+              <div className="absolute inset-x-0 top-0 h-16 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
               <div className="relative">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400"><Icons.Plane /></div>
@@ -543,8 +564,11 @@ export default function LifeOS() {
               background: 'rgba(255, 255, 255, 0.05)',
               boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
               opacity: 0.5,
+              filter: 'blur(1px) brightness(115%)',
             }}
           />
+          {/* Top shine highlight */}
+          <div className="absolute inset-x-0 top-0 h-20 rounded-t-none lg:rounded-t-[2rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
           <div className="relative flex flex-col h-full safe-top">
             <div className="p-4 border-b border-white/10">
               <div className="flex items-center gap-3">
