@@ -131,12 +131,12 @@ export default function TravelView() {
       </div>
 
       {/* Trip Selector */}
-      <div className="flex gap-3 overflow-x-auto pb-2">
+      <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 lg:mx-0 lg:px-0">
         {trips.map(trip => (
           <button
             key={trip.id}
             onClick={() => setSelectedTrip(trip.id)}
-            className={`relative flex-shrink-0 rounded-[1.5rem] p-4 min-w-[220px] overflow-hidden transition-all ${
+            className={`relative flex-shrink-0 rounded-[1.5rem] p-4 w-[180px] sm:w-[220px] overflow-hidden transition-all ${
               selectedTrip === trip.id ? 'ring-2 ring-cyan-500/50 scale-[1.02]' : 'opacity-70 hover:opacity-100'
             }`}
             style={glassStyle}

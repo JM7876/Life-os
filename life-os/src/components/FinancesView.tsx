@@ -133,7 +133,7 @@ export default function FinancesView() {
       </div>
 
       {/* Section Tabs */}
-      <div className="flex gap-2">
+      <div className="flex gap-2 overflow-x-auto pb-1">
         {[
           { id: 'overview' as const, label: 'Overview', icon: BarChart3 },
           { id: 'transactions' as const, label: 'Transactions', icon: Receipt },
@@ -142,7 +142,7 @@ export default function FinancesView() {
           <button
             key={tab.id}
             onClick={() => setActiveSection(tab.id)}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+            className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
               activeSection === tab.id
                 ? 'bg-violet-500/30 text-violet-300 border border-violet-500/30'
                 : 'bg-white/5 text-white/60 border border-white/10 hover:bg-white/10'

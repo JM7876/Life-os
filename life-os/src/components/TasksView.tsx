@@ -207,8 +207,8 @@ export default function TasksView() {
       </div>
 
       {/* Filters */}
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-[200px]">
+      <div className="space-y-3">
+        <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
           <input
             type="text"
@@ -218,12 +218,12 @@ export default function TasksView() {
             className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50"
           />
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 lg:mx-0 lg:px-0">
           {categories.map(cat => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-2 rounded-xl text-sm transition-colors ${
+              className={`flex-shrink-0 px-3 py-2 rounded-xl text-sm transition-colors ${
                 selectedCategory === cat
                   ? 'bg-violet-500/30 text-violet-300 border border-violet-500/30'
                   : 'bg-white/5 text-white/60 border border-white/10 hover:bg-white/10'
@@ -233,17 +233,17 @@ export default function TasksView() {
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1">
           <button
             onClick={() => setShowCompleted(!showCompleted)}
-            className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm transition-colors ${
+            className={`flex-shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl text-sm transition-colors ${
               showCompleted ? 'bg-white/10 text-white/80' : 'bg-white/5 text-white/40'
             }`}
           >
             <CheckCircle2 className="w-4 h-4" />
             Show done
           </button>
-          <div className="relative">
+          <div className="relative flex-shrink-0">
             <select
               value={sortBy}
               onChange={e => setSortBy(e.target.value as typeof sortBy)}

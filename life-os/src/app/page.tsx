@@ -114,7 +114,7 @@ export default function LifeOS() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0d0d2a] text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+    <div className="min-h-screen bg-[#0d0d2a] text-white overflow-x-hidden" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       {/* Vibrant Gradient Background for Liquid Glass */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {/* Base gradient */}
@@ -165,14 +165,20 @@ export default function LifeOS() {
 
       {/* Sidebar - Apple Liquid Glass */}
 <aside
-  className={`fixed left-4 top-44 z-50 transition-all duration-500 ease-out ${
-    sidebarOpen ? 'w-56' : 'w-16'
-  }`}
-  onMouseEnter={() => setSidebarOpen(true)}
-  onMouseLeave={() => setSidebarOpen(false)}
+  className={`fixed z-50 transition-all duration-500 ease-out
+    ${sidebarOpen
+      ? 'left-0 top-0 bottom-0 w-64 lg:left-4 lg:top-44 lg:bottom-auto lg:w-56'
+      : 'hidden lg:block lg:left-4 lg:top-44 lg:w-16'
+    }`}
+  onMouseEnter={() => {
+    if (window.innerWidth >= 1024) setSidebarOpen(true);
+  }}
+  onMouseLeave={() => {
+    if (window.innerWidth >= 1024) setSidebarOpen(false);
+  }}
 >
   <div
-    className="relative min-h-[560px] py-4 px-3 flex flex-col rounded-[2rem] overflow-hidden transition-all duration-500 ease-out"
+    className="relative h-full lg:h-auto min-h-[560px] py-4 px-3 flex flex-col rounded-none lg:rounded-[2rem] overflow-hidden transition-all duration-500 ease-out"
     style={{
       background: 'rgba(255, 255, 255, 0.05)',
       backdropFilter: 'blur(4px) saturate(180%)',
@@ -197,7 +203,7 @@ export default function LifeOS() {
     <div className="absolute inset-x-0 top-0 h-20 rounded-t-[2rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
     {/* Sidebar content wrapper */}
     <div className="relative flex flex-col flex-1">
-      {/* Logo */}
+      {/* Logo + Mobile Close */}
       <div className={`flex items-center gap-3 px-3 mb-6 ${sidebarOpen ? "" : "justify-center"}`}>
         <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/20">
           <Icons.Sparkles className="w-5 h-5 text-white" />
@@ -206,6 +212,11 @@ export default function LifeOS() {
           <h1 className="font-bold text-sm tracking-tight whitespace-nowrap">Life OS</h1>
           <p className="text-[10px] text-white/40 whitespace-nowrap">Command Center</p>
         </div>
+        {sidebarOpen && (
+          <button onClick={() => setSidebarOpen(false)} className="ml-auto p-2 rounded-lg hover:bg-white/10 lg:hidden">
+            <Icons.X className="w-5 h-5" />
+          </button>
+        )}
       </div>
 
       {/* Nav Items */}

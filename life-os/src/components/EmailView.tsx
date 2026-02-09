@@ -163,7 +163,7 @@ export default function EmailView() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {folders.map(folder => (
           <button
             key={folder.id}
@@ -199,7 +199,7 @@ export default function EmailView() {
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         {/* Email List */}
-        <div className={`${activeEmail ? 'lg:col-span-2' : 'lg:col-span-5'} relative rounded-[1.5rem] overflow-hidden`} style={glassStyle}>
+        <div className={`${activeEmail ? 'lg:col-span-2' : 'lg:col-span-5'} ${activeEmail ? 'hidden lg:block' : ''} relative rounded-[1.5rem] overflow-hidden`} style={glassStyle}>
           <div className="absolute inset-x-0 top-0 h-16 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
           <div className="relative divide-y divide-white/5 max-h-[600px] overflow-y-auto">
             {filteredEmails.length === 0 ? (
@@ -253,6 +253,13 @@ export default function EmailView() {
           <div className="lg:col-span-3 relative rounded-[1.5rem] overflow-hidden" style={glassStyle}>
             <div className="absolute inset-x-0 top-0 h-16 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
             <div className="relative p-5">
+              <button
+                onClick={() => setSelectedEmail(null)}
+                className="lg:hidden flex items-center gap-2 text-sm text-white/60 mb-3 hover:text-white/80"
+              >
+                <ChevronRight className="w-4 h-4 rotate-180" />
+                Back to inbox
+              </button>
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <h3 className="font-bold text-lg">{activeEmail.subject}</h3>
