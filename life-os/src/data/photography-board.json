@@ -1,0 +1,449 @@
+{
+  "board": {
+    "id": "photography-os-board",
+    "name": "Photographer OS - Project Management",
+    "description": "Complete photography workflow management board",
+    "background": "gradient-purple-blue",
+    "starred": true,
+    "createdAt": "2025-10-01T00:00:00Z",
+    "updatedAt": "2025-10-15T00:00:00Z"
+  },
+  "lists": [
+    {
+      "id": "list-not-started",
+      "name": "Not Started",
+      "position": 1,
+      "color": "gray"
+    },
+    {
+      "id": "list-in-progress",
+      "name": "In Progress",
+      "position": 2,
+      "color": "blue"
+    },
+    {
+      "id": "list-review",
+      "name": "Review",
+      "position": 3,
+      "color": "amber"
+    },
+    {
+      "id": "list-done",
+      "name": "Done",
+      "position": 4,
+      "color": "emerald"
+    }
+  ],
+  "cards": [
+    {
+      "id": "card-1",
+      "listId": "list-not-started",
+      "title": "Backup Johnson family session RAW files",
+      "description": "Transfer all RAW files from SD cards to NAS and cloud backup",
+      "position": 1,
+      "priority": "medium",
+      "labels": ["backup", "johnson-family"],
+      "dueDate": "2025-10-15T17:00:00Z",
+      "project": {
+        "id": "proj-johnson",
+        "name": "Johnson Family",
+        "type": "portrait"
+      },
+      "checklist": [
+        { "id": "check-1", "text": "Import from SD Card 1", "completed": false },
+        { "id": "check-2", "text": "Import from SD Card 2", "completed": false },
+        { "id": "check-3", "text": "Upload to cloud backup", "completed": false },
+        { "id": "check-4", "text": "Verify backup integrity", "completed": false }
+      ],
+      "attachments": [],
+      "comments": [],
+      "createdAt": "2025-10-10T09:00:00Z"
+    },
+    {
+      "id": "card-2",
+      "listId": "list-in-progress",
+      "title": "Review portfolio selection for Smith Wedding",
+      "description": "Select best 150 images from 2000+ shots for client preview gallery",
+      "position": 1,
+      "priority": "high",
+      "labels": ["editing", "wedding", "smith-wedding"],
+      "dueDate": "2025-10-12T17:00:00Z",
+      "project": {
+        "id": "proj-smith",
+        "name": "Smith Wedding",
+        "type": "wedding"
+      },
+      "checklist": [
+        { "id": "check-1", "text": "First pass - flag favorites", "completed": true },
+        { "id": "check-2", "text": "Second pass - narrow to 300", "completed": true },
+        { "id": "check-3", "text": "Final selection - 150 images", "completed": false },
+        { "id": "check-4", "text": "Basic color correction on selects", "completed": false }
+      ],
+      "attachments": [
+        {
+          "id": "att-1",
+          "name": "Smith_Wedding_Selects_v1.jpg",
+          "type": "image/jpeg",
+          "url": "/attachments/smith-preview.jpg"
+        }
+      ],
+      "comments": [
+        {
+          "id": "com-1",
+          "author": "John",
+          "text": "Client prefers more candid shots over posed",
+          "createdAt": "2025-10-11T14:30:00Z"
+        }
+      ],
+      "createdAt": "2025-10-08T10:00:00Z"
+    },
+    {
+      "id": "card-3",
+      "listId": "list-review",
+      "title": "Retouch corporate headshots for Tech Solutions",
+      "description": "Professional retouching on 25 executive headshots - skin smoothing, background cleanup",
+      "position": 1,
+      "priority": "urgent",
+      "labels": ["retouching", "corporate", "tech-solutions"],
+      "dueDate": "2025-10-11T12:00:00Z",
+      "project": {
+        "id": "proj-techsolutions",
+        "name": "Tech Solutions",
+        "type": "commercial"
+      },
+      "checklist": [
+        { "id": "check-1", "text": "CEO headshot", "completed": true },
+        { "id": "check-2", "text": "CFO headshot", "completed": true },
+        { "id": "check-3", "text": "CTO headshot", "completed": true },
+        { "id": "check-4", "text": "VP Marketing", "completed": false },
+        { "id": "check-5", "text": "Remaining 21 executives", "completed": false }
+      ],
+      "attachments": [],
+      "comments": [
+        {
+          "id": "com-1",
+          "author": "John",
+          "text": "Client requested more natural look - less retouching than usual",
+          "createdAt": "2025-10-10T16:00:00Z"
+        }
+      ],
+      "createdAt": "2025-10-05T08:00:00Z"
+    },
+    {
+      "id": "card-4",
+      "listId": "list-done",
+      "title": "Export final gallery for client delivery",
+      "description": "Export high-res JPEGs and web-optimized versions for Luxe Boutique product shoot",
+      "position": 1,
+      "priority": "high",
+      "labels": ["export", "delivery", "luxe-boutique"],
+      "dueDate": "2025-10-10T17:00:00Z",
+      "completedAt": "2025-10-10T15:30:00Z",
+      "project": {
+        "id": "proj-luxe",
+        "name": "Luxe Boutique",
+        "type": "commercial"
+      },
+      "checklist": [
+        { "id": "check-1", "text": "Export high-res (300dpi)", "completed": true },
+        { "id": "check-2", "text": "Export web-optimized", "completed": true },
+        { "id": "check-3", "text": "Upload to client portal", "completed": true },
+        { "id": "check-4", "text": "Send delivery notification", "completed": true }
+      ],
+      "attachments": [
+        {
+          "id": "att-1",
+          "name": "Luxe_Final_Gallery_Link.txt",
+          "type": "text/plain",
+          "url": "/attachments/luxe-link.txt"
+        }
+      ],
+      "comments": [
+        {
+          "id": "com-1",
+          "author": "John",
+          "text": "Client loved the shots! Requesting additional product line shoot.",
+          "createdAt": "2025-10-10T18:00:00Z"
+        }
+      ],
+      "createdAt": "2025-10-01T09:00:00Z"
+    }
+  ],
+  "labels": [
+    { "id": "label-1", "name": "backup", "color": "#6b7280" },
+    { "id": "label-2", "name": "editing", "color": "#3b82f6" },
+    { "id": "label-3", "name": "retouching", "color": "#8b5cf6" },
+    { "id": "label-4", "name": "export", "color": "#10b981" },
+    { "id": "label-5", "name": "delivery", "color": "#14b8a6" },
+    { "id": "label-6", "name": "wedding", "color": "#ec4899" },
+    { "id": "label-7", "name": "corporate", "color": "#f59e0b" },
+    { "id": "label-8", "name": "portrait", "color": "#06b6d4" }
+  ],
+  "projects": [
+    {
+      "id": "proj-johnson",
+      "name": "Autumn Family Portraits - Johnson Fam",
+      "type": "portrait",
+      "client": {
+        "id": "client-wilson",
+        "name": "David Wilson",
+        "email": "david.wilson@email.com",
+        "phone": "(555) 234-5678"
+      },
+      "status": "planning",
+      "startDate": "2025-10-12",
+      "endDate": "2025-10-12",
+      "location": "Maple Park",
+      "budget": 800,
+      "deliverables": ["Edited Photos", "Prints"]
+    },
+    {
+      "id": "proj-smith",
+      "name": "Smith Wedding Photography",
+      "type": "wedding",
+      "client": {
+        "id": "client-smith",
+        "name": "Smith Wedding",
+        "email": "emily.smith@email.com",
+        "phone": "(555) 345-6789"
+      },
+      "status": "editing",
+      "startDate": "2025-10-08",
+      "endDate": "2025-10-12",
+      "location": "Riverside Gardens, Portland",
+      "budget": 4500,
+      "deliverables": ["Edited Photos", "Prints", "Album"]
+    },
+    {
+      "id": "proj-techsolutions",
+      "name": "Tech Solutions Corporate Headshots",
+      "type": "commercial",
+      "client": {
+        "id": "client-tech",
+        "name": "Tech Solutions Inc.",
+        "email": "hr@techsolutions.com",
+        "phone": "(555) 456-7890"
+      },
+      "status": "review",
+      "startDate": "2025-10-05",
+      "endDate": "2025-10-11",
+      "location": "Tech Solutions HQ",
+      "budget": 3500,
+      "deliverables": ["Edited Photos", "LinkedIn Optimized"]
+    },
+    {
+      "id": "proj-luxe",
+      "name": "TechGrow Product Launch",
+      "type": "commercial",
+      "client": {
+        "id": "client-luxe",
+        "name": "Luxe Boutique",
+        "email": "marketing@luxeboutique.com",
+        "phone": "(555) 567-8901"
+      },
+      "status": "shooting",
+      "startDate": "2025-10-13",
+      "endDate": "2025-10-14",
+      "location": "TechGrow HQ, Seattle",
+      "budget": 2500,
+      "deliverables": ["Edited Photos"]
+    }
+  ],
+  "clients": [
+    {
+      "id": "client-luxe",
+      "name": "Luxe Boutique",
+      "type": "commercial",
+      "email": "marketing@luxeboutique.com",
+      "phone": "(555) 567-8901",
+      "totalProjects": 3,
+      "totalRevenue": 7500
+    },
+    {
+      "id": "client-wilson",
+      "name": "David Wilson",
+      "type": "portrait",
+      "email": "david.wilson@email.com",
+      "phone": "(555) 234-5678",
+      "totalProjects": 1,
+      "totalRevenue": 800
+    },
+    {
+      "id": "client-smith",
+      "name": "Smith Wedding",
+      "type": "wedding",
+      "email": "emily.smith@email.com",
+      "phone": "(555) 345-6789",
+      "totalProjects": 1,
+      "totalRevenue": 4500
+    },
+    {
+      "id": "client-tech",
+      "name": "Tech Solutions Inc.",
+      "type": "commercial",
+      "email": "hr@techsolutions.com",
+      "phone": "(555) 456-7890",
+      "totalProjects": 2,
+      "totalRevenue": 6000
+    }
+  ],
+  "collaborators": [
+    {
+      "id": "collab-1",
+      "name": "Sarah Chen",
+      "role": "second-shooter",
+      "email": "sarah@photography.com",
+      "rate": 350
+    },
+    {
+      "id": "collab-2",
+      "name": "Mike Torres",
+      "role": "assistant",
+      "email": "mike.torres@email.com",
+      "rate": 150
+    },
+    {
+      "id": "collab-3",
+      "name": "Lisa Park",
+      "role": "retoucher",
+      "email": "lisa.park@editing.com",
+      "rate": 45
+    }
+  ],
+  "equipment": [
+    {
+      "id": "gear-1",
+      "name": "Sony A7R V",
+      "category": "camera",
+      "value": 3900,
+      "condition": "excellent",
+      "purchaseDate": "2024-03-15",
+      "notes": "Primary body"
+    },
+    {
+      "id": "gear-2",
+      "name": "Sony 24-70mm f/2.8 GM II",
+      "category": "lens",
+      "value": 2300,
+      "condition": "excellent",
+      "purchaseDate": "2024-03-15",
+      "notes": "Workhorse lens"
+    },
+    {
+      "id": "gear-3",
+      "name": "Sony 70-200mm f/2.8 GM II",
+      "category": "lens",
+      "value": 2800,
+      "condition": "good",
+      "purchaseDate": "2023-08-20",
+      "notes": "Wedding/portrait telephoto"
+    },
+    {
+      "id": "gear-4",
+      "name": "Profoto B10 Plus (x2)",
+      "category": "lighting",
+      "value": 4000,
+      "condition": "excellent",
+      "purchaseDate": "2024-01-10",
+      "notes": "Portable studio lighting"
+    },
+    {
+      "id": "gear-5",
+      "name": "DJI Mavic 3 Pro",
+      "category": "drone",
+      "value": 2200,
+      "condition": "good",
+      "purchaseDate": "2023-05-01",
+      "notes": "Aerial/real estate shots"
+    }
+  ],
+  "finances": {
+    "expenses": [
+      {
+        "id": "exp-1",
+        "name": "Adobe Creative Cloud",
+        "type": "subscription",
+        "amount": 54.99,
+        "date": "2025-10-01",
+        "recurring": true,
+        "notes": "Monthly subscription"
+      },
+      {
+        "id": "exp-2",
+        "name": "Cloud Storage (Backblaze)",
+        "type": "subscription",
+        "amount": 7.00,
+        "date": "2025-10-01",
+        "recurring": true,
+        "notes": "Unlimited backup"
+      },
+      {
+        "id": "exp-3",
+        "name": "Memory Cards (512GB x2)",
+        "type": "equipment",
+        "amount": 180.00,
+        "date": "2025-10-05",
+        "recurring": false,
+        "notes": "CFexpress Type A"
+      },
+      {
+        "id": "exp-4",
+        "name": "Studio Rental - Tech Solutions",
+        "type": "rental",
+        "amount": 250.00,
+        "date": "2025-10-05",
+        "recurring": false,
+        "notes": "Full day headshot session"
+      },
+      {
+        "id": "exp-5",
+        "name": "Second Shooter - Sarah (Smith Wedding)",
+        "type": "contractor",
+        "amount": 350.00,
+        "date": "2025-10-08",
+        "recurring": false,
+        "notes": "8 hour coverage"
+      }
+    ],
+    "income": [
+      {
+        "id": "inc-1",
+        "name": "Smith Wedding - Deposit",
+        "client": "Smith Wedding",
+        "amount": 2250.00,
+        "date": "2025-09-01",
+        "type": "deposit"
+      },
+      {
+        "id": "inc-2",
+        "name": "Tech Solutions - Invoice #1042",
+        "client": "Tech Solutions Inc.",
+        "amount": 3500.00,
+        "date": "2025-10-11",
+        "type": "invoice"
+      },
+      {
+        "id": "inc-3",
+        "name": "Luxe Boutique - Product Shoot",
+        "client": "Luxe Boutique",
+        "amount": 2500.00,
+        "date": "2025-10-14",
+        "type": "invoice"
+      }
+    ],
+    "summary": {
+      "monthlyRevenue": 8250.00,
+      "monthlyExpenses": 841.99,
+      "monthlyProfit": 7408.01,
+      "pendingInvoices": 2250.00,
+      "yearToDateRevenue": 78500.00
+    }
+  },
+  "settings": {
+    "currency": "USD",
+    "timezone": "America/Detroit",
+    "defaultHourlyRate": 150,
+    "businessName": "Johnathon Moulds Photography",
+    "taxRate": 0.25
+  }
+}

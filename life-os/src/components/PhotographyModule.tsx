@@ -33,6 +33,9 @@ import {
   ExternalLink,
 } from 'lucide-react';
 
+// Import data from JSON file
+import boardData from '@/data/photography-board.json';
+
 // Types
 interface Project {
   id: string;
@@ -59,17 +62,16 @@ interface Task {
 interface Client {
   id: string;
   name: string;
-  type: 'wedding-couple' | 'brand' | 'individual' | 'agency';
+  type: 'wedding-couple' | 'brand' | 'individual' | 'agency' | 'commercial' | 'portrait' | 'wedding';
   email: string;
   phone: string;
-  address: string;
   totalProjects: number;
 }
 
 interface Collaborator {
   id: string;
   name: string;
-  role: 'model' | 'videographer' | 'agency' | 'makeup-artist' | 'assistant' | 'stylist';
+  role: 'model' | 'videographer' | 'agency' | 'makeup-artist' | 'assistant' | 'stylist' | 'second-shooter' | 'retoucher';
   rate: number;
   email: string;
 }
@@ -77,61 +79,102 @@ interface Collaborator {
 interface GearItem {
   id: string;
   name: string;
-  category: 'camera' | 'lens' | 'lighting' | 'accessory' | 'audio';
+  category: 'camera' | 'lens' | 'lighting' | 'accessory' | 'audio' | 'drone';
   purchaseDate: string;
   value: number;
   condition: 'excellent' | 'good' | 'fair' | 'needs-repair';
-  nextMaintenance?: string;
+  notes?: string;
 }
 
 interface Expense {
   id: string;
   name: string;
-  type: 'equipment' | 'software' | 'studio-rental' | 'travel' | 'props';
+  type: 'equipment' | 'software' | 'studio-rental' | 'travel' | 'props' | 'subscription' | 'rental' | 'contractor';
   amount: number;
   date: string;
   notes: string;
-  project?: string;
+  recurring?: boolean;
 }
 
-// Sample Data
-const sampleProjects: Project[] = [
-  { id: '1', name: 'TechGrow Product Launch', type: 'commercial', client: 'Luxe Boutique', status: 'shooting', startDate: 'Oct 13, 2025', endDate: 'Oct 14, 2025', location: 'TechGrow HQ, Seattle', deliverables: 'Edited Photos', budget: 2500 },
-  { id: '2', name: 'Autumn Family Portraits - Johnson Fam', type: 'portrait', client: 'David Wilson', status: 'planning', startDate: 'Oct 12, 2025', endDate: 'Oct 12, 2025', location: 'Maple Park', deliverables: 'Edited Photos, Prints', budget: 800 },
-  { id: '3', name: 'Smith Wedding Photography', type: 'wedding', client: 'Smith Wedding Photography', status: 'editing', startDate: 'Oct 8, 2025', endDate: 'Oct 12, 2025', location: 'Riverside Gardens, Portland', deliverables: 'Edited Photos, Prints, Album', budget: 4500 },
-];
+// Transform JSON data to match component interfaces
+const transformProjects = (): Project[] => {
+  return boardData.projects.map(p => ({
+    id: p.id,
+    name: p.name,
+    type: p.type as Project['type'],
+    client: p.client.name,
+    status: p.status as Project['status'],
+    startDate: p.startDate,
+    endDate: p.endDate,
+    location: p.location,
+    deliverables: p.deliverables.join(', '),
+    budget: p.budget,
+  }));
+};
 
-const sampleTasks: Task[] = [
-  { id: '1', title: 'Backup Johnson family session RAW files', project: 'Johnson Family', status: 'not-started', priority: 'medium', dueDate: 'Oct 15, 2025' },
-  { id: '2', title: 'Review portfolio selection for Smith Wedding', project: 'Smith Wedding', status: 'in-progress', priority: 'high', dueDate: 'Oct 12, 2025' },
-  { id: '3', title: 'Retouch corporate headshots for Tech Solutions', project: 'Tech Solutions', status: 'review', priority: 'urgent', dueDate: 'Oct 11, 2025' },
-  { id: '4', title: 'Export final gallery for client delivery', project: 'Luxe Boutique', status: 'done', priority: 'high', dueDate: 'Oct 10, 2025' },
-];
+const transformTasks = (): Task[] => {
+  return boardData.cards.map(card => ({
+    id: card.id,
+    title: card.title,
+    project: card.project.name,
+    status: card.listId.replace('list-', '') as Task['status'],
+    priority: card.priority as Task['priority'],
+    dueDate: new Date(card.dueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+  }));
+};
 
-const sampleClients: Client[] = [
-  { id: '1', name: 'Smith Wedding Photography', type: 'wedding-couple', email: 'smithwedding2025@gmail.com', phone: '(555) 123-4567', address: '123 Maple Street, Portland', totalProjects: 1 },
-  { id: '2', name: 'Luxe Boutique', type: 'brand', email: 'sarah@luxeboutique.com', phone: '(555) 987-6543', address: '450 Fashion Ave, Seattle', totalProjects: 3 },
-  { id: '3', name: 'David Wilson', type: 'individual', email: 'david.wilson@example.com', phone: '(555) 234-5678', address: '789 Oak Drive, Chicago', totalProjects: 2 },
-];
+const transformClients = (): Client[] => {
+  return boardData.clients.map(c => ({
+    id: c.id,
+    name: c.name,
+    type: c.type as Client['type'],
+    email: c.email,
+    phone: c.phone,
+    totalProjects: c.totalProjects,
+  }));
+};
 
-const sampleCollaborators: Collaborator[] = [
-  { id: '1', name: 'Sarah Johnson', role: 'model', rate: 150, email: 'sarah.johnson@email.com' },
-  { id: '2', name: 'Michael Chen', role: 'videographer', rate: 500, email: 'm.chen@videocreative.com' },
-  { id: '3', name: 'Glam Squad Agency', role: 'agency', rate: 350, email: 'bookings@glamsquad.com' },
-];
+const transformCollaborators = (): Collaborator[] => {
+  return boardData.collaborators.map(c => ({
+    id: c.id,
+    name: c.name,
+    role: c.role as Collaborator['role'],
+    rate: c.rate,
+    email: c.email,
+  }));
+};
 
-const sampleGear: GearItem[] = [
-  { id: '1', name: 'Sony A7IV', category: 'camera', purchaseDate: 'Jan 2024', value: 2500, condition: 'excellent', nextMaintenance: 'Mar 2026' },
-  { id: '2', name: 'Sony 24-70mm f/2.8 GM II', category: 'lens', purchaseDate: 'Mar 2024', value: 2300, condition: 'excellent' },
-  { id: '3', name: 'Godox AD600 Pro', category: 'lighting', purchaseDate: 'Jun 2023', value: 800, condition: 'good', nextMaintenance: 'Dec 2025' },
-  { id: '4', name: 'Sony 85mm f/1.4 GM', category: 'lens', purchaseDate: 'Aug 2024', value: 1800, condition: 'excellent' },
-];
+const transformGear = (): GearItem[] => {
+  return boardData.equipment.map(g => ({
+    id: g.id,
+    name: g.name,
+    category: g.category as GearItem['category'],
+    purchaseDate: g.purchaseDate,
+    value: g.value,
+    condition: g.condition as GearItem['condition'],
+    notes: g.notes,
+  }));
+};
 
-const sampleExpenses: Expense[] = [
-  { id: '1', name: 'Camera Equipment Rental', type: 'equipment', amount: 450.75, date: 'Oct 8, 2025', notes: 'Rented camera and lighting kit', project: 'TechGrow' },
-  { id: '2', name: 'Software Subscription - Adobe', type: 'software', amount: 52.99, date: 'Oct 9, 2025', notes: 'Monthly Adobe Creative Cloud' },
-  { id: '3', name: 'Recording Studio Rental', type: 'studio-rental', amount: 350.00, date: 'Oct 12, 2025', notes: '6-hour studio session at Sound Studio' },
-];
+const transformExpenses = (): Expense[] => {
+  return boardData.finances.expenses.map(e => ({
+    id: e.id,
+    name: e.name,
+    type: e.type as Expense['type'],
+    amount: e.amount,
+    date: e.date,
+    notes: e.notes,
+    recurring: e.recurring,
+  }));
+};
+
+// Use transformed data from JSON
+const sampleProjects: Project[] = transformProjects();
+const sampleTasks: Task[] = transformTasks();
+const sampleClients: Client[] = transformClients();
+const sampleCollaborators: Collaborator[] = transformCollaborators();
+const sampleGear: GearItem[] = transformGear();
+const sampleExpenses: Expense[] = transformExpenses();
 
 // Utility Components
 const StatusBadge = ({ status, type = 'status' }: { status: string; type?: 'status' | 'type' | 'priority' | 'role' | 'condition' }) => {
@@ -286,9 +329,74 @@ export default function PhotographyModule() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f0f13] text-white flex">
-      {/* Sidebar Navigation */}
-      <aside className="w-64 bg-[#16161d] border-r border-white/5 flex flex-col">
+    <div className="min-h-screen text-white flex relative">
+      {/* Vibrant Gradient Background for Liquid Glass */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        {/* Base gradient */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(135deg, #1a0a2e 0%, #16213e 25%, #0f3460 50%, #1a1a4e 75%, #2d1b4e 100%)'
+          }}
+        />
+        {/* Flowing wave 1 - cyan/blue */}
+        <div
+          className="absolute -bottom-1/4 -left-1/4 w-[150%] h-[80%] opacity-60"
+          style={{
+            background: 'radial-gradient(ellipse at 30% 80%, #00d4ff 0%, #0066ff 30%, transparent 70%)',
+            filter: 'blur(60px)',
+          }}
+        />
+        {/* Flowing wave 2 - purple/violet */}
+        <div
+          className="absolute top-0 right-0 w-[80%] h-[100%] opacity-50"
+          style={{
+            background: 'radial-gradient(ellipse at 70% 30%, #a855f7 0%, #7c3aed 40%, transparent 70%)',
+            filter: 'blur(80px)',
+          }}
+        />
+        {/* Flowing wave 3 - amber/orange for photography theme */}
+        <div
+          className="absolute top-1/4 left-1/3 w-[60%] h-[60%] opacity-35"
+          style={{
+            background: 'radial-gradient(ellipse at 50% 50%, #fbbf24 0%, #f97316 50%, transparent 80%)',
+            filter: 'blur(100px)',
+          }}
+        />
+        {/* Accent glow - pink */}
+        <div
+          className="absolute bottom-1/3 right-1/4 w-[40%] h-[40%] opacity-30"
+          style={{
+            background: 'radial-gradient(circle, #f0abfc 0%, #c026d3 50%, transparent 70%)',
+            filter: 'blur(80px)',
+          }}
+        />
+      </div>
+
+      {/* Sidebar Navigation - Apple Liquid Glass */}
+      <aside
+        className="w-64 flex flex-col relative z-10 m-4 mr-0 rounded-[2rem] overflow-hidden"
+        style={{
+          background: 'rgba(255, 255, 255, 0.05)',
+          backdropFilter: 'blur(4px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+          border: '1px solid rgba(255,255,255,0.2)',
+          boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+        }}
+      >
+        {/* Shine effect */}
+        <div
+          className="absolute inset-0 rounded-[2rem] pointer-events-none"
+          style={{
+            background: 'rgba(255, 255, 255, 0.05)',
+            boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+            opacity: 0.5,
+            filter: 'blur(1px) brightness(115%)',
+          }}
+        />
+        {/* Top shine highlight */}
+        <div className="absolute inset-x-0 top-0 h-20 rounded-t-[2rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
+        <div className="relative flex flex-col flex-1">
         {/* Header */}
         <div className="p-4 border-b border-white/5">
           <div className="flex items-center gap-3">
@@ -387,15 +495,37 @@ export default function PhotographyModule() {
         <div className="p-4 border-t border-white/5">
           <NavItem icon={Settings} label="Settings" onClick={() => setActiveSection('settings')} />
         </div>
+        </div>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto">
-        {/* Hero Banner */}
-        <div className="relative h-48 bg-gradient-to-r from-amber-900/40 to-orange-900/40 overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/photography-hero.jpg')] bg-cover bg-center opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f13] to-transparent" />
-          <div className="absolute bottom-6 left-6 flex items-center gap-4">
+      <main className="flex-1 overflow-y-auto relative z-10 p-4 pl-4">
+        {/* Hero Banner - Apple Liquid Glass */}
+        <div
+          className="relative h-48 rounded-[2rem] overflow-hidden mb-6"
+          style={{
+            background: 'rgba(255, 255, 255, 0.05)',
+            backdropFilter: 'blur(4px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+          }}
+        >
+          {/* Shine effect */}
+          <div
+            className="absolute inset-0 rounded-[2rem] pointer-events-none"
+            style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+              opacity: 0.5,
+              filter: 'blur(1px) brightness(115%)',
+            }}
+          />
+          {/* Top shine highlight */}
+          <div className="absolute inset-x-0 top-0 h-20 rounded-t-[2rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
+          {/* Gradient overlay for photography theme */}
+          <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/10 rounded-[2rem]" />
+          <div className="absolute bottom-6 left-6 flex items-center gap-4 relative">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg">
               <Camera className="w-6 h-6 text-white" />
             </div>
@@ -428,8 +558,30 @@ export default function PhotographyModule() {
             </div>
 
             <div className="grid grid-cols-4 gap-4">
-              {/* Not Started Column */}
-              <div className="bg-white/5 rounded-xl p-4 border border-white/5">
+              {/* Not Started Column - Apple Liquid Glass */}
+              <div
+                className="relative rounded-[1.5rem] p-4 overflow-hidden"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  backdropFilter: 'blur(4px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+                }}
+              >
+                {/* Shine effect */}
+                <div
+                  className="absolute inset-0 rounded-[1.5rem] pointer-events-none"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                    opacity: 0.5,
+                    filter: 'blur(1px) brightness(115%)',
+                  }}
+                />
+                {/* Top shine highlight */}
+                <div className="absolute inset-x-0 top-0 h-12 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
+                <div className="relative">
                 <div className="flex items-center gap-2 mb-4">
                   <span className="w-2 h-2 rounded-full bg-gray-400" />
                   <h3 className="text-sm font-medium text-white/80">Not Started</h3>
@@ -443,10 +595,31 @@ export default function PhotographyModule() {
                     <Plus className="w-3 h-3" /> New Item
                   </button>
                 </div>
+                </div>
               </div>
 
-              {/* In Progress Column */}
-              <div className="bg-white/5 rounded-xl p-4 border border-white/5">
+              {/* In Progress Column - Apple Liquid Glass */}
+              <div
+                className="relative rounded-[1.5rem] p-4 overflow-hidden"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  backdropFilter: 'blur(4px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+                }}
+              >
+                <div
+                  className="absolute inset-0 rounded-[1.5rem] pointer-events-none"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                    opacity: 0.5,
+                    filter: 'blur(1px) brightness(115%)',
+                  }}
+                />
+                <div className="absolute inset-x-0 top-0 h-12 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
+                <div className="relative">
                 <div className="flex items-center gap-2 mb-4">
                   <span className="w-2 h-2 rounded-full bg-blue-400" />
                   <h3 className="text-sm font-medium text-white/80">In Progress</h3>
@@ -460,10 +633,31 @@ export default function PhotographyModule() {
                     <Plus className="w-3 h-3" /> New Item
                   </button>
                 </div>
+                </div>
               </div>
 
-              {/* Review Column */}
-              <div className="bg-white/5 rounded-xl p-4 border border-white/5">
+              {/* Review Column - Apple Liquid Glass */}
+              <div
+                className="relative rounded-[1.5rem] p-4 overflow-hidden"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  backdropFilter: 'blur(4px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+                }}
+              >
+                <div
+                  className="absolute inset-0 rounded-[1.5rem] pointer-events-none"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                    opacity: 0.5,
+                    filter: 'blur(1px) brightness(115%)',
+                  }}
+                />
+                <div className="absolute inset-x-0 top-0 h-12 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
+                <div className="relative">
                 <div className="flex items-center gap-2 mb-4">
                   <span className="w-2 h-2 rounded-full bg-amber-400" />
                   <h3 className="text-sm font-medium text-white/80">Review</h3>
@@ -477,10 +671,31 @@ export default function PhotographyModule() {
                     <Plus className="w-3 h-3" /> New Item
                   </button>
                 </div>
+                </div>
               </div>
 
-              {/* Done Column */}
-              <div className="bg-white/5 rounded-xl p-4 border border-white/5">
+              {/* Done Column - Apple Liquid Glass */}
+              <div
+                className="relative rounded-[1.5rem] p-4 overflow-hidden"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  backdropFilter: 'blur(4px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+                }}
+              >
+                <div
+                  className="absolute inset-0 rounded-[1.5rem] pointer-events-none"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                    opacity: 0.5,
+                    filter: 'blur(1px) brightness(115%)',
+                  }}
+                />
+                <div className="absolute inset-x-0 top-0 h-12 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
+                <div className="relative">
                 <div className="flex items-center gap-2 mb-4">
                   <span className="w-2 h-2 rounded-full bg-emerald-400" />
                   <h3 className="text-sm font-medium text-white/80">Done</h3>
@@ -493,6 +708,7 @@ export default function PhotographyModule() {
                   <button className="w-full py-2 text-xs text-white/40 hover:text-white/60 flex items-center justify-center gap-1">
                     <Plus className="w-3 h-3" /> New Item
                   </button>
+                </div>
                 </div>
               </div>
             </div>
@@ -515,10 +731,29 @@ export default function PhotographyModule() {
               </div>
             </div>
 
-            <div className="bg-white/5 rounded-xl border border-white/5 overflow-hidden">
-              <table className="w-full">
+            <div
+              className="relative rounded-[1.5rem] overflow-hidden"
+              style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                backdropFilter: 'blur(4px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+              }}
+            >
+              <div
+                className="absolute inset-0 rounded-[1.5rem] pointer-events-none"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                  opacity: 0.5,
+                  filter: 'blur(1px) brightness(115%)',
+                }}
+              />
+              <div className="absolute inset-x-0 top-0 h-12 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
+              <table className="w-full relative">
                 <thead>
-                  <tr className="border-b border-white/5">
+                  <tr className="border-b border-white/10">
                     <th className="text-left text-xs font-medium text-white/40 px-4 py-3">Name</th>
                     <th className="text-left text-xs font-medium text-white/40 px-4 py-3">Type</th>
                     <th className="text-left text-xs font-medium text-white/40 px-4 py-3">Client</th>
@@ -568,10 +803,21 @@ export default function PhotographyModule() {
                 </button>
               </div>
 
-              <div className="bg-white/5 rounded-xl border border-white/5 overflow-hidden">
-                <table className="w-full">
+              <div
+                className="relative rounded-[1.5rem] overflow-hidden"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  backdropFilter: 'blur(4px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+                }}
+              >
+                <div className="absolute inset-0 rounded-[1.5rem] pointer-events-none" style={{ background: 'rgba(255, 255, 255, 0.05)', boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)', opacity: 0.5, filter: 'blur(1px) brightness(115%)' }} />
+                <div className="absolute inset-x-0 top-0 h-12 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
+                <table className="w-full relative">
                   <thead>
-                    <tr className="border-b border-white/5">
+                    <tr className="border-b border-white/10">
                       <th className="text-left text-xs font-medium text-white/40 px-4 py-3">Name</th>
                       <th className="text-left text-xs font-medium text-white/40 px-4 py-3">Type</th>
                       <th className="text-left text-xs font-medium text-white/40 px-4 py-3">Email</th>
@@ -580,7 +826,7 @@ export default function PhotographyModule() {
                   </thead>
                   <tbody>
                     {sampleClients.map((client) => (
-                      <tr key={client.id} className="border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer">
+                      <tr key={client.id} className="border-b border-white/10 hover:bg-white/5 transition-colors cursor-pointer">
                         <td className="px-4 py-3 text-sm text-white/90">{client.name}</td>
                         <td className="px-4 py-3"><StatusBadge status={client.type} type="type" /></td>
                         <td className="px-4 py-3 text-sm text-white/60">{client.email}</td>
@@ -606,12 +852,26 @@ export default function PhotographyModule() {
 
               <div className="grid grid-cols-3 gap-3">
                 {sampleCollaborators.map((collab) => (
-                  <div key={collab.id} className="bg-white/5 rounded-xl p-4 border border-white/5 hover:border-white/10 transition-all">
-                    <StatusBadge status={collab.role} type="role" />
-                    <h4 className="text-sm font-medium text-white/90 mt-2">{collab.name}</h4>
-                    <p className="text-xs text-white/40">${collab.rate}/session</p>
-                    <p className="text-xs text-white/40 mt-1 truncate">{collab.email}</p>
-                    <button className="mt-3 text-xs text-violet-400 hover:text-violet-300">+ New Item</button>
+                  <div
+                    key={collab.id}
+                    className="relative rounded-[1.25rem] p-4 overflow-hidden transition-all hover:scale-[1.02]"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      backdropFilter: 'blur(4px) saturate(180%)',
+                      WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+                    }}
+                  >
+                    <div className="absolute inset-0 rounded-[1.25rem] pointer-events-none" style={{ background: 'rgba(255, 255, 255, 0.05)', boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)', opacity: 0.5, filter: 'blur(1px) brightness(115%)' }} />
+                    <div className="absolute inset-x-0 top-0 h-10 rounded-t-[1.25rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
+                    <div className="relative">
+                      <StatusBadge status={collab.role} type="role" />
+                      <h4 className="text-sm font-medium text-white/90 mt-2">{collab.name}</h4>
+                      <p className="text-xs text-white/40">${collab.rate}/session</p>
+                      <p className="text-xs text-white/40 mt-1 truncate">{collab.email}</p>
+                      <button className="mt-3 text-xs text-violet-400 hover:text-violet-300">+ New Item</button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -636,10 +896,21 @@ export default function PhotographyModule() {
                 </div>
               </div>
 
-              <div className="bg-white/5 rounded-xl border border-white/5 overflow-hidden">
-                <table className="w-full">
+              <div
+                className="relative rounded-[1.5rem] overflow-hidden"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  backdropFilter: 'blur(4px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+                }}
+              >
+                <div className="absolute inset-0 rounded-[1.5rem] pointer-events-none" style={{ background: 'rgba(255, 255, 255, 0.05)', boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)', opacity: 0.5, filter: 'blur(1px) brightness(115%)' }} />
+                <div className="absolute inset-x-0 top-0 h-12 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
+                <table className="w-full relative">
                   <thead>
-                    <tr className="border-b border-white/5">
+                    <tr className="border-b border-white/10">
                       <th className="text-left text-xs font-medium text-white/40 px-4 py-3">Name</th>
                       <th className="text-left text-xs font-medium text-white/40 px-4 py-3">Type</th>
                       <th className="text-left text-xs font-medium text-white/40 px-4 py-3">Amount</th>
@@ -649,7 +920,7 @@ export default function PhotographyModule() {
                   </thead>
                   <tbody>
                     {sampleExpenses.map((expense) => (
-                      <tr key={expense.id} className="border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer">
+                      <tr key={expense.id} className="border-b border-white/10 hover:bg-white/5 transition-colors cursor-pointer">
                         <td className="px-4 py-3 text-sm text-white/90">{expense.name}</td>
                         <td className="px-4 py-3"><StatusBadge status={expense.type} type="type" /></td>
                         <td className="px-4 py-3 text-sm text-white/60">${expense.amount.toFixed(2)}</td>
@@ -674,10 +945,21 @@ export default function PhotographyModule() {
                 </button>
               </div>
 
-              <div className="bg-white/5 rounded-xl border border-white/5 overflow-hidden">
-                <table className="w-full">
+              <div
+                className="relative rounded-[1.5rem] overflow-hidden"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  backdropFilter: 'blur(4px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(4px) saturate(180%)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+                }}
+              >
+                <div className="absolute inset-0 rounded-[1.5rem] pointer-events-none" style={{ background: 'rgba(255, 255, 255, 0.05)', boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)', opacity: 0.5, filter: 'blur(1px) brightness(115%)' }} />
+                <div className="absolute inset-x-0 top-0 h-12 rounded-t-[1.5rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
+                <table className="w-full relative">
                   <thead>
-                    <tr className="border-b border-white/5">
+                    <tr className="border-b border-white/10">
                       <th className="text-left text-xs font-medium text-white/40 px-4 py-3">Name</th>
                       <th className="text-left text-xs font-medium text-white/40 px-4 py-3">Category</th>
                       <th className="text-left text-xs font-medium text-white/40 px-4 py-3">Value</th>
@@ -686,7 +968,7 @@ export default function PhotographyModule() {
                   </thead>
                   <tbody>
                     {sampleGear.map((item) => (
-                      <tr key={item.id} className="border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer">
+                      <tr key={item.id} className="border-b border-white/10 hover:bg-white/5 transition-colors cursor-pointer">
                         <td className="px-4 py-3 text-sm text-white/90">{item.name}</td>
                         <td className="px-4 py-3 text-sm text-white/60 capitalize">{item.category}</td>
                         <td className="px-4 py-3 text-sm text-white/60">${item.value.toLocaleString()}</td>
