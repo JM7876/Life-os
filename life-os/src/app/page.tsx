@@ -6,6 +6,7 @@ import TravelTab from '@/components/TravelTab';
 import EmailTab from '@/components/EmailTab';
 import SettingsTab from '@/components/SettingsTab';
 import TasksTab from '@/components/TasksTab';
+import NotesTab from '@/components/NotesTab';
 import { useChat } from 'ai/react';
 import { useLifeOSStore } from '@/store/useLifeOSStore';
 
@@ -32,6 +33,7 @@ const Icons = {
   Menu: ({ className = "w-6 h-6" }: { className?: string }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>,
   X: ({ className = "w-6 h-6" }: { className?: string }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
   Trash: ({ className = "w-4 h-4" }: { className?: string }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>,
+  FileText: ({ className = "w-5 h-5" }: { className?: string }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,
 };
 
 export default function LifeOS() {
@@ -109,6 +111,7 @@ export default function LifeOS() {
     { id: 'finances', icon: Icons.Wallet, label: 'Finances' },
     { id: 'travel', icon: Icons.Plane, label: 'Travel' },
     { id: 'email', icon: Icons.Mail, label: 'Email Hub' },
+    { id: 'notes', icon: Icons.FileText, label: 'Notes' },
     { id: 'calendar', icon: Icons.Calendar, label: 'Calendar' },
     { id: 'work', icon: Icons.Camera, label: 'Photography' },
   ];
@@ -331,6 +334,8 @@ export default function LifeOS() {
             <TravelTab />
           ) : activeTab === 'email' ? (
             <EmailTab />
+          ) : activeTab === 'notes' ? (
+            <NotesTab />
           ) : activeTab === 'settings' ? (
             <SettingsTab />
           ) : (
