@@ -2,8 +2,9 @@
 import Calendar from './components/Calendar';
 import PhotographyModule from '@/components/PhotographyModule';
 import { useChat } from 'ai/react';
+import { useLifeOSStore } from '@/store/useLifeOSStore';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 // Icons as simple SVG components
 const Icons = {
@@ -27,19 +28,16 @@ const Icons = {
   X: ({ className = "w-6 h-6" }: { className?: string }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
 };
 
-interface Task {
-  id: string;
-  title: string;
-  completed: boolean;
-  priority: 'high' | 'medium' | 'low';
-  dueDate?: string;
-  category: string;
-}
-
 export default function LifeOS() {
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [chatOpen, setChatOpen] = useState(false);
+  const {
+    activeTab, setActiveTab,
+    sidebarOpen, setSidebarOpen,
+    chatOpen, setChatOpen,
+    tasks, toggleTask, deleteTask, addTask,
+    emails, markEmailRead,
+    accounts,
+    trips,
+  } = useLifeOSStore();
   const { messages, input, setInput, handleInputChange, handleSubmit, isLoading } = useChat({
     initialMessages: [
       {
@@ -49,12 +47,6 @@ export default function LifeOS() {
       },
     ],
   });
-  const [tasks, setTasks] = useState<Task[]>([
-    { id: '1', title: 'Review Q1 photography portfolio', completed: false, priority: 'high', dueDate: 'Today', category: 'Work' },
-    { id: '2', title: 'Pay Amex statement', completed: false, priority: 'high', dueDate: 'Tomorrow', category: 'Finance' },
-    { id: '3', title: 'Book Denver flight for March', completed: false, priority: 'medium', dueDate: 'This week', category: 'Travel' },
-    { id: '4', title: 'Organize Apple Notes export', completed: true, priority: 'low', dueDate: 'Completed', category: 'Personal' },
-  ]);
 
   const chatEndRef = useRef<HTMLDivElement>(null);
 
@@ -62,7 +54,26 @@ export default function LifeOS() {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const toggleTask = (id: string) => setTasks(tasks.map(task => task.id === id ? { ...task, completed: !task.completed } : task));
+  const formatTimeAgo = (date: Date | string) => {
+    const ms = Date.now() - new Date(date).getTime();
+    const hours = Math.floor(ms / 3600000);
+    if (hours < 1) return 'Just now';
+    if (hours < 24) return `${hours}h`;
+    return `${Math.floor(hours / 24)}d`;
+  };
+
+  const formatDueDate = (dateStr?: string, completed?: boolean) => {
+    if (completed) return 'Completed';
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    const now = new Date();
+    const diffMs = date.getTime() - now.getTime();
+    const diffDays = Math.ceil(diffMs / 86400000);
+    if (diffDays <= 0) return 'Today';
+    if (diffDays === 1) return 'Tomorrow';
+    if (diffDays <= 7) return 'This week';
+    return date.toLocaleDateString();
+  };
 
   const priorityColors = {
     high: 'bg-rose-500/20 text-rose-400 border-rose-500/30',
@@ -80,12 +91,18 @@ export default function LifeOS() {
     { id: 'work', icon: Icons.Camera, label: 'Photography' },
   ];
 
-  const financialStats = [
-    { label: 'Monthly Budget', value: '$4,250', change: '68% left', positive: true },
-    { label: 'Savings Goal', value: '$12,840', change: '+$840', positive: true },
-    { label: 'Bills Due', value: '$1,245', change: '3 upcoming', positive: false },
-    { label: 'Investments', value: '$28,450', change: '+2.4%', positive: true },
-  ];
+  const accountMeta: Record<string, { change: string; positive: boolean }> = {
+    checking: { change: '68% left', positive: true },
+    savings: { change: '+$840', positive: true },
+    credit: { change: '3 upcoming', positive: false },
+    investment: { change: '+2.4%', positive: true },
+  };
+
+  const financialStats = accounts.map((acct) => ({
+    label: acct.name,
+    value: `$${acct.balance.toLocaleString()}`,
+    ...(accountMeta[acct.type] ?? { change: '', positive: true }),
+  }));
 
   return (
     <div className="min-h-screen bg-[#0d0d2a] text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
@@ -376,7 +393,7 @@ export default function LifeOS() {
                       </button>
                       <div className="flex-1 min-w-0">
                         <p className={`font-medium ${task.completed ? 'line-through text-white/40' : ''}`}>{task.title}</p>
-                        <p className="text-xs text-white/40">{task.dueDate} • {task.category}</p>
+                        <p className="text-xs text-white/40">{formatDueDate(task.dueDate, task.completed)} • {task.category}</p>
                       </div>
                       <span className={`hidden sm:block px-3 py-1 rounded-lg text-xs font-medium border ${priorityColors[task.priority]}`}>{task.priority}</span>
                     </div>
@@ -454,21 +471,17 @@ export default function LifeOS() {
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400"><Icons.Mail /></div>
                   <h3 className="font-semibold">Email</h3>
-                  <span className="ml-auto px-3 py-1 rounded-lg bg-rose-500/20 text-rose-400 text-xs">3 Priority</span>
+                  <span className="ml-auto px-3 py-1 rounded-lg bg-rose-500/20 text-rose-400 text-xs">{emails.filter(e => e.priority).length} Priority</span>
                 </div>
                 <div className="space-y-2">
-                  {[
-                    { from: 'American Express', subject: 'Statement ready', time: '2h', priority: true },
-                    { from: 'Delta Airlines', subject: 'Flight confirmed', time: '5h', priority: true },
-                    { from: 'Adobe', subject: 'New Lightroom features', time: '1d', priority: false },
-                  ].map((email, i) => (
-                    <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+                  {emails.map((email) => (
+                    <div key={email.id} onClick={() => markEmailRead(email.id)} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 cursor-pointer">
                       <div className={`w-2 h-2 rounded-full flex-shrink-0 ${email.priority ? 'bg-rose-400' : 'bg-white/20'}`} />
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-sm truncate">{email.from}</p>
+                        <p className={`font-medium text-sm truncate ${email.read ? 'text-white/50' : ''}`}>{email.from}</p>
                         <p className="text-xs text-white/40 truncate">{email.subject}</p>
                       </div>
-                      <p className="text-xs text-white/30">{email.time}</p>
+                      <p className="text-xs text-white/30">{formatTimeAgo(email.timestamp)}</p>
                     </div>
                   ))}
                 </div>
@@ -503,23 +516,28 @@ export default function LifeOS() {
                   <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400"><Icons.Plane /></div>
                   <h3 className="font-semibold">Upcoming Travel</h3>
                 </div>
-                <div className="p-4 rounded-xl bg-gradient-to-br from-violet-500/20 to-purple-500/10 border border-violet-500/20">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <p className="text-xs text-white/80">Next Trip</p>
-                      <p className="text-xl font-bold">Denver, CO</p>
+                {trips.length > 0 ? (
+                  <div className="p-4 rounded-xl bg-gradient-to-br from-violet-500/20 to-purple-500/10 border border-violet-500/20">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <p className="text-xs text-white/80">Next Trip</p>
+                        <p className="text-xl font-bold">{trips[0].destination}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xs text-white/80">Departure</p>
+                        <p className="text-xl font-bold">{new Date(trips[0].startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-xs text-white/80">Departure</p>
-                      <p className="text-xl font-bold">Mar 15</p>
-                    </div>
+                    {trips[0].flights.length > 0 && (
+                      <div className="flex flex-wrap gap-2 text-sm">
+                        <span className="px-3 py-1 rounded-lg bg-white/10">{trips[0].flights[0].flightNumber}</span>
+                        <span className="text-white/80">{trips[0].flights[0].departure} → {trips[0].flights[0].arrival}</span>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex flex-wrap gap-2 text-sm">
-                    <span className="px-3 py-1 rounded-lg bg-white/10">DL 1247</span>
-                    <span className="text-white/80">DTW → DEN</span>
-                    <span className="text-white/80">3h 45m</span>
-                  </div>
-                </div>
+                ) : (
+                  <p className="text-white/40 text-sm">No upcoming trips</p>
+                )}
               </div>
             </div>
           </div>
