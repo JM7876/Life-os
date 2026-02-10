@@ -5,6 +5,7 @@ import FinancesTab from '@/components/FinancesTab';
 import TravelTab from '@/components/TravelTab';
 import EmailTab from '@/components/EmailTab';
 import SettingsTab from '@/components/SettingsTab';
+import TasksTab from '@/components/TasksTab';
 import { useChat } from 'ai/react';
 import { useLifeOSStore } from '@/store/useLifeOSStore';
 
@@ -322,6 +323,8 @@ export default function LifeOS() {
             <Calendar />
           ) : activeTab === 'work' ? (
             <PhotographyModule />
+          ) : activeTab === 'tasks' ? (
+            <TasksTab />
           ) : activeTab === 'finances' ? (
             <FinancesTab />
           ) : activeTab === 'travel' ? (
