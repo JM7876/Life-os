@@ -1,6 +1,7 @@
 'use client';
 import Calendar from './components/Calendar';
 import PhotographyModule from '@/components/PhotographyModule';
+import { useChat } from 'ai/react';
 
 import React, { useState, useRef, useEffect } from 'react';
 
@@ -26,13 +27,6 @@ const Icons = {
   X: ({ className = "w-6 h-6" }: { className?: string }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
 };
 
-interface Message {
-  id: string;
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: Date;
-}
-
 interface Task {
   id: string;
   title: string;
@@ -46,15 +40,15 @@ export default function LifeOS() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      role: 'assistant',
-      content: "Good morning, Johnathon! I've reviewed your schedule for today. You have 3 priority tasks and 2 meetings. Would you like me to brief you on anything specific?",
-      timestamp: new Date(),
-    },
-  ]);
-  const [inputValue, setInputValue] = useState('');
+  const { messages, input, setInput, handleInputChange, handleSubmit, isLoading } = useChat({
+    initialMessages: [
+      {
+        id: '1',
+        role: 'assistant',
+        content: "Good morning, Johnathon! I've reviewed your schedule for today. You have 3 priority tasks and 2 meetings. Would you like me to brief you on anything specific?",
+      },
+    ],
+  });
   const [tasks, setTasks] = useState<Task[]>([
     { id: '1', title: 'Review Q1 photography portfolio', completed: false, priority: 'high', dueDate: 'Today', category: 'Work' },
     { id: '2', title: 'Pay Amex statement', completed: false, priority: 'high', dueDate: 'Tomorrow', category: 'Finance' },
@@ -67,22 +61,6 @@ export default function LifeOS() {
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
-
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
-    const newMessage: Message = { id: Date.now().toString(), role: 'user', content: inputValue, timestamp: new Date() };
-    setMessages([...messages, newMessage]);
-    setInputValue('');
-    setTimeout(() => {
-      const aiResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: "I'm here to help you manage tasks, triage emails, plan travel, and keep your life organized. What would you like to tackle?",
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, aiResponse]);
-    }, 1000);
-  };
 
   const toggleTask = (id: string) => setTasks(tasks.map(task => task.id === id ? { ...task, completed: !task.completed } : task));
 
@@ -600,13 +578,13 @@ export default function LifeOS() {
             <div className="p-4 border-t border-white/10">
               <div className="flex gap-2 mb-3 overflow-x-auto">
                 {['Plan my day', 'Check emails', 'Finances'].map((action) => (
-                  <button key={action} onClick={() => setInputValue(action)} className="px-3 py-2 rounded-full bg-white/5 hover:bg-white/10 text-sm whitespace-nowrap">{action}</button>
+                  <button key={action} onClick={() => setInput(action)} className="px-3 py-2 rounded-full bg-white/5 hover:bg-white/10 text-sm whitespace-nowrap">{action}</button>
                 ))}
               </div>
-              <div className="flex items-center gap-2 bg-white/5 rounded-xl p-2">
-                <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()} placeholder="Ask anything..." className="flex-1 bg-transparent px-3 py-2 placeholder:text-white/30 focus:outline-none" />
-                <button onClick={handleSendMessage} className="p-3 rounded-xl bg-violet-500 hover:bg-violet-600"><Icons.Send /></button>
-              </div>
+              <form onSubmit={handleSubmit} className="flex items-center gap-2 bg-white/5 rounded-xl p-2">
+                <input type="text" value={input} onChange={handleInputChange} placeholder="Ask anything..." className="flex-1 bg-transparent px-3 py-2 placeholder:text-white/30 focus:outline-none" />
+                <button type="submit" disabled={isLoading} className="p-3 rounded-xl bg-violet-500 hover:bg-violet-600 disabled:opacity-50"><Icons.Send /></button>
+              </form>
             </div>
           </div>
         </div>
