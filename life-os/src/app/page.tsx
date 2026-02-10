@@ -9,6 +9,8 @@ import TasksTab from '@/components/TasksTab';
 import NotesTab from '@/components/NotesTab';
 import { useChat } from 'ai/react';
 import { useLifeOSStore } from '@/store/useLifeOSStore';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 import React, { useState, useRef, useEffect } from 'react';
 
@@ -37,6 +39,8 @@ const Icons = {
 };
 
 export default function LifeOS() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const {
     activeTab, setActiveTab,
     sidebarOpen, setSidebarOpen,
@@ -63,6 +67,28 @@ export default function LifeOS() {
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Auth guard — redirect to login if unauthenticated
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/login');
+    }
+  }, [status, router]);
+
+  // Show loading spinner while checking auth
+  if (status === 'loading' || status === 'unauthenticated') {
+    return (
+      <div className="min-h-screen bg-[#0d0d2a] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  // Derive user display info from session
+  const userName = session?.user?.name || 'User';
+  const userInitial = userName.charAt(0).toUpperCase();
+  const userImage = session?.user?.image;
+  const userFirstName = userName.split(' ')[0];
 
   const formatTimeAgo = (date: Date | string) => {
     const ms = Date.now() - new Date(date).getTime();
@@ -314,7 +340,11 @@ export default function LifeOS() {
                   <Icons.Brain />
                   <span className="hidden sm:inline">AI</span>
                 </button>
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center font-bold">J</div>
+                {userImage ? (
+                  <img src={userImage} alt={userName} className="w-10 h-10 rounded-xl object-cover" referrerPolicy="no-referrer" />
+                ) : (
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center font-bold">{userInitial}</div>
+                )}
               </div>
             </div>
           </div>
@@ -342,7 +372,7 @@ export default function LifeOS() {
             <div className="mb-6">
               <div className="mb-6">
                 <h2 className="text-2xl lg:text-3xl font-bold mb-1">
-              Good morning, <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-400">Johnathon</span>
+              Good morning, <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-400">{userFirstName}</span>
             </h2>
             <p className="text-white/80">Here&apos;s what&apos;s happening today.</p>
           </div>
