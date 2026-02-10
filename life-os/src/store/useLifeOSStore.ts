@@ -17,11 +17,14 @@ export interface Task {
 export interface Email {
   id: string;
   from: string;
+  fromEmail: string;
   subject: string;
   preview: string;
+  body: string;
   timestamp: Date;
   read: boolean;
   priority: boolean;
+  archived: boolean;
   provider: 'gmail' | 'outlook' | 'icloud';
 }
 
@@ -107,7 +110,10 @@ interface LifeOSState {
   
   // Email actions
   markEmailRead: (id: string) => void;
+  toggleEmailRead: (id: string) => void;
   markEmailPriority: (id: string, priority: boolean) => void;
+  archiveEmail: (id: string) => void;
+  unarchiveEmail: (id: string) => void;
   
   // Financial actions
   addAccount: (account: Omit<FinancialAccount, 'id' | 'lastUpdated'>) => void;
@@ -179,33 +185,159 @@ export const useLifeOSStore = create<LifeOSState>()(
 
       emails: [
         {
-          id: '1',
+          id: 'e1',
           from: 'American Express',
-          subject: 'Statement ready',
-          preview: 'Your January statement is now available.',
+          fromEmail: 'alerts@americanexpress.com',
+          subject: 'Your January statement is ready',
+          preview: 'Your January statement is now available for review.',
+          body: 'Dear Johnathon,\n\nYour January statement is now available. Your current balance is $1,245.00. Payment is due by February 15, 2025.\n\nStatement Period: January 1 - January 31, 2025\nNew Balance: $1,245.00\nMinimum Payment Due: $35.00\nPayment Due Date: February 15, 2025\n\nPlease log in to your account to view the full statement and make a payment.\n\nThank you for being a valued Card Member.\n\nAmerican Express',
+          timestamp: new Date(Date.now() - 3600000),
+          read: false,
+          priority: true,
+          archived: false,
+          provider: 'gmail',
+        },
+        {
+          id: 'e2',
+          from: 'Delta Airlines',
+          fromEmail: 'noreply@delta.com',
+          subject: 'Flight DL 1247 to Denver confirmed',
+          preview: 'Your flight DL 1247 to Denver is confirmed for March 15.',
+          body: 'Hi Johnathon,\n\nYour upcoming flight is confirmed!\n\nFlight: DL 1247\nDate: March 15, 2025\nDeparture: DTW 8:30 AM\nArrival: DEN 10:45 AM\nSeat: 14A (Window)\nClass: Main Cabin\n\nCheck-in opens 24 hours before departure. You can manage your booking through the Delta app or at delta.com.\n\nWe look forward to welcoming you on board!\n\nDelta Air Lines',
           timestamp: new Date(Date.now() - 7200000),
           read: false,
           priority: true,
+          archived: false,
           provider: 'gmail',
         },
         {
-          id: '2',
-          from: 'Delta Airlines',
-          subject: 'Flight confirmed',
-          preview: 'Your flight DL 1247 to Denver is confirmed.',
-          timestamp: new Date(Date.now() - 18000000),
+          id: 'e3',
+          from: 'Sarah Chen',
+          fromEmail: 'sarah.chen@designstudio.com',
+          subject: 'Re: Portrait session next week',
+          preview: 'Sounds great! Tuesday at 2pm works perfectly.',
+          body: 'Hi Johnathon,\n\nSounds great! Tuesday at 2pm works perfectly for the portrait session. I was thinking we could shoot at the park downtown or at my studio space on Main St.\n\nDo you have a preference? I can bring a few outfit changes if we go with the outdoor location.\n\nAlso, do you need me to sign a model release form before the session?\n\nLooking forward to it!\n\nBest,\nSarah',
+          timestamp: new Date(Date.now() - 14400000),
           read: false,
-          priority: true,
+          priority: false,
+          archived: false,
           provider: 'gmail',
         },
         {
-          id: '3',
-          from: 'Adobe',
-          subject: 'New Lightroom features',
-          preview: 'Check out the latest Lightroom updates.',
+          id: 'e4',
+          from: 'Adobe Creative Cloud',
+          fromEmail: 'mail@adobe.com',
+          subject: 'New Lightroom AI features available',
+          preview: 'Check out the latest AI-powered editing tools in Lightroom.',
+          body: 'Hi Johnathon,\n\nExciting news! We have launched new AI-powered features in Adobe Lightroom:\n\n- Generative Remove: Seamlessly remove unwanted objects\n- AI Denoise: Dramatically reduce noise in high ISO images\n- Lens Blur: Add realistic depth of field effects\n- Auto Color Grading: Intelligent color matching\n\nThese features are available now in your Creative Cloud subscription. Update Lightroom to the latest version to get started.\n\nHappy editing!\nThe Adobe Team',
           timestamp: new Date(Date.now() - 86400000),
           read: true,
           priority: false,
+          archived: false,
+          provider: 'gmail',
+        },
+        {
+          id: 'e5',
+          from: 'Chase Bank',
+          fromEmail: 'no-reply@chase.com',
+          subject: 'Your direct deposit has arrived',
+          preview: 'A direct deposit of $3,200.00 has been posted to your account.',
+          body: 'Dear Johnathon Moulds,\n\nA direct deposit has been posted to your Chase Total Checking account.\n\nAmount: $3,200.00\nFrom: Portrait Studio LLC\nDate: Today\nAvailable Balance: $4,250.00\n\nLog in to Chase.com or the Chase Mobile app to view your account details.\n\nChase Bank',
+          timestamp: new Date(Date.now() - 108000000),
+          read: true,
+          priority: true,
+          archived: false,
+          provider: 'gmail',
+        },
+        {
+          id: 'e6',
+          from: 'Marcus by Goldman Sachs',
+          fromEmail: 'alerts@marcus.com',
+          subject: 'Your savings goal update',
+          preview: 'You are 85% toward your $15,000 savings goal.',
+          body: 'Hi Johnathon,\n\nGreat progress on your savings goal!\n\nGoal: Emergency Fund\nTarget: $15,000.00\nCurrent Balance: $12,840.00\nProgress: 85.6%\n\nAt your current savings rate, you are on track to reach your goal by April 2025. Keep it up!\n\nYour current APY: 4.40%\nInterest earned this month: $47.08\n\nMarcus by Goldman Sachs',
+          timestamp: new Date(Date.now() - 172800000),
+          read: true,
+          priority: false,
+          archived: false,
+          provider: 'outlook',
+        },
+        {
+          id: 'e7',
+          from: 'Mike Torres',
+          fromEmail: 'mike.t@gmail.com',
+          subject: 'Denver trip - restaurant recommendations',
+          preview: 'Hey! Here are some spots you should check out in Denver.',
+          body: 'Hey Johnathon!\n\nHeard you are heading to Denver next month. Here are some places you absolutely need to check out:\n\n1. Guard and Grace - Amazing steakhouse downtown\n2. Linger - Great rooftop views and eclectic menu\n3. Denver Biscuit Company - Must-try for breakfast\n4. Ratio Beerworks - Best local brewery\n5. Snooze AM Eatery - Weekend brunch spot\n\nAlso, if you get a chance, drive up to Lookout Mountain for some incredible shots. The light is amazing at golden hour.\n\nHave a great trip!\nMike',
+          timestamp: new Date(Date.now() - 259200000),
+          read: true,
+          priority: false,
+          archived: false,
+          provider: 'gmail',
+        },
+        {
+          id: 'e8',
+          from: 'Marriott Bonvoy',
+          fromEmail: 'reservation@marriott.com',
+          subject: 'Reservation confirmation - Denver Downtown',
+          preview: 'Your reservation at Marriott Downtown Denver is confirmed.',
+          body: 'Dear Johnathon Moulds,\n\nYour reservation has been confirmed!\n\nHotel: Marriott Downtown Denver\nConfirmation #: MRR-8847291\nCheck-in: March 15, 2025 (3:00 PM)\nCheck-out: March 19, 2025 (11:00 AM)\nRoom Type: King, City View\nRate: $189/night\n\nBonvoy Points Earned: 1,512 points\n\nSpecial Requests: Late check-out if available\n\nWe look forward to welcoming you!\n\nMarriott Bonvoy',
+          timestamp: new Date(Date.now() - 345600000),
+          read: true,
+          priority: false,
+          archived: false,
+          provider: 'gmail',
+        },
+        {
+          id: 'e9',
+          from: 'GitHub',
+          fromEmail: 'notifications@github.com',
+          subject: '[Life-os] Pull request merged: #4',
+          preview: 'Pull request #4 has been merged into main.',
+          body: 'JM7876 merged pull request #4 in JM7876/Life-os\n\nWire up real Claude AI chat via useChat hook\n\nMerged by: JM7876\nBranch: claude/quizzical-buck -> main\nCommits: 3\nFiles changed: 5\n\nView on GitHub: https://github.com/JM7876/Life-os/pull/4',
+          timestamp: new Date(Date.now() - 432000000),
+          read: true,
+          priority: false,
+          archived: false,
+          provider: 'outlook',
+        },
+        {
+          id: 'e10',
+          from: 'AT&T',
+          fromEmail: 'att-billing@att.com',
+          subject: 'Your bill is ready - $79.99',
+          preview: 'Your AT&T Internet bill for this month is ready.',
+          body: 'Hi Johnathon,\n\nYour AT&T bill is ready.\n\nAccount: ***4821\nBill Period: Jan 10 - Feb 9, 2025\nAmount Due: $79.99\nDue Date: February 25, 2025\n\nService: AT&T Fiber Internet 500\nMonthly Charge: $79.99\n\nPay online at att.com/pay or through the myAT&T app.\n\nThank you for choosing AT&T.',
+          timestamp: new Date(Date.now() - 518400000),
+          read: true,
+          priority: false,
+          archived: false,
+          provider: 'gmail',
+        },
+        {
+          id: 'e11',
+          from: 'Fidelity Investments',
+          fromEmail: 'alerts@fidelity.com',
+          subject: 'Weekly portfolio summary',
+          preview: 'Your portfolio gained 2.4% this week.',
+          body: 'Hi Johnathon,\n\nHere is your weekly portfolio summary:\n\nTotal Value: $28,450.00\nWeekly Change: +$667.20 (+2.4%)\nYTD Return: +8.7%\n\nTop Performers:\n- AAPL: +4.1%\n- MSFT: +3.2%\n- VOO: +2.1%\n\nMarket Summary: Markets rallied this week on strong earnings reports and positive economic data.\n\nLog in to Fidelity.com to view your full portfolio.\n\nFidelity Investments',
+          timestamp: new Date(Date.now() - 604800000),
+          read: true,
+          priority: false,
+          archived: false,
+          provider: 'outlook',
+        },
+        {
+          id: 'e12',
+          from: 'Spotify',
+          fromEmail: 'no-reply@spotify.com',
+          subject: 'Your 2024 Wrapped is here!',
+          preview: 'See your top artists, songs, and listening stats for 2024.',
+          body: 'Hey Johnathon,\n\nYour 2024 Spotify Wrapped is ready!\n\nYour Top Artists:\n1. Khruangbin\n2. Tame Impala\n3. Tycho\n4. Bonobo\n5. Nils Frahm\n\nTotal Minutes Listened: 32,847\nTop Genre: Electronic / Ambient\nListening Personality: The Curator\n\nCheck out your full Wrapped experience in the Spotify app.\n\nThanks for listening!\nSpotify',
+          timestamp: new Date(Date.now() - 864000000),
+          read: true,
+          priority: false,
+          archived: true,
           provider: 'gmail',
         },
       ],
@@ -327,10 +459,28 @@ export const useLifeOSStore = create<LifeOSState>()(
           email.id === id ? { ...email, read: true } : email
         ),
       })),
-      
+
+      toggleEmailRead: (id) => set((state) => ({
+        emails: state.emails.map((email) =>
+          email.id === id ? { ...email, read: !email.read } : email
+        ),
+      })),
+
       markEmailPriority: (id, priority) => set((state) => ({
         emails: state.emails.map((email) =>
           email.id === id ? { ...email, priority } : email
+        ),
+      })),
+
+      archiveEmail: (id) => set((state) => ({
+        emails: state.emails.map((email) =>
+          email.id === id ? { ...email, archived: true } : email
+        ),
+      })),
+
+      unarchiveEmail: (id) => set((state) => ({
+        emails: state.emails.map((email) =>
+          email.id === id ? { ...email, archived: false } : email
         ),
       })),
       
