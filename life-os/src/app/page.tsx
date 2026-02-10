@@ -4,7 +4,7 @@ import PhotographyModule from '@/components/PhotographyModule';
 import { useChat } from 'ai/react';
 import { useLifeOSStore } from '@/store/useLifeOSStore';
 
-import React, { useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 // Icons as simple SVG components
 const Icons = {
@@ -26,6 +26,7 @@ const Icons = {
   Target: ({ className = "w-5 h-5" }: { className?: string }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
   Menu: ({ className = "w-6 h-6" }: { className?: string }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>,
   X: ({ className = "w-6 h-6" }: { className?: string }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+  Trash: ({ className = "w-4 h-4" }: { className?: string }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>,
 };
 
 export default function LifeOS() {
@@ -38,6 +39,8 @@ export default function LifeOS() {
     accounts,
     trips,
   } = useLifeOSStore();
+  const [showAddTask, setShowAddTask] = useState(false);
+  const [newTask, setNewTask] = useState<{ title: string; description: string; priority: 'high' | 'medium' | 'low'; dueDate: string; category: string }>({ title: '', description: '', priority: 'medium', dueDate: '', category: 'Personal' });
   const { messages, input, setInput, handleInputChange, handleSubmit, isLoading } = useChat({
     initialMessages: [
       {
@@ -73,6 +76,20 @@ export default function LifeOS() {
     if (diffDays === 1) return 'Tomorrow';
     if (diffDays <= 7) return 'This week';
     return date.toLocaleDateString();
+  };
+
+  const handleAddTask = () => {
+    if (!newTask.title.trim()) return;
+    addTask({
+      title: newTask.title.trim(),
+      description: newTask.description.trim() || undefined,
+      completed: false,
+      priority: newTask.priority,
+      dueDate: newTask.dueDate || undefined,
+      category: newTask.category,
+    });
+    setNewTask({ title: '', description: '', priority: 'medium', dueDate: '', category: 'Personal' });
+    setShowAddTask(false);
   };
 
   const priorityColors = {
@@ -381,7 +398,7 @@ export default function LifeOS() {
                     <div className="p-2 rounded-xl bg-violet-500/10 text-violet-400"><Icons.CheckSquare /></div>
                     <h3 className="font-semibold">Today&apos;s Tasks</h3>
                   </div>
-                  <button className="p-2 rounded-lg bg-violet-500/10 text-violet-400 hover:bg-violet-500/20">
+                  <button onClick={() => setShowAddTask(true)} className="p-2 rounded-lg bg-violet-500/10 text-violet-400 hover:bg-violet-500/20">
                     <Icons.Plus />
                   </button>
                 </div>
@@ -396,6 +413,9 @@ export default function LifeOS() {
                         <p className="text-xs text-white/40">{formatDueDate(task.dueDate, task.completed)} • {task.category}</p>
                       </div>
                       <span className={`hidden sm:block px-3 py-1 rounded-lg text-xs font-medium border ${priorityColors[task.priority]}`}>{task.priority}</span>
+                      <button onClick={() => deleteTask(task.id)} className="p-1.5 rounded-lg text-white/20 hover:text-rose-400 hover:bg-rose-500/10 transition-all flex-shrink-0">
+                        <Icons.Trash />
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -607,6 +627,129 @@ export default function LifeOS() {
           </div>
         </div>
       </main>
+
+      {/* Add Task Modal */}
+      {showAddTask && (
+        <>
+          <div className="fixed inset-0 bg-black/60 z-[60]" onClick={() => setShowAddTask(false)} />
+          <div className="fixed inset-0 z-[61] flex items-center justify-center p-4">
+            <div
+              className="relative w-full max-w-md rounded-[2rem] p-6 overflow-hidden"
+              style={{
+                background: 'rgba(20, 10, 50, 0.85)',
+                backdropFilter: 'blur(40px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                boxShadow: '0 8px 32px rgba(31, 38, 135, 0.35), inset 0 4px 20px rgba(255, 255, 255, 0.15)',
+              }}
+            >
+              {/* Shine effect */}
+              <div
+                className="absolute inset-0 rounded-[2rem] pointer-events-none"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  boxShadow: 'inset -10px -8px 0px -11px rgba(255, 255, 255, 0.6), inset 0px -9px 0px -8px rgba(255, 255, 255, 0.6)',
+                  opacity: 0.5,
+                  filter: 'blur(1px) brightness(115%)',
+                }}
+              />
+              <div className="absolute inset-x-0 top-0 h-20 rounded-t-[2rem] pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }} />
+
+              <div className="relative">
+                <div className="flex items-center justify-between mb-5">
+                  <h3 className="text-lg font-semibold">New Task</h3>
+                  <button onClick={() => setShowAddTask(false)} className="p-2 rounded-xl hover:bg-white/10 transition-all">
+                    <Icons.X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs text-white/50 mb-1.5">Title</label>
+                    <input
+                      type="text"
+                      value={newTask.title}
+                      onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                      placeholder="What needs to be done?"
+                      autoFocus
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50 transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs text-white/50 mb-1.5">Description</label>
+                    <textarea
+                      value={newTask.description}
+                      onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+                      placeholder="Add details..."
+                      rows={2}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50 resize-none transition-colors"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs text-white/50 mb-1.5">Priority</label>
+                      <div className="flex gap-2">
+                        {(['high', 'medium', 'low'] as const).map((p) => (
+                          <button
+                            key={p}
+                            type="button"
+                            onClick={() => setNewTask({ ...newTask, priority: p })}
+                            className={`flex-1 px-2 py-2 rounded-xl text-xs font-medium border transition-all ${
+                              newTask.priority === p ? priorityColors[p] : 'border-white/10 text-white/40 hover:border-white/20'
+                            }`}
+                          >
+                            {p}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-white/50 mb-1.5">Due Date</label>
+                      <input
+                        type="date"
+                        value={newTask.dueDate}
+                        onChange={(e) => setNewTask({ ...newTask, dueDate: e.target.value })}
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-violet-500/50 transition-colors [color-scheme:dark]"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs text-white/50 mb-1.5">Category</label>
+                    <div className="flex flex-wrap gap-2">
+                      {['Personal', 'Work', 'Finance', 'Travel', 'Health'].map((cat) => (
+                        <button
+                          key={cat}
+                          type="button"
+                          onClick={() => setNewTask({ ...newTask, category: cat })}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-medium border transition-all ${
+                            newTask.category === cat
+                              ? 'bg-violet-500/20 text-violet-300 border-violet-500/30'
+                              : 'border-white/10 text-white/40 hover:border-white/20'
+                          }`}
+                        >
+                          {cat}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={handleAddTask}
+                    disabled={!newTask.title.trim()}
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 font-medium text-sm hover:from-violet-600 hover:to-purple-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                  >
+                    Add Task
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
