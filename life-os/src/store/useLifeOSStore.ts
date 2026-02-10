@@ -52,19 +52,31 @@ export interface Bill {
   paid: boolean;
 }
 
+export interface PackingItem {
+  id: string;
+  item: string;
+  packed: boolean;
+}
+
+export interface Flight {
+  airline: string;
+  flightNumber: string;
+  departure: string;
+  arrival: string;
+  departureTime?: string;
+  arrivalTime?: string;
+}
+
 export interface Trip {
   id: string;
   destination: string;
   startDate: string;
   endDate: string;
-  flights: {
-    airline: string;
-    flightNumber: string;
-    departure: string;
-    arrival: string;
-  }[];
+  flights: Flight[];
   accommodations?: string;
   activities: string[];
+  notes?: string;
+  packingList: PackingItem[];
 }
 
 interface LifeOSState {
@@ -111,6 +123,10 @@ interface LifeOSState {
   // Trip actions
   addTrip: (trip: Omit<Trip, 'id'>) => void;
   updateTrip: (id: string, updates: Partial<Trip>) => void;
+  deleteTrip: (id: string) => void;
+  addPackingItem: (tripId: string, item: string) => void;
+  togglePackingItem: (tripId: string, itemId: string) => void;
+  deletePackingItem: (tripId: string, itemId: string) => void;
 }
 
 export const useLifeOSStore = create<LifeOSState>()(
@@ -253,10 +269,19 @@ export const useLifeOSStore = create<LifeOSState>()(
               flightNumber: 'DL 1247',
               departure: 'DTW',
               arrival: 'DEN',
+              departureTime: '08:30',
+              arrivalTime: '10:45',
             },
           ],
           accommodations: 'Marriott Downtown Denver',
           activities: ['Photography shoot', 'Red Rocks visit'],
+          notes: 'Bring wide-angle lens for landscape shots',
+          packingList: [
+            { id: 'p1', item: 'Camera body + lenses', packed: false },
+            { id: 'p2', item: 'Tripod', packed: false },
+            { id: 'p3', item: 'Laptop + charger', packed: true },
+            { id: 'p4', item: 'Warm jacket', packed: false },
+          ],
         },
       ],
       
@@ -348,6 +373,34 @@ export const useLifeOSStore = create<LifeOSState>()(
       updateTrip: (id, updates) => set((state) => ({
         trips: state.trips.map((trip) =>
           trip.id === id ? { ...trip, ...updates } : trip
+        ),
+      })),
+
+      deleteTrip: (id) => set((state) => ({
+        trips: state.trips.filter((t) => t.id !== id),
+      })),
+
+      addPackingItem: (tripId, item) => set((state) => ({
+        trips: state.trips.map((trip) =>
+          trip.id === tripId
+            ? { ...trip, packingList: [...trip.packingList, { id: crypto.randomUUID(), item, packed: false }] }
+            : trip
+        ),
+      })),
+
+      togglePackingItem: (tripId, itemId) => set((state) => ({
+        trips: state.trips.map((trip) =>
+          trip.id === tripId
+            ? { ...trip, packingList: trip.packingList.map((p) => p.id === itemId ? { ...p, packed: !p.packed } : p) }
+            : trip
+        ),
+      })),
+
+      deletePackingItem: (tripId, itemId) => set((state) => ({
+        trips: state.trips.map((trip) =>
+          trip.id === tripId
+            ? { ...trip, packingList: trip.packingList.filter((p) => p.id !== itemId) }
+            : trip
         ),
       })),
     }),

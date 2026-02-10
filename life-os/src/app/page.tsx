@@ -2,6 +2,7 @@
 import Calendar from './components/Calendar';
 import PhotographyModule from '@/components/PhotographyModule';
 import FinancesTab from '@/components/FinancesTab';
+import TravelTab from '@/components/TravelTab';
 import { useChat } from 'ai/react';
 import { useLifeOSStore } from '@/store/useLifeOSStore';
 
@@ -316,6 +317,8 @@ export default function LifeOS() {
             <PhotographyModule />
           ) : activeTab === 'finances' ? (
             <FinancesTab />
+          ) : activeTab === 'travel' ? (
+            <TravelTab />
           ) : (
             <div className="mb-6">
               <div className="mb-6">
