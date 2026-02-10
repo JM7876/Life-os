@@ -4,6 +4,7 @@ import PhotographyModule from '@/components/PhotographyModule';
 import FinancesTab from '@/components/FinancesTab';
 import TravelTab from '@/components/TravelTab';
 import EmailTab from '@/components/EmailTab';
+import SettingsTab from '@/components/SettingsTab';
 import { useChat } from 'ai/react';
 import { useLifeOSStore } from '@/store/useLifeOSStore';
 
@@ -244,8 +245,13 @@ export default function LifeOS() {
 
       {/* Settings */}
       <div className={`pt-4 border-t border-white/5 ${sidebarOpen ? '' : 'flex justify-center'}`}>
-        <button className="w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-white/80 hover:text-cyan-300 transition-all duration-300">
-          <Icons.Settings className="w-5 h-5 flex-shrink-0" />
+        <button
+          onClick={() => setActiveTab('settings')}
+          className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 ${
+            activeTab === 'settings' ? 'text-cyan-300' : 'text-white/80 hover:text-cyan-300'
+          }`}
+        >
+          <Icons.Settings className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${activeTab === 'settings' ? 'scale-110' : ''}`} />
           <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
             Settings
           </span>
@@ -322,6 +328,8 @@ export default function LifeOS() {
             <TravelTab />
           ) : activeTab === 'email' ? (
             <EmailTab />
+          ) : activeTab === 'settings' ? (
+            <SettingsTab />
           ) : (
             <div className="mb-6">
               <div className="mb-6">

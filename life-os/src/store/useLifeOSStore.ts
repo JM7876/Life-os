@@ -82,12 +82,27 @@ export interface Trip {
   packingList: PackingItem[];
 }
 
+export interface UserSettings {
+  profile: {
+    name: string;
+    email: string;
+  };
+  theme: 'dark' | 'light';
+  aiModel: 'haiku' | 'sonnet';
+  notifications: {
+    emailAlerts: boolean;
+    taskReminders: boolean;
+    billReminders: boolean;
+    travelAlerts: boolean;
+  };
+}
+
 interface LifeOSState {
   // UI State
   sidebarOpen: boolean;
   chatOpen: boolean;
   activeTab: string;
-  
+
   // Data
   tasks: Task[];
   emails: Email[];
@@ -96,6 +111,7 @@ interface LifeOSState {
   bills: Bill[];
   monthlyBudget: number;
   trips: Trip[];
+  settings: UserSettings;
   
   // Actions
   setSidebarOpen: (open: boolean) => void;
@@ -133,6 +149,12 @@ interface LifeOSState {
   addPackingItem: (tripId: string, item: string) => void;
   togglePackingItem: (tripId: string, itemId: string) => void;
   deletePackingItem: (tripId: string, itemId: string) => void;
+
+  // Settings actions
+  updateSettings: (updates: Partial<UserSettings>) => void;
+  updateNotifications: (updates: Partial<UserSettings['notifications']>) => void;
+  updateProfile: (updates: Partial<UserSettings['profile']>) => void;
+  clearAllData: () => void;
 }
 
 export const useLifeOSStore = create<LifeOSState>()(
@@ -416,7 +438,21 @@ export const useLifeOSStore = create<LifeOSState>()(
           ],
         },
       ],
-      
+      settings: {
+        profile: {
+          name: 'Johnathon Moulds',
+          email: 'johnathon@lifeos.app',
+        },
+        theme: 'dark',
+        aiModel: 'sonnet',
+        notifications: {
+          emailAlerts: true,
+          taskReminders: true,
+          billReminders: true,
+          travelAlerts: true,
+        },
+      },
+
       // UI Actions
       setSidebarOpen: (open) => set({ sidebarOpen: open }),
       setChatOpen: (open) => set({ chatOpen: open }),
@@ -553,6 +589,35 @@ export const useLifeOSStore = create<LifeOSState>()(
             : trip
         ),
       })),
+
+      // Settings Actions
+      updateSettings: (updates) => set((state) => ({
+        settings: { ...state.settings, ...updates },
+      })),
+
+      updateNotifications: (updates) => set((state) => ({
+        settings: {
+          ...state.settings,
+          notifications: { ...state.settings.notifications, ...updates },
+        },
+      })),
+
+      updateProfile: (updates) => set((state) => ({
+        settings: {
+          ...state.settings,
+          profile: { ...state.settings.profile, ...updates },
+        },
+      })),
+
+      clearAllData: () => set({
+        tasks: [],
+        emails: [],
+        accounts: [],
+        transactions: [],
+        bills: [],
+        monthlyBudget: 0,
+        trips: [],
+      }),
     }),
     {
       name: 'life-os-storage',
@@ -564,6 +629,7 @@ export const useLifeOSStore = create<LifeOSState>()(
         bills: state.bills,
         monthlyBudget: state.monthlyBudget,
         trips: state.trips,
+        settings: state.settings,
       }),
     }
   )
