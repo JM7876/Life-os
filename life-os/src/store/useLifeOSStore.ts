@@ -34,6 +34,24 @@ export interface FinancialAccount {
   lastUpdated: Date;
 }
 
+export interface Transaction {
+  id: string;
+  amount: number;
+  category: string;
+  description: string;
+  date: string;
+  accountId?: string;
+}
+
+export interface Bill {
+  id: string;
+  name: string;
+  amount: number;
+  dueDate: string;
+  recurring: boolean;
+  paid: boolean;
+}
+
 export interface Trip {
   id: string;
   destination: string;
@@ -59,6 +77,9 @@ interface LifeOSState {
   tasks: Task[];
   emails: Email[];
   accounts: FinancialAccount[];
+  transactions: Transaction[];
+  bills: Bill[];
+  monthlyBudget: number;
   trips: Trip[];
   
   // Actions
@@ -77,8 +98,16 @@ interface LifeOSState {
   markEmailPriority: (id: string, priority: boolean) => void;
   
   // Financial actions
+  addAccount: (account: Omit<FinancialAccount, 'id' | 'lastUpdated'>) => void;
+  deleteAccount: (id: string) => void;
   updateAccountBalance: (id: string, balance: number) => void;
-  
+  addTransaction: (transaction: Omit<Transaction, 'id'>) => void;
+  deleteTransaction: (id: string) => void;
+  addBill: (bill: Omit<Bill, 'id'>) => void;
+  toggleBillPaid: (id: string) => void;
+  deleteBill: (id: string) => void;
+  setMonthlyBudget: (budget: number) => void;
+
   // Trip actions
   addTrip: (trip: Omit<Trip, 'id'>) => void;
   updateTrip: (id: string, updates: Partial<Trip>) => void;
@@ -198,6 +227,20 @@ export const useLifeOSStore = create<LifeOSState>()(
           lastUpdated: new Date(),
         },
       ],
+      transactions: [
+        { id: '1', amount: -64.50, category: 'Dining', description: 'Dinner at Zingerman\'s', date: new Date(Date.now() - 86400000).toISOString() },
+        { id: '2', amount: -129.99, category: 'Software', description: 'Adobe Creative Cloud', date: new Date(Date.now() - 172800000).toISOString() },
+        { id: '3', amount: -42.00, category: 'Transport', description: 'Gas fill-up', date: new Date(Date.now() - 259200000).toISOString() },
+        { id: '4', amount: -235.00, category: 'Shopping', description: 'Camera lens filter', date: new Date(Date.now() - 345600000).toISOString() },
+        { id: '5', amount: 3200.00, category: 'Income', description: 'Client payment - portrait session', date: new Date(Date.now() - 432000000).toISOString() },
+      ],
+      bills: [
+        { id: '1', name: 'Amex Statement', amount: 1245, dueDate: new Date(Date.now() + 172800000).toISOString(), recurring: true, paid: false },
+        { id: '2', name: 'Rent', amount: 1850, dueDate: new Date(Date.now() + 604800000).toISOString(), recurring: true, paid: false },
+        { id: '3', name: 'Internet - AT&T', amount: 79.99, dueDate: new Date(Date.now() + 864000000).toISOString(), recurring: true, paid: false },
+        { id: '4', name: 'Car Insurance', amount: 142, dueDate: new Date(Date.now() + 1209600000).toISOString(), recurring: true, paid: false },
+      ],
+      monthlyBudget: 4250,
       trips: [
         {
           id: '1',
@@ -267,6 +310,12 @@ export const useLifeOSStore = create<LifeOSState>()(
       })),
       
       // Financial Actions
+      addAccount: (account) => set((state) => ({
+        accounts: [...state.accounts, { ...account, id: crypto.randomUUID(), lastUpdated: new Date() }],
+      })),
+      deleteAccount: (id) => set((state) => ({
+        accounts: state.accounts.filter((a) => a.id !== id),
+      })),
       updateAccountBalance: (id, balance) => set((state) => ({
         accounts: state.accounts.map((account) =>
           account.id === id
@@ -274,7 +323,23 @@ export const useLifeOSStore = create<LifeOSState>()(
             : account
         ),
       })),
-      
+      addTransaction: (transaction) => set((state) => ({
+        transactions: [{ ...transaction, id: crypto.randomUUID() }, ...state.transactions],
+      })),
+      deleteTransaction: (id) => set((state) => ({
+        transactions: state.transactions.filter((t) => t.id !== id),
+      })),
+      addBill: (bill) => set((state) => ({
+        bills: [...state.bills, { ...bill, id: crypto.randomUUID() }],
+      })),
+      toggleBillPaid: (id) => set((state) => ({
+        bills: state.bills.map((b) => b.id === id ? { ...b, paid: !b.paid } : b),
+      })),
+      deleteBill: (id) => set((state) => ({
+        bills: state.bills.filter((b) => b.id !== id),
+      })),
+      setMonthlyBudget: (budget) => set({ monthlyBudget: budget }),
+
       // Trip Actions
       addTrip: (trip) => set((state) => ({
         trips: [...state.trips, { ...trip, id: crypto.randomUUID() }],
@@ -292,6 +357,9 @@ export const useLifeOSStore = create<LifeOSState>()(
         tasks: state.tasks,
         emails: state.emails,
         accounts: state.accounts,
+        transactions: state.transactions,
+        bills: state.bills,
+        monthlyBudget: state.monthlyBudget,
         trips: state.trips,
       }),
     }

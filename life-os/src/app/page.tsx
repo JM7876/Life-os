@@ -1,6 +1,7 @@
 'use client';
 import Calendar from './components/Calendar';
 import PhotographyModule from '@/components/PhotographyModule';
+import FinancesTab from '@/components/FinancesTab';
 import { useChat } from 'ai/react';
 import { useLifeOSStore } from '@/store/useLifeOSStore';
 
@@ -313,6 +314,8 @@ export default function LifeOS() {
             <Calendar />
           ) : activeTab === 'work' ? (
             <PhotographyModule />
+          ) : activeTab === 'finances' ? (
+            <FinancesTab />
           ) : (
             <div className="mb-6">
               <div className="mb-6">
