@@ -265,9 +265,9 @@ const NavItem = ({
     <div>
       <button
         onClick={hasChildren ? onToggle : onClick}
-        className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all ${
-          active 
-            ? 'bg-violet-500/20 text-violet-300' 
+        className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
+          active
+            ? 'bg-violet-500/20 text-violet-300'
             : 'text-white/60 hover:bg-white/5 hover:text-white/80'
         }`}
       >
@@ -290,7 +290,7 @@ const NavItem = ({
 
 // Task Card Component
 const TaskCard = ({ task }: { task: Task }) => (
-  <div className="bg-white/5 rounded-lg p-3 border border-white/10 hover:border-white/20 transition-all cursor-pointer group">
+  <div className="bg-white/5 rounded-lg p-3 border border-white/10 hover:border-white/20 transition-colors cursor-pointer group">
     <div className="flex items-start justify-between mb-2">
       <h4 className="text-sm text-white/90 font-medium leading-tight">{task.title}</h4>
       <button className="opacity-0 group-hover:opacity-100 transition-opacity">
@@ -413,7 +413,7 @@ export default function PhotographyModule() {
         {/* Quick Actions */}
         <div className="p-4 border-b border-white/5">
           <p className="text-xs text-white/40 uppercase tracking-wider mb-2">Quick Actions</p>
-          <button className="w-full flex items-center gap-2 px-3 py-2 rounded-lg bg-violet-500/20 text-violet-300 hover:bg-violet-500/30 transition-all text-sm">
+          <button className="w-full flex items-center gap-2 px-3 py-2 rounded-lg bg-violet-500/20 text-violet-300 hover:bg-violet-500/30 transition-colors text-sm">
             <Plus className="w-4 h-4" />
             Add Project
           </button>
@@ -854,7 +854,7 @@ export default function PhotographyModule() {
                 {sampleCollaborators.map((collab) => (
                   <div
                     key={collab.id}
-                    className="relative rounded-[1.25rem] p-4 overflow-hidden transition-all hover:scale-[1.02]"
+                    className="relative rounded-[1.25rem] p-4 overflow-hidden transition-transform hover:scale-[1.02]"
                     style={{
                       background: 'rgba(255, 255, 255, 0.05)',
                       backdropFilter: 'blur(4px) saturate(180%)',

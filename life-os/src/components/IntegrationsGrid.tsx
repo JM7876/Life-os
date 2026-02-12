@@ -119,7 +119,7 @@ const IntegrationCard = ({ integration }: { integration: Integration }) => {
         }}
       />
       
-      <div className="relative bg-[#1a1a22] border border-white/10 rounded-2xl p-5 hover:border-white/20 transition-all duration-300 cursor-pointer">
+      <div className="relative bg-[#1a1a22] border border-white/10 rounded-2xl p-5 hover:border-white/20 transition-colors duration-300 cursor-pointer">
         <div className="absolute top-3 right-3">
           {integration.status === 'connected' && (
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />

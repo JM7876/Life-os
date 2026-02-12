@@ -192,14 +192,14 @@ export default function SettingsTab() {
             </div>
             <button
               onClick={() => updateSettings({ theme: settings.theme === 'dark' ? 'light' : 'dark' })}
-              className={`relative w-14 h-8 rounded-full transition-all duration-300 ${
+              className={`relative w-14 h-8 rounded-full transition-colors duration-300 ${
                 settings.theme === 'dark'
                   ? 'bg-gradient-to-r from-violet-500 to-purple-500'
                   : 'bg-white/20'
               }`}
             >
               <div
-                className={`absolute top-1 w-6 h-6 rounded-full bg-white shadow-lg transition-all duration-300 ${
+                className={`absolute top-1 w-6 h-6 rounded-full bg-white shadow-lg transition-[left] duration-300 ${
                   settings.theme === 'dark' ? 'left-7' : 'left-1'
                 }`}
               />
@@ -239,7 +239,7 @@ export default function SettingsTab() {
                 </div>
                 <a
                   href="/integrations"
-                  className="px-4 py-2 rounded-xl text-xs font-medium bg-white/5 border border-white/10 text-white/60 hover:border-violet-500/30 hover:text-violet-400 transition-all"
+                  className="px-4 py-2 rounded-xl text-xs font-medium bg-white/5 border border-white/10 text-white/60 hover:border-violet-500/30 hover:text-violet-400 transition-colors"
                 >
                   Connect
                 </a>
@@ -265,7 +265,7 @@ export default function SettingsTab() {
               <button
                 key={model.id}
                 onClick={() => updateSettings({ aiModel: model.id })}
-                className={`relative p-4 rounded-xl text-left transition-all duration-300 ${
+                className={`relative p-4 rounded-xl text-left transition-[background-color,border-color,box-shadow] duration-300 ${
                   settings.aiModel === model.id
                     ? 'bg-white/10 border border-violet-500/40 shadow-lg shadow-violet-500/10'
                     : 'bg-white/5 border border-white/10 hover:border-white/20'
@@ -316,14 +316,14 @@ export default function SettingsTab() {
                 </div>
                 <button
                   onClick={() => updateNotifications({ [notif.key]: !settings.notifications[notif.key] })}
-                  className={`relative w-14 h-8 rounded-full transition-all duration-300 ${
+                  className={`relative w-14 h-8 rounded-full transition-colors duration-300 ${
                     settings.notifications[notif.key]
                       ? 'bg-gradient-to-r from-violet-500 to-purple-500'
                       : 'bg-white/20'
                   }`}
                 >
                   <div
-                    className={`absolute top-1 w-6 h-6 rounded-full bg-white shadow-lg transition-all duration-300 ${
+                    className={`absolute top-1 w-6 h-6 rounded-full bg-white shadow-lg transition-[left] duration-300 ${
                       settings.notifications[notif.key] ? 'left-7' : 'left-1'
                     }`}
                   />
@@ -359,9 +359,9 @@ export default function SettingsTab() {
             {/* Export */}
             <button
               onClick={handleExportData}
-              className="w-full flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition-all group"
+              className="w-full flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition-colors group"
             >
-              <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 group-hover:bg-emerald-500/20 transition-all">
+              <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 group-hover:bg-emerald-500/20 transition-colors">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               </div>
               <div className="text-left flex-1">
@@ -376,9 +376,9 @@ export default function SettingsTab() {
             {/* Clear All Data */}
             <button
               onClick={() => setShowClearConfirm(true)}
-              className="w-full flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-rose-500/30 hover:bg-rose-500/5 transition-all group"
+              className="w-full flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-rose-500/30 hover:bg-rose-500/5 transition-colors group"
             >
-              <div className="p-2 rounded-lg bg-rose-500/10 text-rose-400 group-hover:bg-rose-500/20 transition-all">
+              <div className="p-2 rounded-lg bg-rose-500/10 text-rose-400 group-hover:bg-rose-500/20 transition-colors">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
               </div>
               <div className="text-left flex-1">
@@ -408,13 +408,13 @@ export default function SettingsTab() {
                 <div className="flex gap-3">
                   <button
                     onClick={() => setShowClearConfirm(false)}
-                    className="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 font-medium text-sm hover:bg-white/10 transition-all"
+                    className="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 font-medium text-sm hover:bg-white/10 transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleClearAll}
-                    className="flex-1 py-3 rounded-xl bg-gradient-to-r from-rose-500 to-red-500 font-medium text-sm hover:from-rose-600 hover:to-red-600 transition-all"
+                    className="flex-1 py-3 rounded-xl bg-gradient-to-r from-rose-500 to-red-500 font-medium text-sm hover:from-rose-600 hover:to-red-600 transition-opacity"
                   >
                     Clear Everything
                   </button>

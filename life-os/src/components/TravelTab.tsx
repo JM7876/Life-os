@@ -54,7 +54,7 @@ function ModalShine() {
 
 const inputCls = "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50 transition-colors";
 const labelCls = "block text-xs text-white/50 mb-1.5";
-const btnPrimary = "w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 font-medium text-sm hover:from-cyan-600 hover:to-blue-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all";
+const btnPrimary = "w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 font-medium text-sm hover:from-cyan-600 hover:to-blue-600 disabled:opacity-30 disabled:cursor-not-allowed transition-opacity";
 
 const emptyFlight: Flight = { airline: '', flightNumber: '', departure: '', arrival: '', departureTime: '', arrivalTime: '' };
 
@@ -149,7 +149,7 @@ export default function TravelTab() {
           </h2>
           <p className="text-white/60 text-sm">Plan trips, track flights, and pack smart</p>
         </div>
-        <button onClick={() => setShowAddTrip(true)} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 font-medium text-sm transition-all">
+        <button onClick={() => setShowAddTrip(true)} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 font-medium text-sm transition-colors">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           New Trip
         </button>
@@ -174,7 +174,7 @@ export default function TravelTab() {
             const totalPacking = trip.packingList.length;
 
             return (
-              <div key={trip.id} className="relative rounded-[1.5rem] overflow-hidden transition-all duration-300" style={glassCard}>
+              <div key={trip.id} className="relative rounded-[1.5rem] overflow-hidden transition-shadow duration-300" style={glassCard}>
                 <ShineOverlay />
                 <div className="relative">
                   {/* Trip Header */}
@@ -197,7 +197,7 @@ export default function TravelTab() {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={(e) => { e.stopPropagation(); deleteTrip(trip.id); }}
-                          className="p-2 rounded-lg text-white/20 hover:text-rose-400 hover:bg-rose-500/10 transition-all"
+                          className="p-2 rounded-lg text-white/20 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
                         >
                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                         </button>
@@ -295,7 +295,7 @@ export default function TravelTab() {
                           <button
                             onClick={() => handleAddPackingItem(trip.id)}
                             disabled={!packingInput.trim()}
-                            className="px-3 py-2 rounded-xl bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 disabled:opacity-30 transition-all"
+                            className="px-3 py-2 rounded-xl bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 disabled:opacity-30 transition-[background-color,opacity]"
                           >
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                           </button>
@@ -307,14 +307,14 @@ export default function TravelTab() {
                             <div key={item.id} className="flex items-center gap-3 p-2.5 rounded-xl bg-white/5 group">
                               <button
                                 onClick={() => togglePackingItem(trip.id, item.id)}
-                                className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-all ${item.packed ? 'bg-emerald-500 border-emerald-500' : 'border-white/30 hover:border-emerald-400'}`}
+                                className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-colors ${item.packed ? 'bg-emerald-500 border-emerald-500' : 'border-white/30 hover:border-emerald-400'}`}
                               >
                                 {item.packed && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                               </button>
                               <span className={`flex-1 text-sm ${item.packed ? 'line-through text-white/30' : 'text-white/80'}`}>{item.item}</span>
                               <button
                                 onClick={() => deletePackingItem(trip.id, item.id)}
-                                className="p-1 rounded-md text-white/0 group-hover:text-white/20 hover:!text-rose-400 transition-all"
+                                className="p-1 rounded-md text-white/0 group-hover:text-white/20 hover:!text-rose-400 transition-colors"
                               >
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                               </button>
@@ -330,7 +330,7 @@ export default function TravelTab() {
                           <div className="mt-3">
                             <div className="h-2 rounded-full bg-white/10 overflow-hidden">
                               <div
-                                className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 transition-all duration-500"
+                                className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 transition-[width] duration-500"
                                 style={{ width: `${(packedCount / totalPacking) * 100}%` }}
                               />
                             </div>
@@ -356,7 +356,7 @@ export default function TravelTab() {
               <div className="relative">
                 <div className="flex items-center justify-between mb-5">
                   <h3 className="text-lg font-semibold">New Trip</h3>
-                  <button onClick={() => setShowAddTrip(false)} className="p-2 rounded-xl hover:bg-white/10 transition-all">
+                  <button onClick={() => setShowAddTrip(false)} className="p-2 rounded-xl hover:bg-white/10 transition-colors">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                   </button>
                 </div>

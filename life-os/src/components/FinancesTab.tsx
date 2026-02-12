@@ -54,7 +54,7 @@ function ModalShine() {
 
 const inputCls = "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50 transition-colors";
 const labelCls = "block text-xs text-white/50 mb-1.5";
-const btnPrimary = "w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 font-medium text-sm hover:from-emerald-600 hover:to-cyan-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all";
+const btnPrimary = "w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 font-medium text-sm hover:from-emerald-600 hover:to-cyan-600 disabled:opacity-30 disabled:cursor-not-allowed transition-opacity";
 
 const CATEGORIES = ['Dining', 'Transport', 'Shopping', 'Software', 'Entertainment', 'Groceries', 'Health', 'Income', 'Other'];
 const ACCOUNT_TYPES = ['checking', 'savings', 'credit', 'investment'] as const;
@@ -180,7 +180,7 @@ export default function FinancesTab() {
           </div>
           <div className="h-3 rounded-full bg-white/10 overflow-hidden">
             <div
-              className={`h-full rounded-full transition-all duration-500 ${budgetPct > 90 ? 'bg-gradient-to-r from-rose-500 to-red-500' : budgetPct > 70 ? 'bg-gradient-to-r from-amber-500 to-orange-500' : 'bg-gradient-to-r from-emerald-500 to-cyan-500'}`}
+              className={`h-full rounded-full transition-[width] duration-500 ${budgetPct > 90 ? 'bg-gradient-to-r from-rose-500 to-red-500' : budgetPct > 70 ? 'bg-gradient-to-r from-amber-500 to-orange-500' : 'bg-gradient-to-r from-emerald-500 to-cyan-500'}`}
               style={{ width: `${Math.min(100, budgetPct)}%` }}
             />
           </div>
@@ -194,7 +194,7 @@ export default function FinancesTab() {
           <div className="relative">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-semibold">Accounts</h3>
-              <button onClick={() => setModal('account')} className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-all">
+              <button onClick={() => setModal('account')} className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               </button>
             </div>
@@ -211,7 +211,7 @@ export default function FinancesTab() {
                   <p className={`font-bold text-sm ${acct.type === 'credit' ? 'text-rose-400' : 'text-emerald-400'}`}>
                     {acct.type === 'credit' ? '-' : ''}${acct.balance.toLocaleString()}
                   </p>
-                  <button onClick={() => deleteAccount(acct.id)} className="p-1.5 rounded-lg text-white/0 group-hover:text-white/20 hover:!text-rose-400 hover:bg-rose-500/10 transition-all">
+                  <button onClick={() => deleteAccount(acct.id)} className="p-1.5 rounded-lg text-white/0 group-hover:text-white/20 hover:!text-rose-400 hover:bg-rose-500/10 transition-colors">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                   </button>
                 </div>
@@ -227,7 +227,7 @@ export default function FinancesTab() {
           <div className="relative">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-semibold">Upcoming Bills</h3>
-              <button onClick={() => setModal('bill')} className="p-2 rounded-lg bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 transition-all">
+              <button onClick={() => setModal('bill')} className="p-2 rounded-lg bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 transition-colors">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               </button>
             </div>
@@ -236,7 +236,7 @@ export default function FinancesTab() {
                 const daysLeft = Math.ceil((new Date(bill.dueDate).getTime() - Date.now()) / 86400000);
                 return (
                   <div key={bill.id} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 group">
-                    <button onClick={() => toggleBillPaid(bill.id)} className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center flex-shrink-0 ${bill.paid ? 'bg-emerald-500 border-emerald-500' : 'border-white/30 hover:border-emerald-400'} transition-all`}>
+                    <button onClick={() => toggleBillPaid(bill.id)} className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center flex-shrink-0 ${bill.paid ? 'bg-emerald-500 border-emerald-500' : 'border-white/30 hover:border-emerald-400'} transition-colors`}>
                       {bill.paid && <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                     </button>
                     <div className="flex-1 min-w-0">
@@ -253,7 +253,7 @@ export default function FinancesTab() {
                           {daysLeft <= 0 ? 'Due today' : `${daysLeft}d left`}
                         </p>
                       </div>
-                      <button onClick={() => deleteBill(bill.id)} className="p-1.5 rounded-lg text-white/0 group-hover:text-white/20 hover:!text-rose-400 hover:bg-rose-500/10 transition-all">
+                      <button onClick={() => deleteBill(bill.id)} className="p-1.5 rounded-lg text-white/0 group-hover:text-white/20 hover:!text-rose-400 hover:bg-rose-500/10 transition-colors">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                       </button>
                     </div>
@@ -286,7 +286,7 @@ export default function FinancesTab() {
                       <p className="text-sm font-medium">${amount.toFixed(2)}</p>
                     </div>
                     <div className="h-2 rounded-full bg-white/10 overflow-hidden">
-                      <div className="h-full rounded-full bg-gradient-to-r from-violet-500 to-purple-500 transition-all duration-500" style={{ width: `${pct}%` }} />
+                      <div className="h-full rounded-full bg-gradient-to-r from-violet-500 to-purple-500 transition-[width] duration-500" style={{ width: `${pct}%` }} />
                     </div>
                   </div>
                 );
@@ -302,7 +302,7 @@ export default function FinancesTab() {
         <div className="relative">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold">Recent Transactions</h3>
-            <button onClick={() => setModal('transaction')} className="p-2 rounded-lg bg-violet-500/10 text-violet-400 hover:bg-violet-500/20 transition-all">
+            <button onClick={() => setModal('transaction')} className="p-2 rounded-lg bg-violet-500/10 text-violet-400 hover:bg-violet-500/20 transition-colors">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             </button>
           </div>
@@ -319,7 +319,7 @@ export default function FinancesTab() {
                 <p className={`font-bold text-sm ${tx.amount >= 0 ? 'text-emerald-400' : 'text-white/80'}`}>
                   {tx.amount >= 0 ? '+' : '-'}${Math.abs(tx.amount).toFixed(2)}
                 </p>
-                <button onClick={() => deleteTransaction(tx.id)} className="p-1.5 rounded-lg text-white/0 group-hover:text-white/20 hover:!text-rose-400 hover:bg-rose-500/10 transition-all">
+                <button onClick={() => deleteTransaction(tx.id)} className="p-1.5 rounded-lg text-white/0 group-hover:text-white/20 hover:!text-rose-400 hover:bg-rose-500/10 transition-colors">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                 </button>
               </div>
@@ -344,7 +344,7 @@ export default function FinancesTab() {
                     {modal === 'bill' && 'Add Bill'}
                     {modal === 'budget' && 'Set Monthly Budget'}
                   </h3>
-                  <button onClick={() => setModal(null)} className="p-2 rounded-xl hover:bg-white/10 transition-all">
+                  <button onClick={() => setModal(null)} className="p-2 rounded-xl hover:bg-white/10 transition-colors">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                   </button>
                 </div>
@@ -359,7 +359,7 @@ export default function FinancesTab() {
                       <label className={labelCls}>Type</label>
                       <div className="flex gap-2">
                         {ACCOUNT_TYPES.map(t => (
-                          <button key={t} type="button" onClick={() => setNewAccount({ ...newAccount, type: t })} className={`flex-1 px-2 py-2 rounded-xl text-xs font-medium border transition-all capitalize ${newAccount.type === t ? accountTypeIcons[t] + ' border-current' : 'border-white/10 text-white/40 hover:border-white/20'}`}>{t}</button>
+                          <button key={t} type="button" onClick={() => setNewAccount({ ...newAccount, type: t })} className={`flex-1 px-2 py-2 rounded-xl text-xs font-medium border transition-colors capitalize ${newAccount.type === t ? accountTypeIcons[t] + ' border-current' : 'border-white/10 text-white/40 hover:border-white/20'}`}>{t}</button>
                         ))}
                       </div>
                     </div>
@@ -397,7 +397,7 @@ export default function FinancesTab() {
                       <label className={labelCls}>Category</label>
                       <div className="flex flex-wrap gap-2">
                         {CATEGORIES.map(cat => (
-                          <button key={cat} type="button" onClick={() => setNewTx({ ...newTx, category: cat })} className={`px-3 py-1.5 rounded-xl text-xs font-medium border transition-all ${newTx.category === cat ? 'bg-violet-500/20 text-violet-300 border-violet-500/30' : 'border-white/10 text-white/40 hover:border-white/20'}`}>{cat}</button>
+                          <button key={cat} type="button" onClick={() => setNewTx({ ...newTx, category: cat })} className={`px-3 py-1.5 rounded-xl text-xs font-medium border transition-colors ${newTx.category === cat ? 'bg-violet-500/20 text-violet-300 border-violet-500/30' : 'border-white/10 text-white/40 hover:border-white/20'}`}>{cat}</button>
                         ))}
                       </div>
                     </div>
@@ -422,7 +422,7 @@ export default function FinancesTab() {
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <button type="button" onClick={() => setNewBill({ ...newBill, recurring: !newBill.recurring })} className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center flex-shrink-0 transition-all ${newBill.recurring ? 'bg-emerald-500 border-emerald-500' : 'border-white/30'}`}>
+                      <button type="button" onClick={() => setNewBill({ ...newBill, recurring: !newBill.recurring })} className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center flex-shrink-0 transition-colors ${newBill.recurring ? 'bg-emerald-500 border-emerald-500' : 'border-white/30'}`}>
                         {newBill.recurring && <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                       </button>
                       <span className="text-sm text-white/60">Recurring monthly</span>

@@ -54,7 +54,7 @@ function ModalShine() {
 
 const inputCls = "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50 transition-colors";
 const labelCls = "block text-xs text-white/50 mb-1.5";
-const btnPrimary = "w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 font-medium text-sm hover:from-violet-600 hover:to-purple-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all";
+const btnPrimary = "w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 font-medium text-sm hover:from-violet-600 hover:to-purple-600 disabled:opacity-30 disabled:cursor-not-allowed transition-opacity";
 
 const CATEGORIES = ['All', 'Work', 'Finance', 'Travel', 'Personal', 'Health'];
 const SORT_OPTIONS = [
@@ -199,7 +199,7 @@ export default function TasksTab() {
         </div>
         <button
           onClick={() => setShowAddTask(true)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 font-medium text-sm hover:from-violet-600 hover:to-purple-600 transition-all"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 font-medium text-sm hover:from-violet-600 hover:to-purple-600 transition-opacity"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           New Task
@@ -236,7 +236,7 @@ export default function TasksTab() {
             </div>
             <div className="h-3 rounded-full bg-white/10 overflow-hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-violet-500 to-purple-500 transition-all duration-500"
+                className="h-full rounded-full bg-gradient-to-r from-violet-500 to-purple-500 transition-[width] duration-500"
                 style={{ width: `${(stats.completed / stats.total) * 100}%` }}
               />
             </div>
@@ -268,7 +268,7 @@ export default function TasksTab() {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-medium border transition-all ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-medium border transition-colors ${
                   selectedCategory === cat
                     ? 'bg-violet-500/20 text-violet-300 border-violet-500/30'
                     : 'border-white/10 text-white/40 hover:border-white/20'
@@ -287,7 +287,7 @@ export default function TasksTab() {
                 <button
                   key={opt.id}
                   onClick={() => setSortBy(opt.id)}
-                  className={`px-2.5 py-1 rounded-lg text-xs transition-all ${
+                  className={`px-2.5 py-1 rounded-lg text-xs transition-colors ${
                     sortBy === opt.id
                       ? 'bg-white/10 text-white'
                       : 'text-white/40 hover:text-white/60'
@@ -299,7 +299,7 @@ export default function TasksTab() {
             </div>
             <button
               onClick={() => setShowCompleted(!showCompleted)}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs transition-all ${
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs transition-colors ${
                 showCompleted ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white/60'
               }`}
             >
@@ -330,7 +330,7 @@ export default function TasksTab() {
             {filteredTasks.map((task) => (
               <div
                 key={task.id}
-                className={`flex items-start gap-3 p-3 rounded-xl border transition-all group ${
+                className={`flex items-start gap-3 p-3 rounded-xl border transition-[border-color,opacity] group ${
                   task.completed
                     ? 'bg-white/[0.02] border-white/5 opacity-50'
                     : 'bg-white/5 border-white/10 hover:border-white/15'
@@ -338,7 +338,7 @@ export default function TasksTab() {
               >
                 <button
                   onClick={() => toggleTask(task.id)}
-                  className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all ${
+                  className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors ${
                     task.completed ? 'bg-violet-500 border-violet-500' : 'border-white/30 hover:border-violet-400'
                   }`}
                 >
@@ -371,7 +371,7 @@ export default function TasksTab() {
                 </span>
                 <button
                   onClick={() => deleteTask(task.id)}
-                  className="p-1.5 rounded-lg text-white/0 group-hover:text-white/20 hover:!text-rose-400 hover:bg-rose-500/10 transition-all flex-shrink-0"
+                  className="p-1.5 rounded-lg text-white/0 group-hover:text-white/20 hover:!text-rose-400 hover:bg-rose-500/10 transition-colors flex-shrink-0"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
                     <polyline points="3 6 5 6 21 6"/>
@@ -387,7 +387,7 @@ export default function TasksTab() {
                 </p>
                 <button
                   onClick={() => setShowAddTask(true)}
-                  className="mt-3 text-xs text-violet-400 hover:text-violet-300 transition-all"
+                  className="mt-3 text-xs text-violet-400 hover:text-violet-300 transition-colors"
                 >
                   + Create a task
                 </button>
@@ -407,7 +407,7 @@ export default function TasksTab() {
               <div className="relative">
                 <div className="flex items-center justify-between mb-5">
                   <h3 className="text-lg font-semibold">New Task</h3>
-                  <button onClick={() => setShowAddTask(false)} className="p-2 rounded-xl hover:bg-white/10 transition-all">
+                  <button onClick={() => setShowAddTask(false)} className="p-2 rounded-xl hover:bg-white/10 transition-colors">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                   </button>
                 </div>
@@ -445,7 +445,7 @@ export default function TasksTab() {
                             key={p}
                             type="button"
                             onClick={() => setNewTask({ ...newTask, priority: p })}
-                            className={`flex-1 px-2 py-2 rounded-xl text-xs font-medium border transition-all ${
+                            className={`flex-1 px-2 py-2 rounded-xl text-xs font-medium border transition-colors ${
                               newTask.priority === p ? priorityColors[p] : 'border-white/10 text-white/40 hover:border-white/20'
                             }`}
                           >
@@ -474,7 +474,7 @@ export default function TasksTab() {
                           key={cat}
                           type="button"
                           onClick={() => setNewTask({ ...newTask, category: cat })}
-                          className={`px-3 py-1.5 rounded-xl text-xs font-medium border transition-all ${
+                          className={`px-3 py-1.5 rounded-xl text-xs font-medium border transition-colors ${
                             newTask.category === cat
                               ? 'bg-violet-500/20 text-violet-300 border-violet-500/30'
                               : 'border-white/10 text-white/40 hover:border-white/20'
