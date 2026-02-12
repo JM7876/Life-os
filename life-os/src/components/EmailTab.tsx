@@ -173,7 +173,7 @@ export default function EmailTab() {
               <p className="text-xs text-white/40">Mock data shown below for preview</p>
             </div>
           </div>
-          <a href="/integrations" className="px-4 py-2 rounded-xl bg-violet-500/20 text-violet-300 text-xs font-medium hover:bg-violet-500/30 transition-all whitespace-nowrap">
+          <a href="/integrations" className="px-4 py-2 rounded-xl bg-violet-500/20 text-violet-300 text-xs font-medium hover:bg-violet-500/30 transition-colors whitespace-nowrap">
             Set up integrations
           </a>
         </div>
@@ -193,7 +193,7 @@ export default function EmailTab() {
           <button
             key={folder.id}
             onClick={() => { setActiveFolder(folder.id); setSelectedEmail(null); }}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
               activeFolder === folder.id
                 ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
                 : 'bg-white/5 text-white/50 border border-white/10 hover:bg-white/10 hover:text-white/70'
@@ -232,7 +232,7 @@ export default function EmailTab() {
                     <button
                       key={email.id}
                       onClick={() => handleSelectEmail(email)}
-                      className={`w-full text-left p-4 transition-all hover:bg-white/5 ${
+                      className={`w-full text-left p-4 transition-colors hover:bg-white/5 ${
                         selectedEmail?.id === email.id ? 'bg-white/10' : ''
                       } ${!email.read ? '' : 'opacity-70'}`}
                     >
@@ -277,7 +277,7 @@ export default function EmailTab() {
                   {/* Detail Header */}
                   <div className="p-4 lg:p-5 border-b border-white/10">
                     <div className="flex items-center gap-2 mb-4 lg:hidden">
-                      <button onClick={handleBack} className="p-2 rounded-xl hover:bg-white/10 transition-all">
+                      <button onClick={handleBack} className="p-2 rounded-xl hover:bg-white/10 transition-colors">
                         <ArrowLeftIcon />
                       </button>
                       <span className="text-sm text-white/50">Back to {activeFolder}</span>
@@ -309,14 +309,14 @@ export default function EmailTab() {
                     <div className="flex items-center gap-2 mt-4">
                       <button
                         onClick={() => toggleEmailRead(selectedEmail.id)}
-                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-white/60 hover:text-white/80 transition-all"
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-white/60 hover:text-white/80 transition-colors"
                       >
                         {selectedEmail.read ? <MailIcon /> : <MailOpenIcon />}
                         {selectedEmail.read ? 'Mark unread' : 'Mark read'}
                       </button>
                       <button
                         onClick={() => markEmailPriority(selectedEmail.id, !selectedEmail.priority)}
-                        className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs transition-all ${
+                        className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs transition-colors ${
                           selectedEmail.priority
                             ? 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30'
                             : 'bg-white/5 hover:bg-white/10 text-white/60 hover:text-white/80'
@@ -328,7 +328,7 @@ export default function EmailTab() {
                       {selectedEmail.archived ? (
                         <button
                           onClick={() => { unarchiveEmail(selectedEmail.id); setSelectedEmail(null); }}
-                          className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-white/60 hover:text-white/80 transition-all"
+                          className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-white/60 hover:text-white/80 transition-colors"
                         >
                           <InboxIcon />
                           Move to inbox
@@ -336,7 +336,7 @@ export default function EmailTab() {
                       ) : (
                         <button
                           onClick={() => { archiveEmail(selectedEmail.id); setSelectedEmail(null); }}
-                          className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-white/60 hover:text-white/80 transition-all"
+                          className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-white/60 hover:text-white/80 transition-colors"
                         >
                           <ArchiveIcon />
                           Archive

@@ -91,7 +91,7 @@ function StatCard({ icon: Icon, label, value, color, delay = 0 }: {
   }, [delay]);
 
   return (
-    <div className={`flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5 transition-all duration-500 ${show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+    <div className={`flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5 transition-[opacity,transform] duration-500 ${show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
       <div className="flex items-center gap-2">
         <Icon className={`w-4 h-4 ${color}`} />
         <span className="text-white/60 text-sm">{label}</span>
@@ -204,7 +204,7 @@ export default function Calendar() {
           </h2>
           <p className="text-white/60 text-sm mt-1">Manage your schedule and events</p>
         </div>
-        <button className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 text-white font-medium hover:from-violet-500 hover:to-cyan-500 transition-all duration-300 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:scale-[1.02] active:scale-[0.98]">
+        <button className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 text-white font-medium hover:from-violet-500 hover:to-cyan-500 transition-[transform,box-shadow] duration-300 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:scale-[1.02] active:scale-[0.98]">
           <CalendarIcons.Plus className="w-4 h-4" />
           <span>Add Event</span>
         </button>
@@ -218,7 +218,7 @@ export default function Calendar() {
         >
           {/* Apple Liquid Glass card - Official CSS specs */}
           <div
-            className="relative rounded-[2rem] p-6 overflow-hidden transition-all duration-500"
+            className="relative rounded-[2rem] p-6 overflow-hidden transition-shadow duration-500"
             style={{
               background: `
                 radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.13) 0%, transparent 50%),
@@ -247,7 +247,7 @@ export default function Calendar() {
             <div className="flex items-center justify-between mb-6">
               <button
                 onClick={prevMonth}
-                className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all duration-300 hover:scale-105 active:scale-95"
+                className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-[transform,background-color,border-color] duration-300 hover:scale-105 active:scale-95"
               >
                 <CalendarIcons.ChevronLeft />
               </button>
@@ -259,7 +259,7 @@ export default function Calendar() {
                 {(currentDate.getMonth() !== today.getMonth() || currentDate.getFullYear() !== today.getFullYear()) && (
                   <button
                     onClick={goToToday}
-                    className="px-3 py-1 text-xs rounded-lg bg-violet-500/20 text-violet-300 border border-violet-500/30 hover:bg-violet-500/30 transition-all"
+                    className="px-3 py-1 text-xs rounded-lg bg-violet-500/20 text-violet-300 border border-violet-500/30 hover:bg-violet-500/30 transition-colors"
                   >
                     Today
                   </button>
@@ -268,7 +268,7 @@ export default function Calendar() {
 
               <button
                 onClick={nextMonth}
-                className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all duration-300 hover:scale-105 active:scale-95"
+                className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-[transform,background-color,border-color] duration-300 hover:scale-105 active:scale-95"
               >
                 <CalendarIcons.ChevronRight />
               </button>
@@ -307,7 +307,7 @@ export default function Calendar() {
                     onMouseEnter={() => setHoveredDay(day)}
                     onMouseLeave={() => setHoveredDay(null)}
                     className={`
-                      aspect-square rounded-2xl transition-all duration-300
+                      aspect-square rounded-2xl transition-transform duration-300
                       flex flex-col items-center justify-start pt-1.5 sm:pt-2 gap-0.5 sm:gap-1
                       relative overflow-hidden group/day
                       ${isHovered && !isTodayCell ? 'scale-105 z-10' : ''}
@@ -344,7 +344,7 @@ export default function Calendar() {
                     />
 
                     <span className={`
-                      text-xs sm:text-sm font-semibold transition-all duration-300
+                      text-xs sm:text-sm font-semibold transition-[color,transform] duration-300
                       ${isTodayCell ? 'text-white' : isPastDay ? 'text-white/40' : 'text-white/80'}
                       ${isHovered && !isTodayCell ? 'text-white scale-110' : ''}
                     `}>
@@ -360,7 +360,7 @@ export default function Calendar() {
                             className={`
                               w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full
                               ${eventDots[event.color]}
-                              transition-all duration-300
+                              transition-transform duration-300
                               ${isHovered ? 'scale-125' : ''}
                             `}
                           />
@@ -452,7 +452,7 @@ export default function Calendar() {
                   key={event.id}
                   className={`
                     p-3 rounded-xl border ${eventColors[event.color]}
-                    transition-all duration-300 hover:scale-[1.02] cursor-pointer
+                    transition-[transform,box-shadow] duration-300 hover:scale-[1.02] cursor-pointer
                     hover:shadow-lg ${eventGlows[event.color]}
                     animate-slide-up
                   `}
@@ -532,7 +532,7 @@ export default function Calendar() {
               </div>
               <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-violet-500 to-cyan-500 transition-all duration-1000 ease-out"
+                  className="h-full rounded-full bg-gradient-to-r from-violet-500 to-cyan-500 transition-[width] duration-1000 ease-out"
                   style={{
                     width: `${(today.getDate() / daysInMonth) * 100}%`,
                     animation: 'slideInWidth 1s ease-out forwards'
@@ -584,7 +584,7 @@ export default function Calendar() {
                 </div>
                 <button
                   onClick={() => setShowEventPanel(false)}
-                  className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105 hover:rotate-90"
+                  className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-[transform,background-color,border-color] duration-300 hover:scale-105 hover:rotate-90"
                 >
                   <CalendarIcons.X />
                 </button>
@@ -596,7 +596,7 @@ export default function Calendar() {
                     key={event.id}
                     className={`
                       p-4 rounded-xl border ${eventColors[event.color]}
-                      transition-all duration-300 hover:scale-[1.02]
+                      transition-[transform,box-shadow] duration-300 hover:scale-[1.02]
                       hover:shadow-lg ${eventGlows[event.color]}
                       animate-slide-up
                     `}
@@ -620,7 +620,7 @@ export default function Calendar() {
                       <CalendarIcons.Plus className="w-8 h-8 text-white/30" />
                     </div>
                     <p className="text-white/50 mb-4">No events scheduled</p>
-                    <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-500/20 to-cyan-500/20 text-white border border-violet-500/30 hover:border-violet-400/50 hover:from-violet-500/30 hover:to-cyan-500/30 transition-all duration-300 hover:scale-105">
+                    <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-500/20 to-cyan-500/20 text-white border border-violet-500/30 hover:border-violet-400/50 hover:from-violet-500/30 hover:to-cyan-500/30 transition-[transform,background-color,border-color] duration-300 hover:scale-105">
                       Add Event
                     </button>
                   </div>

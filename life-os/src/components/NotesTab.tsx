@@ -53,7 +53,7 @@ function ModalShine() {
 
 const inputCls = "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50 transition-colors";
 const labelCls = "block text-xs text-white/50 mb-1.5";
-const btnPrimary = "w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 font-medium text-sm hover:from-violet-600 hover:to-purple-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all";
+const btnPrimary = "w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 font-medium text-sm hover:from-violet-600 hover:to-purple-600 disabled:opacity-30 disabled:cursor-not-allowed transition-opacity";
 
 interface NotionPage {
   id: string;
@@ -259,7 +259,7 @@ NOTION_DATABASE_ID=your_database_id_here`}
         <div className="flex items-center gap-3">
           <button
             onClick={() => setSelectedPage(null)}
-            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-all"
+            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
@@ -276,7 +276,7 @@ NOTION_DATABASE_ID=your_database_id_here`}
             href={selectedPage.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white/60 hover:border-violet-500/30 hover:text-violet-400 transition-all"
+            className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white/60 hover:border-violet-500/30 hover:text-violet-400 transition-colors"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             Open in Notion
@@ -372,7 +372,7 @@ NOTION_DATABASE_ID=your_database_id_here`}
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 font-medium text-sm hover:from-orange-600 hover:to-amber-600 transition-all"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 font-medium text-sm hover:from-orange-600 hover:to-amber-600 transition-opacity"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           New Note
@@ -434,7 +434,7 @@ NOTION_DATABASE_ID=your_database_id_here`}
             <h3 className="font-semibold">{pages.length} note{pages.length !== 1 ? 's' : ''}</h3>
             <button
               onClick={() => fetchPages(searchQuery)}
-              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all text-white/40 hover:text-white/60"
+              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-white/40 hover:text-white/60"
               title="Refresh"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
@@ -452,7 +452,7 @@ NOTION_DATABASE_ID=your_database_id_here`}
               </p>
               <button
                 onClick={() => setShowCreate(true)}
-                className="mt-3 text-xs text-orange-400 hover:text-orange-300 transition-all"
+                className="mt-3 text-xs text-orange-400 hover:text-orange-300 transition-colors"
               >
                 + Create your first note
               </button>
@@ -463,7 +463,7 @@ NOTION_DATABASE_ID=your_database_id_here`}
                 <button
                   key={page.id}
                   onClick={() => openPage(page.id)}
-                  className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/[0.08] border border-transparent hover:border-white/10 transition-all text-left group"
+                  className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/[0.08] border border-transparent hover:border-white/10 transition-colors text-left group"
                 >
                   <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-lg flex-shrink-0">
                     {page.icon || '📄'}
@@ -474,7 +474,7 @@ NOTION_DATABASE_ID=your_database_id_here`}
                       Edited {formatRelative(page.lastEditedTime)}
                     </p>
                   </div>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-white/0 group-hover:text-white/30 transition-all flex-shrink-0"><polyline points="9 18 15 12 9 6"/></svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-white/0 group-hover:text-white/30 transition-colors flex-shrink-0"><polyline points="9 18 15 12 9 6"/></svg>
                 </button>
               ))}
             </div>
@@ -492,7 +492,7 @@ NOTION_DATABASE_ID=your_database_id_here`}
               <div className="relative">
                 <div className="flex items-center justify-between mb-5">
                   <h3 className="text-lg font-semibold">New Note</h3>
-                  <button onClick={() => setShowCreate(false)} className="p-2 rounded-xl hover:bg-white/10 transition-all">
+                  <button onClick={() => setShowCreate(false)} className="p-2 rounded-xl hover:bg-white/10 transition-colors">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                   </button>
                 </div>

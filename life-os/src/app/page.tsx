@@ -12,7 +12,7 @@ import { useLifeOSStore } from '@/store/useLifeOSStore';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback, memo } from 'react';
 
 // Icons as simple SVG components
 const Icons = {
@@ -37,6 +37,50 @@ const Icons = {
   Trash: ({ className = "w-4 h-4" }: { className?: string }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>,
   FileText: ({ className = "w-5 h-5" }: { className?: string }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,
 };
+
+const MemoizedTasksTab = React.memo(TasksTab);
+const MemoizedFinancesTab = React.memo(FinancesTab);
+const MemoizedTravelTab = React.memo(TravelTab);
+const MemoizedEmailTab = React.memo(EmailTab);
+const MemoizedNotesTab = React.memo(NotesTab);
+const MemoizedSettingsTab = React.memo(SettingsTab);
+
+// Memoized sidebar nav to avoid re-rendering on unrelated state changes
+const SidebarNav = React.memo(function SidebarNav({
+  navItems,
+  activeTab,
+  setActiveTab,
+  sidebarOpen,
+}: {
+  navItems: { id: string; icon: React.ComponentType<{ className?: string }>; label: string }[];
+  activeTab: string;
+  setActiveTab: (id: string) => void;
+  sidebarOpen: boolean;
+}) {
+  return (
+    <nav className="space-y-1 flex-1">
+      {navItems.map((item) => (
+        <button
+          key={item.id}
+          onClick={() => setActiveTab(item.id)}
+          className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-colors duration-300 group relative ${
+            activeTab === item.id
+              ? 'text-cyan-300'
+              : 'text-white/80 hover:text-cyan-300'
+          } ${sidebarOpen ? '' : 'justify-center'}`}
+        >
+          {activeTab === item.id && sidebarOpen && (
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full" />
+          )}
+          <item.icon className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${activeTab === item.id ? 'scale-110' : 'group-hover:scale-105'}`} />
+          <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-[opacity,width] duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
+            {item.label}
+          </span>
+        </button>
+      ))}
+    </nav>
+  );
+});
 
 export default function LifeOS() {
   const { data: session, status } = useSession();
@@ -207,14 +251,14 @@ export default function LifeOS() {
 
       {/* Sidebar - Apple Liquid Glass */}
 <aside
-  className={`fixed left-4 top-44 z-50 transition-all duration-500 ease-out ${
+  className={`fixed left-4 top-44 z-50 transition-[width] duration-500 ease-out ${
     sidebarOpen ? 'w-56' : 'w-16'
   }`}
   onMouseEnter={() => setSidebarOpen(true)}
   onMouseLeave={() => setSidebarOpen(false)}
 >
   <div
-    className="relative min-h-[560px] py-4 px-3 flex flex-col rounded-[2rem] overflow-hidden transition-all duration-500 ease-out"
+    className="relative min-h-[560px] py-4 px-3 flex flex-col rounded-[2rem] overflow-hidden transition-shadow duration-500 ease-out"
     style={{
       background: 'rgba(255, 255, 255, 0.05)',
       backdropFilter: 'blur(4px) saturate(180%)',
@@ -244,45 +288,25 @@ export default function LifeOS() {
         <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/20">
           <Icons.Sparkles className="w-5 h-5 text-white" />
         </div>
-        <div className={`overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
+        <div className={`overflow-hidden transition-[opacity,width] duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
           <h1 className="font-bold text-sm tracking-tight whitespace-nowrap">Life OS</h1>
           <p className="text-[10px] text-white/40 whitespace-nowrap">Command Center</p>
         </div>
       </div>
 
       {/* Nav Items */}
-      <nav className="space-y-1 flex-1">
-        {navItems.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setActiveTab(item.id)}
-            className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative ${
-              activeTab === item.id
-                ? 'text-cyan-300'
-                : 'text-white/80 hover:text-cyan-300'
-            } ${sidebarOpen ? '' : 'justify-center'}`}
-          >
-            {activeTab === item.id && sidebarOpen && (
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full" />
-            )}
-            <item.icon className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${activeTab === item.id ? 'scale-110' : 'group-hover:scale-105'}`} />
-            <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
-              {item.label}
-            </span>
-          </button>
-        ))}
-      </nav>
+      <SidebarNav navItems={navItems} activeTab={activeTab} setActiveTab={setActiveTab} sidebarOpen={sidebarOpen} />
 
       {/* Settings */}
       <div className={`pt-4 border-t border-white/5 ${sidebarOpen ? '' : 'flex justify-center'}`}>
         <button
           onClick={() => setActiveTab('settings')}
-          className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 ${
+          className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-colors duration-300 ${
             activeTab === 'settings' ? 'text-cyan-300' : 'text-white/80 hover:text-cyan-300'
           }`}
         >
           <Icons.Settings className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${activeTab === 'settings' ? 'scale-110' : ''}`} />
-          <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
+          <span className={`font-medium text-sm whitespace-nowrap overflow-hidden transition-[opacity,width] duration-300 ${sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
             Settings
           </span>
         </button>
@@ -327,13 +351,13 @@ export default function LifeOS() {
               </div>
 
               <div className="flex items-center gap-3">
-                <button className="relative p-2.5 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                <button className="relative p-2.5 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
                   <Icons.Bell />
                   <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-violet-500 rounded-full" />
                 </button>
                 <button
                   onClick={() => setChatOpen(!chatOpen)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-colors ${
                     chatOpen ? 'bg-violet-500 text-white' : 'bg-violet-500/20 text-violet-300 hover:bg-violet-500/30'
                   }`}
                 >
@@ -351,23 +375,23 @@ export default function LifeOS() {
         </header>
 
         {/* Dashboard Content */}
-        <div className={`transition-all duration-300 ${chatOpen ? 'lg:mr-96' : ''} ${activeTab === 'work' ? 'p-0' : 'p-4 lg:p-6'}`}>
+        <div className={`transition-[margin,padding] duration-300 ${chatOpen ? 'lg:mr-96' : ''} ${activeTab === 'work' ? 'p-0' : 'p-4 lg:p-6'}`}>
           {activeTab === 'calendar' ? (
             <Calendar />
           ) : activeTab === 'work' ? (
             <PhotographyModule />
           ) : activeTab === 'tasks' ? (
-            <TasksTab />
+            <MemoizedTasksTab />
           ) : activeTab === 'finances' ? (
-            <FinancesTab />
+            <MemoizedFinancesTab />
           ) : activeTab === 'travel' ? (
-            <TravelTab />
+            <MemoizedTravelTab />
           ) : activeTab === 'email' ? (
-            <EmailTab />
+            <MemoizedEmailTab />
           ) : activeTab === 'notes' ? (
-            <NotesTab />
+            <MemoizedNotesTab />
           ) : activeTab === 'settings' ? (
-            <SettingsTab />
+            <MemoizedSettingsTab />
           ) : (
             <div className="mb-6">
               <div className="mb-6">
@@ -387,7 +411,7 @@ export default function LifeOS() {
             ].map((stat, i) => (
               <div
                 key={i}
-                className="relative rounded-[1.5rem] p-4 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1"
+                className="relative rounded-[1.5rem] p-4 overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:-translate-y-1"
                 style={{
                   background: 'rgba(255, 255, 255, 0.05)',
                   backdropFilter: 'blur(4px) saturate(180%)',
@@ -426,7 +450,7 @@ export default function LifeOS() {
           <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-6">
             {/* Tasks - Apple Liquid Glass */}
             <div
-              className="lg:col-span-2 relative rounded-[1.5rem] p-4 lg:p-5 overflow-hidden transition-all duration-300 hover:scale-[1.01] hover:-translate-y-1"
+              className="lg:col-span-2 relative rounded-[1.5rem] p-4 lg:p-5 overflow-hidden transition-transform duration-300 hover:scale-[1.01] hover:-translate-y-1"
               style={{
                 background: 'rgba(255, 255, 255, 0.05)',
                 backdropFilter: 'blur(4px) saturate(180%)',
@@ -459,7 +483,7 @@ export default function LifeOS() {
                 </div>
                 <div className="space-y-2">
                   {tasks.map((task) => (
-                    <div key={task.id} className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${task.completed ? 'bg-white/5 border-white/5 opacity-50' : 'bg-white/5 border-white/10'}`}>
+                    <div key={task.id} className={`flex items-center gap-3 p-3 rounded-xl border transition-[opacity,border-color] ${task.completed ? 'bg-white/5 border-white/5 opacity-50' : 'bg-white/5 border-white/10'}`}>
                       <button onClick={() => toggleTask(task.id)} className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center flex-shrink-0 ${task.completed ? 'bg-violet-500 border-violet-500' : 'border-white/30'}`}>
                         {task.completed && <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                       </button>
@@ -468,7 +492,7 @@ export default function LifeOS() {
                         <p className="text-xs text-white/40">{formatDueDate(task.dueDate, task.completed)} • {task.category}</p>
                       </div>
                       <span className={`hidden sm:block px-3 py-1 rounded-lg text-xs font-medium border ${priorityColors[task.priority]}`}>{task.priority}</span>
-                      <button onClick={() => deleteTask(task.id)} className="p-1.5 rounded-lg text-white/20 hover:text-rose-400 hover:bg-rose-500/10 transition-all flex-shrink-0">
+                      <button onClick={() => deleteTask(task.id)} className="p-1.5 rounded-lg text-white/20 hover:text-rose-400 hover:bg-rose-500/10 transition-colors flex-shrink-0">
                         <Icons.Trash />
                       </button>
                     </div>
@@ -479,7 +503,7 @@ export default function LifeOS() {
 
             {/* Financial - Apple Liquid Glass */}
             <div
-              className="relative rounded-[1.5rem] p-4 lg:p-5 overflow-hidden transition-all duration-300 hover:scale-[1.01] hover:-translate-y-1"
+              className="relative rounded-[1.5rem] p-4 lg:p-5 overflow-hidden transition-transform duration-300 hover:scale-[1.01] hover:-translate-y-1"
               style={{
                 background: 'rgba(255, 255, 255, 0.05)',
                 backdropFilter: 'blur(4px) saturate(180%)',
@@ -521,7 +545,7 @@ export default function LifeOS() {
 
             {/* Email - Apple Liquid Glass */}
             <div
-              className="relative rounded-[1.5rem] p-4 lg:p-5 overflow-hidden transition-all duration-300 hover:scale-[1.01] hover:-translate-y-1"
+              className="relative rounded-[1.5rem] p-4 lg:p-5 overflow-hidden transition-transform duration-300 hover:scale-[1.01] hover:-translate-y-1"
               style={{
                 background: 'rgba(255, 255, 255, 0.05)',
                 backdropFilter: 'blur(4px) saturate(180%)',
@@ -565,7 +589,7 @@ export default function LifeOS() {
 
             {/* Travel - Apple Liquid Glass */}
             <div
-              className="lg:col-span-2 relative rounded-[1.5rem] p-4 lg:p-5 overflow-hidden transition-all duration-300 hover:scale-[1.01] hover:-translate-y-1"
+              className="lg:col-span-2 relative rounded-[1.5rem] p-4 lg:p-5 overflow-hidden transition-transform duration-300 hover:scale-[1.01] hover:-translate-y-1"
               style={{
                 background: 'rgba(255, 255, 255, 0.05)',
                 backdropFilter: 'blur(4px) saturate(180%)',
@@ -713,7 +737,7 @@ export default function LifeOS() {
               <div className="relative">
                 <div className="flex items-center justify-between mb-5">
                   <h3 className="text-lg font-semibold">New Task</h3>
-                  <button onClick={() => setShowAddTask(false)} className="p-2 rounded-xl hover:bg-white/10 transition-all">
+                  <button onClick={() => setShowAddTask(false)} className="p-2 rounded-xl hover:bg-white/10 transition-colors">
                     <Icons.X className="w-5 h-5" />
                   </button>
                 </div>
@@ -751,7 +775,7 @@ export default function LifeOS() {
                             key={p}
                             type="button"
                             onClick={() => setNewTask({ ...newTask, priority: p })}
-                            className={`flex-1 px-2 py-2 rounded-xl text-xs font-medium border transition-all ${
+                            className={`flex-1 px-2 py-2 rounded-xl text-xs font-medium border transition-colors ${
                               newTask.priority === p ? priorityColors[p] : 'border-white/10 text-white/40 hover:border-white/20'
                             }`}
                           >
@@ -780,7 +804,7 @@ export default function LifeOS() {
                           key={cat}
                           type="button"
                           onClick={() => setNewTask({ ...newTask, category: cat })}
-                          className={`px-3 py-1.5 rounded-xl text-xs font-medium border transition-all ${
+                          className={`px-3 py-1.5 rounded-xl text-xs font-medium border transition-colors ${
                             newTask.category === cat
                               ? 'bg-violet-500/20 text-violet-300 border-violet-500/30'
                               : 'border-white/10 text-white/40 hover:border-white/20'
@@ -795,7 +819,7 @@ export default function LifeOS() {
                   <button
                     onClick={handleAddTask}
                     disabled={!newTask.title.trim()}
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 font-medium text-sm hover:from-violet-600 hover:to-purple-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 font-medium text-sm hover:from-violet-600 hover:to-purple-600 disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
                   >
                     Add Task
                   </button>
