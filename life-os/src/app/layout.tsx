@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import AuthProvider from "@/components/AuthProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Life OS - Your Personal Command Center",
-  description: "AI-powered personal life operating system for managing tasks, finances, travel, and more.",
+  title: "Life OS",
+  description: "Your personal command center.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -17,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0f",
+  themeColor: "#0A0D13",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -37,9 +36,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body className="antialiased">
-        <AuthProvider>{children}</AuthProvider>
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
