@@ -1,14 +1,15 @@
-import type { Metadata, Viewport } from "next";
-import "./globals.css";
+import type { Metadata, Viewport } from 'next';
+import { AuthProvider } from '@/lib/auth-context';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Life OS",
-  description: "Your personal command center.",
-  manifest: "/manifest.json",
+  title: 'Life OS',
+  description: 'Your personal command center.',
+  manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
-    title: "Life OS",
+    statusBarStyle: 'black-translucent',
+    title: 'Life OS',
   },
   formatDetection: {
     telephone: false,
@@ -16,12 +17,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A0D13",
-  width: "device-width",
+  themeColor: '#0A0D13',
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  viewportFit: "cover",
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({
@@ -36,7 +37,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }
