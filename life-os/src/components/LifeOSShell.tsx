@@ -25,6 +25,7 @@ import { useState, type ComponentType } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import TasksScreen from '@/components/TasksScreen';
 import NotesScreen from '@/components/NotesScreen';
+import FinancesScreen from '@/components/FinancesScreen';
 
 type Tab = 'dashboard' | 'inbox' | 'tasks' | 'money' | 'calendar' | 'notes';
 
@@ -144,11 +145,11 @@ export default function LifeOSShell() {
           {tab === 'dashboard' && <Dashboard tasks={tasks} toggle={toggle} />}
           {tab === 'inbox' && <InboxView />}
           {tab === 'tasks' && <TasksScreen />}
-          {tab === 'money' && <MoneyView />}
+          {tab === 'money' && <FinancesScreen />}
           {tab === 'notes' && <NotesScreen />}
           {tab === 'calendar' && <Soon name={tabTitles[tab]} />}
-          {/* Tasks and Notes are real now; the demo notice only applies to the other tabs. */}
-          {tab !== 'tasks' && tab !== 'notes' && (
+          {/* Tasks, Notes and Money are real now; the demo notice only applies to the rest. */}
+          {tab !== 'tasks' && tab !== 'notes' && tab !== 'money' && (
             <div className="lo-demo">Demo data — not yet connected to your accounts</div>
           )}
         </div>
@@ -332,39 +333,6 @@ function InboxView() {
         ))}
       </ul>
     </Card>
-  );
-}
-
-function MoneyView() {
-  const accts = [
-    { n: 'Checking', b: '$4,250', i: 'Chase' },
-    { n: 'Savings', b: '$12,840', i: 'Marcus' },
-    { n: 'Credit', b: '$1,245', i: 'Amex' },
-  ];
-  return (
-    <div className="lo-grid">
-      <Card title="Accounts" className="span2">
-        <div className="lo-acct-row">
-          {accts.map((a, i) => (
-            <div key={i} className="acct">
-              <div className="al">{a.n}</div>
-              <div className="av">{a.b}</div>
-              <div className="ai">{a.i}</div>
-            </div>
-          ))}
-        </div>
-      </Card>
-      <Card title="Upcoming bills" className="span2">
-        <ul className="lo-bills">
-          <li>
-            <Clock size={14} /> Internet — AT&amp;T <span>$79.99 · Fri</span>
-          </li>
-          <li>
-            <Clock size={14} /> Car insurance <span>$142 · 2 wks</span>
-          </li>
-        </ul>
-      </Card>
-    </div>
   );
 }
 
