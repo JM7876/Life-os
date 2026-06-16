@@ -24,6 +24,7 @@ import {
 import { useState, type ComponentType } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import TasksScreen from '@/components/TasksScreen';
+import NotesScreen from '@/components/NotesScreen';
 
 type Tab = 'dashboard' | 'inbox' | 'tasks' | 'money' | 'calendar' | 'notes';
 
@@ -144,9 +145,10 @@ export default function LifeOSShell() {
           {tab === 'inbox' && <InboxView />}
           {tab === 'tasks' && <TasksScreen />}
           {tab === 'money' && <MoneyView />}
-          {(tab === 'calendar' || tab === 'notes') && <Soon name={tabTitles[tab]} />}
-          {/* Tasks is real now; the demo notice only applies to the other tabs. */}
-          {tab !== 'tasks' && (
+          {tab === 'notes' && <NotesScreen />}
+          {tab === 'calendar' && <Soon name={tabTitles[tab]} />}
+          {/* Tasks and Notes are real now; the demo notice only applies to the other tabs. */}
+          {tab !== 'tasks' && tab !== 'notes' && (
             <div className="lo-demo">Demo data — not yet connected to your accounts</div>
           )}
         </div>
