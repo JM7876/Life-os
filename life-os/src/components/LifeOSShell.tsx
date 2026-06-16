@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { useState, type ComponentType } from 'react';
 import { useAuth } from '@/lib/auth-context';
+import TasksScreen from '@/components/TasksScreen';
 
 type Tab = 'dashboard' | 'inbox' | 'tasks' | 'money' | 'calendar' | 'notes';
 
@@ -141,10 +142,13 @@ export default function LifeOSShell() {
         <div className="lo-scroll">
           {tab === 'dashboard' && <Dashboard tasks={tasks} toggle={toggle} />}
           {tab === 'inbox' && <InboxView />}
-          {tab === 'tasks' && <TasksView tasks={tasks} toggle={toggle} />}
+          {tab === 'tasks' && <TasksScreen />}
           {tab === 'money' && <MoneyView />}
           {(tab === 'calendar' || tab === 'notes') && <Soon name={tabTitles[tab]} />}
-          <div className="lo-demo">Demo data — not yet connected to your accounts</div>
+          {/* Tasks is real now; the demo notice only applies to the other tabs. */}
+          {tab !== 'tasks' && (
+            <div className="lo-demo">Demo data — not yet connected to your accounts</div>
+          )}
         </div>
       </main>
 
@@ -322,32 +326,6 @@ function InboxView() {
               <div className="ms">{m.subj}</div>
             </div>
             <span className="msrc">{m.src}</span>
-          </li>
-        ))}
-      </ul>
-    </Card>
-  );
-}
-
-function TasksView({ tasks, toggle }: DashboardProps) {
-  return (
-    <Card title="Tasks">
-      <ul className="lo-tasks big">
-        {tasks.map((task) => (
-          <li key={task.id}>
-            <button
-              className={'chk' + (task.done ? ' on' : '')}
-              onClick={() => toggle(task.id)}
-              type="button"
-              aria-label={task.done ? 'Mark incomplete' : 'Mark complete'}
-            >
-              {task.done && <Check size={13} strokeWidth={3} />}
-            </button>
-            <div className={'tk' + (task.done ? ' done' : '')}>
-              <div className="tt">{task.title}</div>
-              <div className="tm">{task.meta}</div>
-            </div>
-            <span className="tcat">{task.cat}</span>
           </li>
         ))}
       </ul>
